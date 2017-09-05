@@ -1,0 +1,87 @@
+doctype html
+html
+    include inc/header
+    include inc/scripts
+    body#page-top
+        // Navigation
+        nav.navbar.navbar-default.navbar-fixed-top
+          .container
+            // Brand and toggle get grouped for better mobile display
+            .navbar-header.page-scroll
+              button.navbar-toggle(type="button", data-toggle="collapse", data-target="#bs-example-navbar-collapse-1")
+                span.sr-only Toggle navigation
+                | 					
+                span.icon-bar
+                | 					
+                span.icon-bar
+                | 					
+                span.icon-bar
+                | 					
+              a.navbar-brand.page-scroll(href="/page")
+                img(src="images/logo.png", alt="Lattes theme logo")
+            // Collect the nav links, forms, and other content for toggling
+            #bs-example-navbar-collapse-1.collapse.navbar-collapse
+              ul.nav.navbar-nav.navbar-right
+                li.hidden
+                  a(href="#page-top") Home
+                |             
+                li
+                  //- a.page-scroll(href="#about") About
+                  a.page-scroll#home(href="/page") Home
+                | 						
+                li
+                  //- a.page-scroll(href="#about") About
+                  a.page-scroll#aboutUs(href="/aboutUs") About Us
+                | 						
+                //- li
+                //-   a.page-scroll(href="#services") Services
+                | 						
+                //- li
+                //-   a.page-scroll#products(href="/products") Products
+                li
+                  a.page-scroll#products(href="/products", data-toggle="dropdown", aria-expanded="false")
+                    | Products
+                    span.caret
+                  |           
+                  ul#menus.dropdown-menu
+                    li
+                      a(href="/products") All
+                    |             
+                    li.divider(role="separator")
+                    |             
+                    li
+                      a(href="/products#product") Leather Shoes
+                    |             
+                    li.divider(role="separator")
+                    |             
+                    li
+                      a(href="/products#product") Gym Shoes
+                    |             
+                    li.divider(role="separator")
+                    |             
+                    li
+                      a(href="/products#product") Crocs & Beach Shoes
+                    |             
+                    li.divider(role="separator")
+                    |             
+                    li
+                      a(href="/products#product") Sandals
+                    |             
+                    li.divider(role="separator")
+                    |             
+                    li
+                      a(href="/products#product") High-heeled Shoes
+                | 						
+                //- li
+                //-   a.page-scroll(href="#team") Team
+                //- | 						
+                li
+                  a.page-scroll#contact(href="/contact") Contact
+            // /.navbar-collapse
+          // /.container-fluid
+        // Header
+        block content
+        include inc/footer
+
+        script(src='/javascripts/init.js')
+        block scripts

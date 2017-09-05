@@ -1,0 +1,95 @@
+extends layout
+
+block content
+    section
+        div.row
+            div.panel.panel-primary
+                div.panel-heading
+                    strong 策略接口
+                div.panel-body
+                    div
+                        table(style='width:100%')
+                            tr
+                                td
+                                    label mac
+                                td
+                                    input(type='text' id="fmac" name='fmac' value='#{mac ? mac : "" }')
+                                td
+                                    label sn
+                                td
+                                    input(type='text' id="fsn" name='fsn' value='#{sn ? sn : "" }')
+                            tr
+                                td
+                                    label 所在区域
+                                td
+                                    input(type='text' id="fregion" name='fregion' value='#{region ? region : "" }')
+                                td
+                                    label 终端软件版本号
+                                td
+                                    input(type='text' id="fsw" name='fsw' value='#{sw ? sw : "" }')
+                            tr
+                                td
+                                    label 终端硬件版本号
+                                td
+                                    input(type='text' id="fhw"  name='fhw' value='#{hw ? hw : "" }')
+                                td
+                                    input(type='button' value='查询' onclick="queryStrategy()").btn.btn-primary
+                                    &nbsp;&nbsp;
+                                    input(type='button' value='新增' onclick="strategyAdd()").btn.btn-primary
+
+                div.panel-body
+                    table(class="table table-hover ")
+                        thead
+                            tr
+                                th mac
+                                th sn
+                                th 所在区域
+                                th 终端软件版本号
+                                th 终端硬件版本号
+                                th 终端采集开关
+                                th 策略更新模式
+                                th 策略定时更新时间
+                                th 数据上报协议
+                                th 上报周期
+                                th 缓存最大条目数
+                                th 数据上报错误重传次数
+                                th 需要上报的业务场景
+                                th 立即上报业务场景
+                                th 操作
+                        tbody
+                            each stra in strategy
+                                tr
+                                    td #{stra.mac == undefined ? '' :stra.mac}
+                                    td #{stra.sn == undefined ? '' :stra.sn}
+                                    td #{stra.region == undefined ? '' :stra.region}
+                                    td #{stra.sw == undefined ? '' :stra.sw}
+                                    td #{stra.hw == undefined ? '' :stra.hw}
+                                    td #{stra.enable == 0 ? '不采集':'采集'}
+                                    td #{stra.confUpdateMode == 0 ? '通知更新' :'定时更新'}
+                                    td #{stra.confUpdatePeriod == undefined ? '' :stra.confUpdatePeriod}
+                                    td #{stra.protocol == undefined ? '' :stra.protocol}
+                                    td #{stra.period == undefined ? '' :stra.period}
+                                    td #{stra.actionMax == undefined ? '' :stra.actionMax}
+                                    td #{stra.resendNum == undefined ? '' :stra.resendNum}
+                                    td #{stra.sendArray == undefined ? '' :stra.sendArray}
+                                    td #{stra.extralArray == undefined ? '' :stra.extralArray}
+                                    td
+                                       a(href="/strategyeedit?sid=" + stra._id) 修改
+                                       a(href="/strategydel?sid="+stra._id) 删除
+                div(style='text-align:center')
+                    - if(pageCount>1)
+                    ul.pagination
+                        -var suffix = search ? ('search='+search):'';
+                        li
+                            a(href='/strategQuery?#{suffix}') &laquo;
+                            -for(var i=1; i<=pageCount; i++)
+                                if(index == i)
+                                    li.active
+                                        span #{i}
+                                else
+                                    li
+                                        a(href='/strategQuery?index=#{i}&size=#{size}&#{suffix}') #{i}
+                        li
+                            a(href='/strategQuery?index=#{pageCount}&size=#{size}&#{suffix}') &raquo
+
+    script(type='text/javascript', src='/conm/strategy.js')

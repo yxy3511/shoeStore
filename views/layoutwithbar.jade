@@ -1,0 +1,25 @@
+doctype html
+html
+	include inc/header
+	include inc/scripts
+	body
+		nav(role='navigation').navbar.navbar-default.navbar-inverse.navbar-fixed-top
+			div.navbar-header
+				a(href='/').navbar-brand 数据采集后台
+			div.navbar-collapse.collapse.container
+				ul.nav.navbar-nav#navigation
+					li#content
+						a(href='/contents?index=1&size=100') &nbsp;日志查询&nbsp;
+					li#test
+						a(href='/test') 接口测试
+					li#admin
+						a(href='/admin') 策略管理
+						li#resource
+							a(href='/resource') 资源分配
+
+		div.container
+			block content
+			include inc/footer
+
+		script(src='/javascripts/init.js')
+		block scripts

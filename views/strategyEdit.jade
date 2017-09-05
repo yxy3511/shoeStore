@@ -1,0 +1,119 @@
+extends layout
+
+block content
+
+    div.row
+        div.panel.panel-primary
+            div.panel-heading
+                strong 策略接口
+            div.panel-body
+                link(rel='stylesheet', href='/stylesheets/strategy.css')
+                div
+                    form(action="/manage/strategyForm", method="post")
+                        table(style='width:100%')
+                            tr
+                                td
+                                    label mac
+                                td
+                                    input(type='text' id="mac" name='mac' required )
+                                td
+                                    label sn
+                                td
+                                    input(type='text' id="sn" name='sn' required )
+                            tr
+                                td
+                                    label 所在区域
+                                td
+                                    input(type='text' id="region" name='region'  )
+                                td
+                                    label 终端软件版本号
+                                td
+                                    input(type='text' id="sw" name='sw'  )
+                            tr
+                                td
+                                    label 终端硬件版本号
+                                td
+                                    input(type='text' id="hw" name='hw'  )
+                                td
+                                    label 数据上报协议
+                                td
+                                    input(type='text' id="protocol" name='protocol' required )
+                            tr
+                                td
+                                    label 终端采集开关
+                                td
+                                    select(id="enable"  name='enable' )
+                                        option(value="0" )  不采集
+                                        option(value="1" )  采集
+                                td
+                                    label 策略更新模式
+                                td
+                                    select(id="confUpdateMode"  name='confUpdateMode' )
+                                        option(value="1" )  通知更新
+                                        option(value="0" )  定时更新
+                            tr
+                                td
+                                    label 策略定时更新时间
+                                td
+                                    input(type='text' id="confUpdatePeriod" name='confUpdatePeriod' required )
+                                    label &nbsp;秒
+                                td
+                                    label 上报周期
+                                td
+                                    input(type='text' name='period' id="period" required )
+                                    label &nbsp;秒
+                            tr
+                                td
+                                    label 数据上报错误重传次数
+                                td
+                                    input(type='text' name='resendNum' id="resendNum" required )
+                                td
+                                    label 缓存最大条目数
+                                td
+                                    input(type='text' name='actionMax' id="actionMax" required )
+                            tr
+                                td
+                                     label 立即上报业务场景
+                                td
+                                     input(type='text' name='extralArray' id="extralArray" required )
+                                     label 多条,分割
+                                td
+                                    label  需要上报的业务场景
+                                td
+                                    input(type='text' name='sendArray' id="sendArray" required )
+                                    label 多条,分割
+                                    input(type='hidden' id='objId' name="objId" )
+                        input(type='submit' value='确定').btn.btn-primary
+                        input(type='button' value='取消' onclick="strateBack()").btn.btn-primary
+
+
+            div.panel-body
+            script(style="javascript").
+                    $(function(){
+                        try{
+                            var ustrategyid='#{ustrategy ? (ustrategy._id.toString() || ''):''}'+"";
+                            console.log(ustrategyid);
+                            if('' == ustrategyid){
+                                console.log('新增操作');
+                            }else{
+                                console.log('修改操作');
+                                $('#mac').val('#{ustrategy ? (ustrategy.mac || ''):''}');
+                                $('#sn').val('#{ustrategy ? (ustrategy.sn || ''):''}');
+                                $('#region').val('#{ustrategy ? (ustrategy.region || ''):''}');
+                                $('#sw').val('#{ustrategy ? (ustrategy.sw || ''):''}');
+                                $('#hw').val('#{ustrategy ? (ustrategy.hw || ''):''}');
+                                $('#protocol').val('#{ustrategy ? (ustrategy.protocol || ''):''}');
+                                $('#senable').val('#{ustrategy ? (ustrategy.enable || ''):''}');
+                                $('#confUpdateMode').val('#{ustrategy ? (ustrategy.confUpdateMode || ''):''}');
+                                $('#confUpdatePeriod').val('#{ustrategy ? (ustrategy.confUpdatePeriod || ''):''}');
+                                $('#period').val('#{ustrategy ? (ustrategy.period || ''):''}');
+                                $('#resendNum').val('#{ustrategy ? (ustrategy.resendNum || ''):''}');
+                                $('#actionMax').val('#{ustrategy ? (ustrategy.actionMax || ''):''}');
+                                $('#extralArray').val('#{ustrategy ? (ustrategy.extralArray || ''):''}');
+                                $('#sendArray').val('#{ustrategy ? (ustrategy.sendArray || ''):''}');
+                                $('#objId').val('#{ustrategy ? (ustrategy._id || ''):''}');
+                            }
+                        }catch(e){
+                            console.log(e);
+                        }
+                    });
