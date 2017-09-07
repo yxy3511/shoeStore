@@ -917,3 +917,71 @@ ol.carousel-indicators{
 }  
     
 
+/* -------------上传图片--------------- */
+.upload-container {
+    display: inline-block;
+    border: 1px dashed #a7a9aa;
+    // background-image: url('../images/addBg.png');
+    // background-repeat: no-repeat;
+    width: 100px;
+    height: 100px;
+    margin-left: 5px;
+    // display: inline-block;
+    vertical-align: middle;  
+}
+.upImgs{
+    padding-top:5px;
+}
+.upImg{
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+}
+.upTex{
+    display: inline-block;
+    // margin: 0 auto;
+    // vertical-align: middle;
+    margin-top: 25px;
+    margin-left: 20px;
+    position: relative;
+    overflow: hidden;
+}
+.upTex:hover{
+    cursor:pointer;
+}
+.upIcon{
+    display: block;
+    margin-left: 20px;
+}
+.fileupload {
+    visibility: hidden;
+    // display: none;
+    position: absolute;
+    left: 15px;
+    top: 98px;
+    // background-image: url('../images/addBg.png');
+    // background-repeat: no-repeat;
+    // width: 180px;
+    // height: 200px;
+    // padding-bottom: 10px;
+    // display: inline-block;
+    // vertical-align: middle;
+    // opacity: 0;
+    // filter: alpha(opacity=0);
+    // width: 200px;
+    // height: 200px;
+}
+
+
+.upBtns{
+    margin:0px !important;
+}
+.upBtns .cancelBtn{
+    background-color: #a7a9aa !important;
+    opacity: 0.8;
+}
+.upBtns .cancelBtn:hover,.upBtns .cancelBtn:active,.upBtns .cancelBtn:focus{
+    // background-color: #9a9c9d;
+    opacity: 1;
+}

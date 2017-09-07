@@ -27,12 +27,11 @@ toContact=function(req,res){
 	res.render('contact');
 }
 
-module.exports = function(app){
-    router.get('/',rePage);
-    router.get('/page',toPage);
-    router.get('/aboutUs',toAbout);
-    router.get('/products',toProducts);
-    router.get('/proDesc/:id',toProDesc);
-    router.get('/contact',toContact);
-    app.use('/',router);
-}
+router.get('/',rePage);
+router.get('/page',toPage);
+router.get('/aboutUs',toAbout);
+router.get('/products',toProducts);
+router.get('/proDesc/:id',toProDesc);
+router.get('/contact',toContact);
+module.exports = router
+

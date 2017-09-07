@@ -11,6 +11,8 @@ var mongoose = require('mongoose');
 //var admin = require('./routes/admin');
 var strategy= require('./routes/strategy');
 var page= require('./routes/page');
+var upload = require('./routes/upload')
+// var proList = require('./routes/proList')
 var mongodb=require('mongodb');
 
 var app = express();
@@ -20,7 +22,9 @@ var app = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
-//app.set('env', 'production');
+// app.engine('html', require('jade').__express);
+// app.set('view engine', 'html');
+app.set('env', 'production');
 
 // uncomment after placing your favicon in /public
 app.use(favicon(__dirname + '/public/favicon.ico'));
@@ -30,8 +34,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 // app.use(express.session({ secret: "OZhCLfxlGp9TtzSXmJtq" }));
 app.use(express.static(path.join(__dirname, 'public')));
-strategy(app)
-page(app)
+app.use('/manage',strategy)
+// app.use('/manage',proList)
+app.use('/',page)
+app.use('/',upload)
+
 //app.get('/test', index.test);
 //app.get('/contents', content.findContents);
 /*app.get('/admin',strategy.findStrategy);

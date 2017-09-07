@@ -1,99 +1,202 @@
 extends layout
 
 block content
-    section
-        div.row
-            div.panel.panel-primary
-                div.panel-heading
-                    strong 商品列表
-                div.panel-body
-                    div
-                        table(style='width:100%')
-                            tr
-                                td
-                                    label pid
-                                td
-                                    input(type='text' id="pid" name='pid' value='#{pid ? pid : "" }')
-                                td
-                                    label 类别
-                                td
-                                    input(type='text' id="category" name='category' value='#{category ? category : "" }')
-                                td
-                                    label pname
-                                td
-                                    input(type='text' id="pname" name='pname' value='#{pname ? pname : "" }')
-                            tr
-                                td
-                                    label 价格
-                                td
-                                    input(type='text' id="price" name='price' value='#{price ? price : "" }')
-                                td
-                                    label 描述
-                                td
-                                    input(type='text' id="desc" name='desc' value='#{desc ? desc : "" }')
-                            tr
-                                td
-                                    label 库存
-                                td
-                                    input(type='text' id="stock"  name='stock' value='#{stock ? stock : "" }')
-                                td
-                                    input(type='button' value='查询' onclick="queryPro()").btn.btn-primary
-                                    &nbsp;&nbsp;
-                                    input(type='button' value='新增' onclick="proAdd()").btn.btn-primary
-
-                div.panel-body
-                    table(class="table table-hover ")
-                        thead
-                            tr
-                                th mac
-                                th sn
-                                th 所在区域
-                                th 终端软件版本号
-                                th 终端硬件版本号
-                                th 终端采集开关
-                                th 策略更新模式
-                                th 策略定时更新时间
-                                th 数据上报协议
-                                th 上报周期
-                                th 缓存最大条目数
-                                th 数据上报错误重传次数
-                                th 需要上报的业务场景
-                                th 立即上报业务场景
-                                th 操作
-                        tbody
-                            each stra in strategy
-                                tr
-                                    td #{stra.mac == undefined ? '' :stra.mac}
-                                    td #{stra.sn == undefined ? '' :stra.sn}
-                                    td #{stra.region == undefined ? '' :stra.region}
-                                    td #{stra.sw == undefined ? '' :stra.sw}
-                                    td #{stra.hw == undefined ? '' :stra.hw}
-                                    td #{stra.enable == 0 ? '不采集':'采集'}
-                                    td #{stra.confUpdateMode == 0 ? '通知更新' :'定时更新'}
-                                    td #{stra.confUpdatePeriod == undefined ? '' :stra.confUpdatePeriod}
-                                    td #{stra.protocol == undefined ? '' :stra.protocol}
-                                    td #{stra.period == undefined ? '' :stra.period}
-                                    td #{stra.actionMax == undefined ? '' :stra.actionMax}
-                                    td #{stra.resendNum == undefined ? '' :stra.resendNum}
-                                    td #{stra.sendArray == undefined ? '' :stra.sendArray}
-                                    td #{stra.extralArray == undefined ? '' :stra.extralArray}
-                                    td
-                                       a(href="/strategyeedit?sid=" + stra._id) 修改
-                                       a(href="/strategydel?sid="+stra._id) 删除
+    section.light-bg.content
+        // start: Content
+        .container-fluid-full
+            #content.span10            
+              .row-fluid.sortable
+                .box.span12
+                  .box-header(data-original-title="")
+                    h2
+                      i.halflings-icon.white.user
+                      span.break
+                      | Members
+                    | 
+                    .theadbox
+                      .ops
+                        span.addIcon.icons
+                          i.glyphicon.glyphicon-plus
+                        span.searchIcon.icons
+                          i.glyphicon.glyphicon-search
+                      .searchForm
+                        .input-group.searchGroup(style='display:none;')
+                          input.form-control.searchInput(name="key", autocomplete="on", type="text", placeholder="输入关键字")
+                          span.input-group-addon.searchAddon
+                            button.searchClose
+                              span.glyphicon.glyphicon-remove
+                      //- |                             
+                      //- a.btn-minimize(href="#")
+                      //-   i.halflings-icon.white.chevron-up
+                      //- |                             
+                      //- a.btn-close(href="#")
+                      //-   i.halflings-icon.white.remove
+                  |                     
+                  .box-content
+                    table.table.table-striped.table-bordered.bootstrap-datatable.datatable
+                      thead
+                        tr
+                          th ID
+                          |                                   
+                          th 分类
+                          |                                   
+                          th 商品名
+                          |                                   
+                          th 价格
+                          |                                   
+                          th 描述
+                          |                                   
+                          th 库存
+                          |                                   
+                          th 更新日期
+                          |                                   
+                          th 操作
+                      |    
+                      tbody
+                        tr
+                          td 1
+                          |                                 
+                          td.center Gym shoes
+                          |                                 
+                          td.center Member
+                          |                                 
+                          td.center $666.00
+                          |                                 
+                          td.center beautiful
+                          |                                 
+                          td.center
+                            span.label.label-success 充足
+                          |                                 
+                          td.center 2012/01/01
+                          |                                 
+                          td.center
+                            a.btn.btn-success(href="#")
+                              i.halflings-icon.white.zoom-in
+                            |                                   
+                            a.btn.btn-info(href="#")
+                              i.halflings-icon.white.edit
+                            |                                   
+                            a.btn.btn-danger(href="#")
+                              i.halflings-icon.white.trash
+                        |                           
+                        tr
+                          td 2
+                          |                                 
+                          td.center leather shoes
+                          |                                 
+                          td.center Member
+                          |                                 
+                          td.center $666.00
+                          |                                 
+                          td.center beautiful
+                          |                                 
+                          td.center
+                            span.label.label-warning 较少
+                          |                                 
+                          td.center 2012/01/01
+                          |                                 
+                          td.center
+                            a.btn.btn-success(href="#")
+                              i.halflings-icon.white.zoom-in
+                            |                                   
+                            a.btn.btn-info(href="#")
+                              i.halflings-icon.white.edit
+                            |                                   
+                            a.btn.btn-danger(href="#")
+                              i.halflings-icon.white.trash
+                        |                           
+                        tr
+                          td 3
+                          |                                 
+                          td.center Gym shoes
+                          |                                 
+                          td.center Member
+                          |                                 
+                          td.center $666.00
+                          |                                 
+                          td.center beautiful
+                          |                                 
+                          td.center
+                            span.label.label-success 充足
+                          |                                 
+                          td.center 2012/01/01
+                          |                                 
+                          td.center
+                            a.btn.btn-success(href="#")
+                              i.halflings-icon.white.zoom-in
+                            |                                   
+                            a.btn.btn-info(href="#")
+                              i.halflings-icon.white.edit
+                            |                                   
+                            a.btn.btn-danger(href="#")
+                              i.halflings-icon.white.trash
+                        |                           
+                        tr
+                          td 4
+                          |                                 
+                          td.center leather shoes
+                          |                                 
+                          td.center Member
+                          |                                 
+                          td.center $666.00
+                          |                                 
+                          td.center beautiful
+                          |                                 
+                          td.center
+                            span.label.label-warning 较少
+                          |                                 
+                          td.center 2012/01/01
+                          |                                 
+                          td.center
+                            a.btn.btn-success(href="#")
+                              i.halflings-icon.white.zoom-in
+                            |                                   
+                            a.btn.btn-info(href="#")
+                              i.halflings-icon.white.edit
+                            |                                   
+                            a.btn.btn-danger(href="#")
+                              i.halflings-icon.white.trash
+                        |                           
+                        tr
+                          td 5
+                          |                                 
+                          td.center Gym shoes
+                          |                                 
+                          td.center Staff
+                          |                                 
+                          td.center $666.00
+                          |                                 
+                          td.center beautiful
+                          |                                 
+                          td.center
+                            span.label.label-important 缺货
+                          |                                 
+                          td.center 2012/01/01
+                          |                                 
+                          td.center
+                            a.btn.btn-success(href="#")
+                              i.halflings-icon.white.zoom-in
+                            |                                   
+                            a.btn.btn-info(href="#")
+                              i.halflings-icon.white.edit
+                            |                                   
+                            a.btn.btn-danger(href="#")
+                              i.halflings-icon.white.trash
+              .row-fluid
                 div(style='text-align:center')
-                    - if(pageCount>1)
-                    ul.pagination
-                        -var suffix = search ? ('search='+search):'';
-                        li
-                            a(href='/strategQuery?#{suffix}') &laquo;
-                            -for(var i=1; i<=pageCount; i++)
-                                if(index == i)
-                                    li.active
-                                        span #{i}
-                                else
-                                    li
-                                        a(href='/strategQuery?index=#{i}&size=#{size}&#{suffix}') #{i}
-                        li
-                            a(href='/strategQuery?index=#{pageCount}&size=#{size}&#{suffix}') &raquo
+                    - if(pageCount==1)
+                        ul.pagination
+                            -var suffix = search ? ('search='+search):'';
+                            li
+                                a(href='/strategQuery?#{suffix}') &laquo;
+                                -for(var i=1; i<=pageCount; i++)
+                                    if(index == i)
+                                        li.active
+                                            span #{i}
+                                    -else
+                                        li
+                                            a(href='/strategQuery?index=#{i}&size=#{size}&#{suffix}') #{i}
+                            li
+                                a(href='/strategQuery?index=#{pageCount}&size=#{size}&#{suffix}') &raquo
 
-    script(type='text/javascript', src='/conm/strategy.js')
+    script(type='text/javascript', src='/conm/proList.js')

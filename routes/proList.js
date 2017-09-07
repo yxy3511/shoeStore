@@ -25,7 +25,7 @@ module.exports = function (app) {
     //策略配置修改
     router.get('/proEdit/',edit);
 
-    app.use('/manage', router);
+    
 }
 
 // 查询所有
@@ -35,14 +35,14 @@ findPro = function(req, res) {
         var pname = req.query.pname || 100;
         var price = req.query.price;
         var desc = req.query.desc;
-        var category = req.query.category;
+        var sort = req.query.sort;
 
         var result = {};
         result.id = id;
         result.pname = pname;
         result.price=price;
         result.desc=desc;
-        result.category=category;
+        result.sort=sort;
 
         var params = {};
         // params.model = '';
@@ -61,15 +61,17 @@ findPro = function(req, res) {
         if(desc!=''){
             params.desc=desc;
         }
-        if(category!=''){
-            params.category=category;
+        if(sort!=''){
+            params.sort=sort;
         }
         // blogs in current page
         proListContent.findAll(params, function (proList) {
             result.proList = proList;
             proListContent.count(params, function (count) {
-                result.pageCount = Math.ceil(count / size);
-                result.totalCount = count;
+                // result.pageCount = Math.ceil(count / size);
+                result.pageCount = 10;
+                // result.totalCount = count;
+                result.totalCount = 20;
                 res.render('proList', result);
             });
         });

@@ -1,0 +1,88 @@
+extends layout
+
+block content
+    section.content
+        //- form(name='picForm', method='post', action='/uploading', enctype='multipart/form-data')
+            //- .upload-container
+            //-     .upTex
+            //-         span.upIcon
+            //-             i.fa.fa-plus
+            //-         span 点击上传
+            //-     input(name='inputFile',id='j_imgfile', type='file', multiple='mutiple',class="fileupload")
+                
+        //-     input(name='btnUp',type='Submit',value='上传')
+        // start: Content
+        .container-fluid-full
+            #content.span10            
+              .row-fluid.sortable
+                .box.span12
+                  .box-header(data-original-title="")
+                    h2
+                      i.halflings-icon.white.user
+                      span.break
+                      | Members
+                    | 
+                    //- .theadbox
+                    //-   .ops
+                    //-     span.addIcon.icons
+                    //-       i.glyphicon.glyphicon-plus
+                    //-     span.searchIcon.icons
+                    //-       i.glyphicon.glyphicon-search
+                    //-   .searchForm
+                    //-     .input-group.searchGroup(style='display:none;')
+                    //-       input.form-control.searchInput(name="key", autocomplete="on", type="text", placeholder="输入关键字")
+                    //-       span.input-group-addon.searchAddon
+                    //-         button.searchClose
+                    //-           span.glyphicon.glyphicon-remove              
+                  .box-content
+                    form.form-horizontal
+                      fieldset
+                        .control-group
+                          label.control-label(for="typeahead") Auto complete 
+                          |                               
+                          .controls
+                            input#typeahead.span6.typeahead(type="text", data-provide="typeahead", data-items="4", data-source='["Alabama","Alaska","Arizona","Arkansas","California","Colorado","Connecticut","Delaware","Florida","Georgia","Hawaii","Idaho","Illinois","Indiana","Iowa","Kansas","Kentucky","Louisiana","Maine","Maryland","Massachusetts","Michigan","Minnesota","Mississippi","Missouri","Montana","Nebraska","Nevada","New Hampshire","New Jersey","New Mexico","New York","North Dakota","North Carolina","Ohio","Oklahoma","Oregon","Pennsylvania","Rhode Island","South Carolina","South Dakota","Tennessee","Texas","Utah","Vermont","Virginia","Washington","West Virginia","Wisconsin","Wyoming"]')
+                            |                               
+                            p.help-block Start typing to activate auto complete!
+                        |                           
+                        .control-group
+                          label.control-label(for="date01") Date input
+                          |                               
+                          .controls
+                            input#date01.input-xlarge.datepicker(type="text", value="02/16/12")
+                        //- |                           
+                        //- .control-group
+                        //-   label.control-label(for="fileInput") File input
+                        //-   |                               
+                        //-   .controls
+                        //-     input#fileInput.input-file.uniform_on(type="file")
+                        |                           
+                        .control-group
+                          label.control-label(for="j_imgfile") File input
+                          .controls
+                              .upload-container.upImgs
+                                img.upImg(src='/images/addBg.png')
+                              .upload-container.upImgs
+                                img.upImg(src='/images/addBg.png')
+                              .upload-container.upImgs
+                                img.upImg(src='/images/addBg.png')
+                              .upload-container
+                                .upTex
+                                    span.upIcon
+                                        i.fa.fa-plus
+                                    span 点击上传
+                                input(name='inputFile',id='j_imgfile', type='file', multiple='mutiple',class="fileupload")
+                        |           
+                        |                           
+                        .control-group.hidden-phone
+                          label.control-label(for="textarea2") Textarea WYSIWYG
+                          |                               
+                          .controls
+                            textarea#textarea2(class='cleditor' rows="3")
+                        |                           
+                        .form-actions.upBtns
+                          button.btn.btn-primary(type="submit") Save changes
+                          |                               
+                          button.btn.cancelBtn(type="reset") Cancel
+
+    script(type='text/javascript', src="/conm/upload.js")

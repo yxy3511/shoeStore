@@ -11,7 +11,7 @@ block content
                         table(style='width:100%')
                             tr
                                 td
-                                    label mac
+                                    label mac1
                                 td
                                     input(type='text' id="fmac" name='fmac' value='#{mac ? mac : "" }')
                                 td
@@ -59,7 +59,7 @@ block content
                         tbody
                             each stra in strategy
                                 tr
-                                    td #{stra.mac == undefined ? '' :stra.mac}
+                                    td #{stra.mac1 == undefined ? '' :stra.mac1}
                                     td #{stra.sn == undefined ? '' :stra.sn}
                                     td #{stra.region == undefined ? '' :stra.region}
                                     td #{stra.sw == undefined ? '' :stra.sw}
@@ -74,22 +74,22 @@ block content
                                     td #{stra.sendArray == undefined ? '' :stra.sendArray}
                                     td #{stra.extralArray == undefined ? '' :stra.extralArray}
                                     td
-                                       a(href="/strategyeedit?sid=" + stra._id) 修改
-                                       a(href="/strategydel?sid="+stra._id) 删除
+                                       a(href="/manage/strategyeedit?sid=" + stra._id) 修改
+                                       a(href="/manage/strategydel?sid="+stra._id) 删除
                 div(style='text-align:center')
                     - if(pageCount>1)
-                    ul.pagination
-                        -var suffix = search ? ('search='+search):'';
-                        li
-                            a(href='/strategQuery?#{suffix}') &laquo;
-                            -for(var i=1; i<=pageCount; i++)
-                                if(index == i)
-                                    li.active
-                                        span #{i}
-                                else
-                                    li
-                                        a(href='/strategQuery?index=#{i}&size=#{size}&#{suffix}') #{i}
-                        li
-                            a(href='/strategQuery?index=#{pageCount}&size=#{size}&#{suffix}') &raquo
+                        ul.pagination
+                            -var suffix = search ? ('search='+search):'';
+                            li
+                                a(href='/strategQuery?#{suffix}') &laquo;
+                                -for(var i=1; i<=pageCount; i++)
+                                    if(index == i)
+                                        li.active
+                                            span #{i}
+                                    else
+                                        li
+                                            a(href='/strategQuery?index=#{i}&size=#{size}&#{suffix}') #{i}
+                            li
+                                a(href='/strategQuery?index=#{pageCount}&size=#{size}&#{suffix}') &raquo
 
     script(type='text/javascript', src='/conm/strategy.js')

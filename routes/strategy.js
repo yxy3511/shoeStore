@@ -11,22 +11,10 @@ var StrategyContent = require('./../dao/StrategyContent.js');
 toStrategyEdit=function(req,res){
     res.render('strategyEdit', {});
 }
-
-module.exports = function (app) {
-    router.get('/admin',findStrategy);
-    //app.get('/resource',index.findResource);
-
-    router.get('/toStrategyPage',toStrategyEdit);
-    //查询
-    router.get('/strategQuery/',findStrategy);
-    //策略配置保存
-    router.post('/strategyForm/',save);
-    //策略配置删除
-    router.get('/strategydel/', del);
-    //策略配置修改
-    router.get('/strategyeedit/',edit);
-    app.use('/manage', router);
+toProList = function(req,res){
+    res.render('proList')
 }
+
 
 // 查询所有
 findStrategy = function(req, res) {
@@ -38,7 +26,6 @@ findStrategy = function(req, res) {
         var region = req.query.fregion;
         var sw = req.query.fsw;
         var hw = req.query.fhw;
-
 
         var result = {};
         result.index = index;
@@ -71,6 +58,7 @@ findStrategy = function(req, res) {
         }
         // blogs in current page
         StrategyContent.findAll(params, function (strategy) {
+            console.log('strategy',strategy)
             result.strategy = strategy;
             StrategyContent.count(params, function (count) {
                 result.pageCount = Math.ceil(count / size);
@@ -177,6 +165,7 @@ edit = function(req, res) {
  * 删除
  */
 del = function(req, res) {
+    console.log('del')
     req.setEncoding("utf-8");
     var sid=req.query.sid;
     try {
@@ -192,3 +181,19 @@ del = function(req, res) {
     res.redirect('/manage/admin');
 }
 
+router.get('/admin',findStrategy);
+//app.get('/resource',index.findResource);
+
+router.get('/toStrategyPage',toStrategyEdit);
+//查询
+router.get('/strategQuery/',findStrategy);
+//策略配置保存
+router.post('/strategyForm/',save);
+//策略配置删除
+router.get('/strategydel/', del);
+//策略配置修改
+router.get('/strategyeedit/',edit);
+//列表页
+router.get('/proList',toProList);
+
+module.exports = router

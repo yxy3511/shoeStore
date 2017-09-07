@@ -9,7 +9,7 @@ var proListSehema=new Schema({
     price:{type:Number,default:0},
     desc:String,
     stock:{type:Number,default:0},
-    category:String
+    sort:String
 });
 mongoose.model("proList", StrategySehema)
 var proListContent = mongoose.model('proList');
@@ -20,14 +20,15 @@ exports.findAll = function(params, callback) {
     // var price = params.price;
     // var desc = params.desc;
     // var stock = params.stock;
-    // var category = params.category;
+    // var sort = params.sort;
 
     var pid = params  ? (params.pid || ''):'';
     var pname = params  ? (params.pname || ''):'';
     var price = params  ? (params.price || 0):0;
     var desc = params  ? (params.desc || ''):'';
     var stock = params  ? (params.stock || 0):0;
-    var category = params  ? (params.category || ''):'';
+    var sort = params  ? (params.sort || ''):'';
+    var imgs = pramas ? (params.imgs || []):[]
 
     var str = [];
 
@@ -48,18 +49,18 @@ exports.findAll = function(params, callback) {
     if(stock != ''){
         str.push({stock:stock});
     }
-    if(category != ''){
-        str.push({category:category});
+    if(sort != ''){
+        str.push({sort:sort});
     }
 
     if(str.length>0){
         StrategyContent.find({
             "$and":str
-        }).pname(pname).price(price).desc(desc).category(category).exec(function(err, proList) {
+        }).pname(pname).price(price).desc(desc).sort(sort).exec(function(err, proList) {
             callback(err ? {} : proList);
         });
     }else{
-        proListContent.price(price).desc(desc).category(category).exec(function(err, proList) {
+        proListContent.price(price).desc(desc).sort(sort).exec(function(err, proList) {
             callback(err ? {} : proList);
         });
     }
@@ -70,7 +71,7 @@ exports.count=function(params,callback){
     var price = params  ? (params.price || 0):0;
     var desc = params  ? (params.desc || ''):'';
     var stock = params  ? (params.stock || 0):0;
-    var category = params  ? (params.category || ''):'';
+    var sort = params  ? (params.sort || ''):'';
 
     var str = [];
     if(pid != ''){
@@ -90,8 +91,8 @@ exports.count=function(params,callback){
     if(stock != ''){
         str.push({stock:stock});
     }
-    if(category != ''){
-        str.push({category:category});
+    if(sort != ''){
+        str.push({sort:sort});
     }
     if(str.length>0){
         proListContent.count({
