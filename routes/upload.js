@@ -28,9 +28,11 @@ router.post('/uploading', function(req, res, next){
                 console.log('parse files: ' + filesTmp);
                 var inputFile = imgs[i]['inputFile'][0];
                 var uploadedPath = inputFile['path'];
-                dstPath['path'+i] = '/files/' + inputFile['originalFilename'];
+                //存数据库存这个
+                dstPath['path'+i] = './files/' + inputFile['originalFilename'];
+                var renamePath = './public/files/' + inputFile['originalFilename'];
                 //重命名为真实文件名
-                fs.rename(uploadedPath, dstPath['path'+i], function(err) {
+                fs.rename(uploadedPath, renamePath, function(err) {
                     if(err){
                         console.log('rename error: ' + err);
                     } else {

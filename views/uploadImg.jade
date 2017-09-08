@@ -82,11 +82,11 @@ block content
                           .controls
                               .upload-container.upImgs
                                 a(href='#{path0}')
-                                  img.upImg(src="#{path0 ? '.'+path0 : '/images/addBg.png' }")
+                                  img.upImg(src="#{path0 ? path0 : '/images/addBg.png' }")
                               .upload-container.upImgs
-                                img.upImg(src="#{path1 ? '.'+path1 : '/images/addBg.png' }")
+                                img.upImg(src="#{path1 ? path1 : '/images/addBg.png' }")
                               .upload-container.upImgs
-                                img.upImg(src="#{path2 ? '.'+path2 : '/images/addBg.png' }")
+                                img.upImg(src="#{path2 ? path2 : '/images/addBg.png' }")
                               .upload-container
                                 .upTex
                                   span.upIcon
