@@ -12,7 +12,7 @@ var mongoose = require('mongoose');
 var strategy= require('./routes/strategy');
 var page= require('./routes/page');
 var upload = require('./routes/upload')
-// var proList = require('./routes/proList')
+var proList = require('./routes/proList')
 var mongodb=require('mongodb');
 
 var app = express();
@@ -35,7 +35,7 @@ app.use(cookieParser());
 // app.use(express.session({ secret: "OZhCLfxlGp9TtzSXmJtq" }));
 app.use(express.static(path.join(__dirname, 'public')))
 app.use('/manage',strategy)
-// app.use('/manage',proList)
+app.use('/manage',proList)
 app.use('/',page)
 app.use('/',upload)
 

@@ -81,11 +81,12 @@ block content
                           label.control-label(for="j_imgfile") 商品图片
                           .controls
                               .upload-container.upImgs
-                                img.upImg(src="#{path0 ? '.'+path0 : '/images/addBg.png' }")
+                                a(href='#{path0}')
+                                  img.upImg(src="#{path0 ? '.'+path0 : '/images/addBg.png' }")
                               .upload-container.upImgs
-                                img.upImg(src='../public/files/1f6d79787933353131ff53.jpg')
+                                img.upImg(src="#{path1 ? '.'+path1 : '/images/addBg.png' }")
                               .upload-container.upImgs
-                                img.upImg(src='/images/addBg.png')
+                                img.upImg(src="#{path2 ? '.'+path2 : '/images/addBg.png' }")
                               .upload-container
                                 .upTex
                                   span.upIcon

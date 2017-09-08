@@ -11,10 +11,6 @@ var StrategyContent = require('./../dao/StrategyContent.js');
 toStrategyEdit=function(req,res){
     res.render('strategyEdit', {});
 }
-toProList = function(req,res){
-    res.render('proList')
-}
-
 
 // 查询所有
 findStrategy = function(req, res) {
@@ -193,7 +189,5 @@ router.post('/strategyForm/',save);
 router.get('/strategydel/', del);
 //策略配置修改
 router.get('/strategyeedit/',edit);
-//列表页
-router.get('/proList',toProList);
 
 module.exports = router
