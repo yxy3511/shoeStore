@@ -117,10 +117,12 @@ section {
 	color:#fff
 }
 .navbar-default .nav li a:hover,.navbar-default .nav li a:focus {
-	color: #fed136;
+	color: #fed136 !important;
 	outline: 0
 }
-
+.navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:focus, .navbar-default .navbar-nav>.open>a:hover{
+    background-color: transparent;
+}
 .navbar-default .navbar-nav>.active>a {
 	border-radius: 0;
 	color: #fff;
@@ -980,8 +982,24 @@ ol.carousel-indicators{
 .upBtns .cancelBtn{
     background-color: #a7a9aa !important;
     opacity: 0.8;
+    border: none;
+    outline: none;
+    color: #fff;
+}
+.upBtns .subBtn:hover,.upBtns .subBtn:active,.upBtns .subBtn:focus{
+    background-color: #357ebd !important;
+    border-color: #357ebd ;
+    outline: none;
+
 }
 .upBtns .cancelBtn:hover,.upBtns .cancelBtn:active,.upBtns .cancelBtn:focus{
     // background-color: #9a9c9d;
     opacity: 1;
+    outline: none;
+}
+
+.upload input.span66,
+.upload textarea.span66,
+.upload .uneditable-input.span66 {
+  width: 422px;
 }

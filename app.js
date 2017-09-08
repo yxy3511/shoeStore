@@ -33,7 +33,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 // app.use(express.session({ secret: "OZhCLfxlGp9TtzSXmJtq" }));
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public')))
 app.use('/manage',strategy)
 // app.use('/manage',proList)
 app.use('/',page)

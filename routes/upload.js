@@ -6,26 +6,27 @@ var fs = require('fs');
 
 /* 上传页面 */
 router.get('/uploadImg', function(req, res, next) {
-  res.render('uploadImg', { title: 'Express' });
+    res.render('uploadImg', { title: 'Express' });
 });
 
 /* 上传*/
 router.post('/uploading', function(req, res, next){
     //生成multiparty对象，并配置上传目标路径
     var form = new multiparty.Form({uploadDir: './public/files/'});
-    //上传完成后处理
+    //上传完成后处理 
     form.parse(req, function(err, fields, files) {
-        var filesTmp = JSON.stringify(files,null,2);    
+        var filesTmp = JSON.stringify(files,null,2);   
+        var dstPath = {} 
         if(err){
             console.log('parse error: ' + err);
-        } else {
+        } else if(filesTmp){
             console.log('parse files: ' + filesTmp);
-            for(var i=0;i<files.length;i++){
-                var inputFile = files.inputFile[0];
+            for(var i in files.inputFile){
+                var inputFile = files.inputFile[i];
                 var uploadedPath = inputFile.path;
-                var dstPath = './public/files/' + inputFile.originalFilename;
+                dstPath['path'+i] = './public/files/' + inputFile.originalFilename;
                 //重命名为真实文件名
-                fs.rename(uploadedPath, dstPath, function(err) {
+                fs.rename(uploadedPath, dstPath['path'+i], function(err) {
                     if(err){
                         console.log('rename error: ' + err);
                     } else {
@@ -35,7 +36,8 @@ router.post('/uploading', function(req, res, next){
             }
             
         }
-        // console.log(dstPath)
+        console.log('dstpath',dstPath)
+        res.render('uploadImg', dstPath);
         // res.writeHead(200, {'content-type': 'text/plain;charset=utf-8'});
         // res.write('received upload:\n\n');
         // res.end(util.inspect({fields: fields, files: filesTmp}));   
@@ -43,5 +45,7 @@ router.post('/uploading', function(req, res, next){
 
     });
 });
+
  
+
 module.exports = router;

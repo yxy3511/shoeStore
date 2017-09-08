@@ -1,25 +1,27 @@
-.add-on,
-select,
-textarea,
-input[type="text"],
-input[type="password"],
-input[type="datetime"],
-input[type="datetime-local"],
-input[type="date"],
-input[type="month"],
-input[type="time"],
-input[type="week"],
-input[type="number"],
-input[type="email"],
-input[type="url"],
-input[type="search"],
-input[type="tel"],
-input[type="color"],
-input[type="file"],
-.uneditable-input {
+.upload .add-on,
+.upload select,
+.upload textarea,
+.upload input[type="text"],
+.upload input[type="password"],
+.upload input[type="datetime"],
+.upload input[type="datetime-local"],
+.upload input[type="date"],
+.upload input[type="month"],
+.upload input[type="time"],
+.upload input[type="week"],
+.upload input[type="number"],
+.upload input[type="email"],
+.upload input[type="url"],
+.upload input[type="search"],
+.upload input[type="tel"],
+.upload input[type="color"],
+.upload input[type="file"],
+.upload .uneditable-input {
   border-color: #eee !important;	
   display: inline-block;
-  height: 20px;
+  // height: 20px;
+  height: 32px;
+  border-radius: 3px;
   padding: 4px 6px;
   margin-bottom: 10px;
   font-size: 14px;
@@ -31,32 +33,32 @@ input[type="file"],
           border-radius: 0px;
 }
 
-input,
-textarea,
-.uneditable-input {
+.upload input,
+.upload textarea,
+.upload .uneditable-input {
   width: 206px;
 }
 
-textarea {
+.upload textarea {
   height: auto;
 }
 
-textarea,
-input[type="text"],
-input[type="password"],
-input[type="datetime"],
-input[type="datetime-local"],
-input[type="date"],
-input[type="month"],
-input[type="time"],
-input[type="week"],
-input[type="number"],
-input[type="email"],
-input[type="url"],
-input[type="search"],
-input[type="tel"],
-input[type="color"],
-.uneditable-input {
+.upload textarea,
+.upload input[type="text"],
+.upload input[type="password"],
+.upload input[type="datetime"],
+.upload input[type="datetime-local"],
+.upload input[type="date"],
+.upload input[type="month"],
+.upload input[type="time"],
+.upload input[type="week"],
+.upload input[type="number"],
+.upload input[type="email"],
+.upload input[type="search"],
+.upload input[type="url"],
+.upload input[type="tel"],
+.upload input[type="color"],
+.upload .uneditable-input {
   background-color: #ffffff;
   border: 1px solid #cccccc;
   -webkit-box-shadow: none;
@@ -68,22 +70,22 @@ input[type="color"],
           transition: border linear 0.2s, box-shadow linear 0.2s;
 }
 
-textarea:focus,
-input[type="text"]:focus,
-input[type="password"]:focus,
-input[type="datetime"]:focus,
-input[type="datetime-local"]:focus,
-input[type="date"]:focus,
-input[type="month"]:focus,
-input[type="time"]:focus,
-input[type="week"]:focus,
-input[type="number"]:focus,
-input[type="email"]:focus,
-input[type="url"]:focus,
-input[type="search"]:focus,
-input[type="tel"]:focus,
-input[type="color"]:focus,
-.uneditable-input:focus {
+.upload textarea:focus,
+.upload input[type="text"]:focus,
+.upload input[type="password"]:focus,
+.upload input[type="datetime"]:focus,
+.upload input[type="datetime-local"]:focus,
+.upload input[type="date"]:focus,
+.upload input[type="month"]:focus,
+.upload input[type="time"]:focus,
+.upload input[type="week"]:focus,
+.upload input[type="number"]:focus,
+.upload input[type="email"]:focus,
+.upload input[type="url"]:focus,
+.upload input[type="search"]:focus,
+.upload input[type="tel"]:focus,
+.upload input[type="color"]:focus,
+.upload .uneditable-input:focus {
   border-color: rgba(82, 168, 236, 0.8);
   outline: 0;
   outline: thin dotted \9;
@@ -94,26 +96,26 @@ input[type="color"]:focus,
           box-shadow: none;
 }
 
-input[type="radio"],
-input[type="checkbox"] {
+.upload input[type="radio"],
+.upload input[type="checkbox"] {
   margin: 4px 0 0;
   margin-top: 1px \9;
   *margin-top: 0;
   line-height: normal;
 }
 
-input[type="file"],
-input[type="image"],
-input[type="submit"],
-input[type="reset"],
-input[type="button"],
-input[type="radio"],
-input[type="checkbox"] {
+.upload input[type="file"],
+.upload input[type="image"],
+.upload input[type="submit"],
+.upload input[type="reset"],
+.upload input[type="button"],
+.upload input[type="radio"],
+.upload input[type="checkbox"] {
   width: auto;
 }
 
-select,
-input[type="file"] {
+.upload select,
+.upload input[type="file"] {
   height: 30px;
   /* In IE7, the height of the select element cannot be changed by height, only font-size */
 
@@ -123,28 +125,28 @@ input[type="file"] {
   line-height: 30px;
 }
 
-select {
+.upload select {
   width: 220px;
   background-color: #ffffff;
   border: 1px solid #cccccc;
 }
 
-select[multiple],
-select[size] {
+.upload select[multiple],
+.upload select[size] {
   height: auto;
 }
 
-select:focus,
-input[type="file"]:focus,
-input[type="radio"]:focus,
-input[type="checkbox"]:focus {
+.upload select:focus,
+.upload input[type="file"]:focus,
+.upload input[type="radio"]:focus,
+.upload input[type="checkbox"]:focus {
   outline: thin dotted #333;
   outline: 5px auto -webkit-focus-ring-color;
   outline-offset: -2px;
 }
 
-.uneditable-input,
-.uneditable-textarea {
+.upload .uneditable-input,
+.upload .uneditable-textarea {
   color: #999999;
   cursor: not-allowed;
   background-color: #fcfcfc;
@@ -154,165 +156,165 @@ input[type="checkbox"]:focus {
           box-shadow: none;
 }
 
-.uneditable-input {
+.upload .uneditable-input {
   overflow: hidden;
   white-space: nowrap;
 }
 
-.uneditable-textarea {
+.upload .uneditable-textarea {
   width: auto;
   height: auto;
 }
 
-input:-moz-placeholder,
-textarea:-moz-placeholder {
+.upload input:-moz-placeholder,
+.upload textarea:-moz-placeholder {
   color: #999999;
 }
 
-input:-ms-input-placeholder,
-textarea:-ms-input-placeholder {
+.upload input:-ms-input-placeholder,
+.upload textarea:-ms-input-placeholder {
   color: #999999;
 }
 
-input::-webkit-input-placeholder,
-textarea::-webkit-input-placeholder {
+.upload input::-webkit-input-placeholder,
+.upload textarea::-webkit-input-placeholder {
   color: #999999;
 }
 
-.radio,
-.checkbox {
+.upload .radio,
+.upload .checkbox {
   min-height: 20px;
   padding-left: 20px;
 }
 
-.radio input[type="radio"],
-.checkbox input[type="checkbox"] {
+.upload .radio input[type="radio"],
+.upload .checkbox input[type="checkbox"] {
   float: left;
   margin-left: -20px;
 }
 
-.controls > .radio:first-child,
-.controls > .checkbox:first-child {
+.upload .controls > .radio:first-child,
+.upload .controls > .checkbox:first-child {
   padding-top: 5px;
 }
 
-.radio.inline,
-.checkbox.inline {
+.upload .radio.inline,
+.upload .checkbox.inline {
   display: inline-block;
   padding-top: 5px;
   margin-bottom: 0;
   vertical-align: middle;
 }
 
-.radio.inline + .radio.inline,
-.checkbox.inline + .checkbox.inline {
+.upload .radio.inline + .radio.inline,
+.upload .checkbox.inline + .checkbox.inline {
   margin-left: 10px;
 }
 
-.input-mini {
+.upload .input-mini {
   width: 60px;
 }
 
-.input-small {
+.upload .input-small {
   width: 90px;
 }
 
-.input-medium {
+.upload .input-medium {
   width: 150px;
 }
 
-.input-large {
+.upload .input-large {
   width: 210px;
 }
 
-.input-xlarge {
+.upload .input-xlarge {
   width: 270px;
 }
 
-.input-xxlarge {
+.upload .input-xxlarge {
   width: 530px;
 }
 
-input[class*="span"],
-select[class*="span"],
-textarea[class*="span"],
-.uneditable-input[class*="span"],
-.row-fluid input[class*="span"],
-.row-fluid select[class*="span"],
-.row-fluid textarea[class*="span"],
-.row-fluid .uneditable-input[class*="span"] {
+.upload input[class*="span"],
+.upload select[class*="span"],
+.upload textarea[class*="span"],
+.upload .uneditable-input[class*="span"],
+.upload .row-fluid input[class*="span"],
+.upload .row-fluid select[class*="span"],
+.upload .row-fluid textarea[class*="span"],
+.upload .row-fluid .uneditable-input[class*="span"] {
   float: none;
   margin-left: 0;
 }
 
-.input-append input[class*="span"],
-.input-append .uneditable-input[class*="span"],
-.input-prepend input[class*="span"],
-.input-prepend .uneditable-input[class*="span"],
-.row-fluid input[class*="span"],
-.row-fluid select[class*="span"],
-.row-fluid textarea[class*="span"],
-.row-fluid .uneditable-input[class*="span"],
-.row-fluid .input-prepend [class*="span"],
-.row-fluid .input-append [class*="span"] {
+.upload .input-append input[class*="span"],
+.upload .input-append .uneditable-input[class*="span"],
+.upload .input-prepend input[class*="span"],
+.upload .input-prepend .uneditable-input[class*="span"],
+.upload .row-fluid input[class*="span"],
+.upload .row-fluid select[class*="span"],
+.upload .row-fluid textarea[class*="span"],
+.upload .row-fluid .uneditable-input[class*="span"],
+.upload .row-fluid .input-prepend [class*="span"],
+.upload .row-fluid .input-append [class*="span"] {
   display: inline-block;
 }
 
-input,
-textarea,
-.uneditable-input {
+.upload input,
+.upload textarea,
+.upload .uneditable-input {
   margin-left: 0;
 }
 
-.controls-row [class*="span"] + [class*="span"] {
+.upload .controls-row [class*="span"] + [class*="span"] {
   margin-left: 20px;
 }
 
-input.span12,
-textarea.span12,
-.uneditable-input.span12 {
+.upload input.span12,
+.upload textarea.span12,
+.upload .uneditable-input.span12 {
   width: 926px;
 }
 
-input.span11,
-textarea.span11,
-.uneditable-input.span11 {
+.upload input.span11,
+.upload textarea.span11,
+.upload .uneditable-input.span11 {
   width: 846px;
 }
 
-input.span10,
-textarea.span10,
-.uneditable-input.span10 {
+.upload input.span10,
+.upload textarea.span10,
+.upload .uneditable-input.span10 {
   width: 766px;
 }
 
-input.span9,
-textarea.span9,
-.uneditable-input.span9 {
+.upload input.span9,
+.upload textarea.span9,
+.upload .uneditable-input.span9 {
   width: 686px;
 }
 
-input.span8,
-textarea.span8,
-.uneditable-input.span8 {
+.upload input.span8,
+.upload textarea.span8,
+.upload .uneditable-input.span8 {
   width: 606px;
 }
 
-input.span7,
-textarea.span7,
-.uneditable-input.span7 {
+.upload input.span7,
+.upload textarea.span7,
+.upload .uneditable-input.span7 {
   width: 526px;
 }
 
-input.span6,
-textarea.span6,
-.uneditable-input.span6 {
+.upload input.span6,
+.upload textarea.span6,
+.upload .uneditable-input.span6 {
   width: 446px;
 }
 
-input.span5,
-textarea.span5,
-.uneditable-input.span5 {
+.upload input.span5,
+.upload textarea.span5,
+.upload .uneditable-input.span5 {
   width: 366px;
 }
 
