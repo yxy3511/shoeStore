@@ -14,4 +14,10 @@ $(function(){
             $('.searchIcon').show(); 
         });
     })
+
+    //回车搜索
+    $('#inputKey').on('keypress',function(event){
+        if(event.keyCode == 13){
+        }   
+    })
 })  

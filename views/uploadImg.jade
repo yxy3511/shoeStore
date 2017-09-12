@@ -35,7 +35,7 @@ block content
                     //-         button.searchClose
                     //-           span.glyphicon.glyphicon-remove              
                   .box-content.upload
-                    form.form-horizontal(method='post', action='/uploading', enctype='multipart/form-data')
+                    form.form-horizontal(name='picForm' ,method='post', action='/uploading', enctype='multipart/form-data')
                       fieldset
                         //- .control-group
                         //-   label.control-label(for="typeahead") Auto complete 
@@ -49,21 +49,27 @@ block content
                           label.control-label(for="typeahead") 商品名称
                           |                               
                           .controls
-                            input#typeahead.span4.typeahead(type="text")
+                            input#typeahead.span4.typeahead(type="text" value="#{pname ? pname : '' }")
                             |                               
                             p.help-block Start typing to activate auto complete!
                         |  
                         .control-group
-                          label.control-label(for="typeahead") 商品价格
+                          label.control-label(for="price") 商品价格
                           |                               
                           .controls
-                            input.span4.typeahead(type="number")
+                            input#price.span4.typeahead(type="number" value="#{price ? price : '' }")
                         |   
                         .control-group
-                          label.control-label(for="typeahead") 商品分类
+                          label.control-label(for="psort") 商品分类
                           |                               
                           .controls
-                            input.span4.typeahead(type="text")
+                            input#psort.span4.typeahead(type="text" value="#{sort ? sort : '' }")
+                        |   
+                        .control-group
+                          label.control-label(for="pstate") 商品状态
+                          |                               
+                          .controls
+                            input#pstate.span4.typeahead(type="text" value="#{state ? state : '' }")
                         |                             
                         //- .control-group
                         //-   label.control-label(for="date01") Date input
@@ -76,30 +82,43 @@ block content
                         //-   |                               
                         //-   .controls
                         //-     input#fileInput.input-file.uniform_on(type="file")
-                        |                           
+                        //- |                           
+                        //- .control-group
+                        //-   label.control-label(for="j_imgfile") 商品图片
+                        //-   .controls
+                        //-       .upload-container.upImgs
+                        //-         a(href='#{path0}')
+                        //-           img.upImg(src="#{path0 ? path0 : '/images/addBg.png' }")
+                        //-       .upload-container.upImgs
+                        //-         img.upImg(src="#{path1 ? path1 : '/images/addBg.png' }")
+                        //-       .upload-container.upImgs
+                        //-         img.upImg(src="#{path2 ? path2 : '/images/addBg.png' }")
+                        //-       .upload-container
+                        //-         .upTex
+                        //-           span.upIcon
+                        //-               i.fa.fa-plus
+                        //-           span 点击上传
+                        //-         input(name='inputFile',id='j_imgfile', type='file', multiple='mutiple',class="fileupload")
+                        |          
                         .control-group
                           label.control-label(for="j_imgfile") 商品图片
                           .controls
-                              .upload-container.upImgs
-                                a(href='#{path0}')
-                                  img.upImg(src="#{path0 ? path0 : '/images/addBg.png' }")
-                              .upload-container.upImgs
-                                img.upImg(src="#{path1 ? path1 : '/images/addBg.png' }")
-                              .upload-container.upImgs
-                                img.upImg(src="#{path2 ? path2 : '/images/addBg.png' }")
+                              -for(var i in imgs)
+                                .upload-container.upImgs
+                                  a(id='aaa' ,href='#{imgs[i]}')
+                                    img.upImg(src="#{imgs[i] ? imgs[i] : '/images/addBg.png' }")
                               .upload-container
                                 .upTex
                                   span.upIcon
                                       i.fa.fa-plus
                                   span 点击上传
                                 input(name='inputFile',id='j_imgfile', type='file', multiple='mutiple',class="fileupload")
-                        |           
                         |                           
                         .control-group.hidden-phone
                           label.control-label(for="textarea") 商品描述
                           |                               
                           .controls
-                            textarea#textarea.span66(class='cleditor' rows='8') #{path0 ? '.'+path0 : 'ha'}
+                            textarea#textarea.span66(class='cleditor' rows='8') #{desc ? '.'+desc : ''}
                         |                           
                         .form-actions.upBtns
                           button.btn.btn-primary.subBtn(type="submit") Save changes

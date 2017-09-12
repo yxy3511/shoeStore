@@ -13,7 +13,7 @@ var strategy= require('./routes/strategy');
 var page= require('./routes/page');
 var upload = require('./routes/upload')
 var proList = require('./routes/proList')
-var mongodb=require('mongodb');
+// var mongodb=require('mongodb');
 
 var app = express();
 
@@ -87,7 +87,7 @@ app.use(function(err, req, res, next) {
 });
 
 // connect to the database
-mongoose.connect('mongodb://localhost/data_collect');
+// mongoose.connect('mongodb://localhost/data_collect');
 app.set('port', 3000);
 var server = app.listen(app.get('port'), function () {
     console.log('Express server listening on port ' + app.get('port'));
