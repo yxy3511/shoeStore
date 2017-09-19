@@ -21,28 +21,13 @@ $(function(){
         $('#searchInput').hide('slow','linear');
         $('#searchIcon').show();
     })*/
-
-    // 循环轮播到上一个项目
-    $(".glyphicon-chevron-left").click(function(){
-        $("#carousel-example-generic").carousel('prev');
-    });
-    // 循环轮播到下一个项目
-    $(".glyphicon-chevron-right").click(function(){
-        $("#carousel-example-generic").carousel('next');
-    });
-    // 循环轮播到某个特定的帧 
-    $(".slide-one").click(function(){
-        $("#carousel-example-generic").carousel(0);
-    });
-    $(".slide-two").click(function(){
-        $("#carousel-example-generic").carousel(1);
-    });
-    $(".slide-three").click(function(){
-        $("#carousel-example-generic").carousel(2);
-    });
-    //暂停轮播
-    $('#carousel').hover(function(){
-        $("#carousel-example-generic").carousel('pause');
+    //回车搜索
+    $('#searchIn').on('keypress',function(event){
+        if(event.keyCode == 13){
+            var keyVal = $('#searchIn').val();
+            window.location = '/searchPro?key='+keyVal
+        }   
     })
+
 })
 

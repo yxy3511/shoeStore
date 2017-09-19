@@ -3,5 +3,9 @@ extends layout
 block content
   section.content
     h1= message
-    h2= error.status
-    pre #{error.stack}
+    h2= status
+    pre #{errMsg}
+    -if(error != null)
+        pre #{error}
+  script.
+    console.log('#{status}')

@@ -29,7 +29,7 @@
 		$('#aboutUs').removeClass('active');
 		$('#products').removeClass('active');
 	} 
-	
+	// window.location = '/getSorts'
 
 });
  

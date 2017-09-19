@@ -16,9 +16,13 @@ var query=require("./mysql.js");
  *
  *获取商品列表
  */
-exports.getProList = function(callback){
+exports.getProList = function(key,callback){
     // var searchSql = sql ? ' select * from products where '+sql : ' select * from products';
     var searchSql = 'select * from products' ;
+    if(key == 'sort'){
+        searchSql = 'select sort,group_concat(pname),group_concat(price) from products group by sort'
+    }
+    
     query(searchSql,callback)
 }
 
@@ -27,22 +31,12 @@ exports.getProList = function(callback){
 *查找商品
 */
 exports.searchPro = function(key,callback){
-    var searchSql = null;
-    var searchSql2 = null;
     var sql = null;
     if(parseInt(key)){
-        if(parseInt(key)>2){
-            sql = 'select * from products where price = ' + key;
-        }else{
-            searchSql = 'select * from products where price = ' + key;
-            searchSql2 = 'select * from products where state = ' + key;
-            // sql = searvhSql union searchSql2;
-        }
+        sql = 'select * from products where price = ' + parseInt(key) + " or state = "+ parseInt(key) + " or pname like '%"+key+"%' or desc_txt like '%"+key+"%'";
         
     }else{
-        searchSql = "select * from products where pname = '" + key +"'";
-        searchSql2 = "select * from products where desc = '" + key +"'";
-        // sql = searvhSql union searchSql2;
+        sql = "select * from products where pname like '%" + key +"%' or desc_txt like '%"+key+"%'";
     }
     
     query(sql,callback)
@@ -54,8 +48,8 @@ exports.searchPro = function(key,callback){
 *删除商品
 */
 
-exports.delPro = function(key){
-    var searchSql = 'DELETE FROM products WHERE id =' + key;
+exports.delPro = function(key,callback){
+    var searchSql = 'DELETE FROM products WHERE pid =' + key;
     query(searchSql,callback)
 }
 
@@ -64,9 +58,19 @@ exports.delPro = function(key){
 *增加商品
 */
 
-exports.addPro = function(param){
-    var searchSql = "insert into products(pname,price,state,desc,update,imgs) values('"+param.pname+"',"+param.price+","+param.state+",'"+param.desc+"',CURDATE(),"+param.imgs+")"
-    query(searchSql,callback)
+exports.addPro = function(param,callback){
+    var searchSql = ''
+    if(param.pname && param.price && param.state && param.desc && param.imgs && param.sort){
+        searchSql = "insert into products(pname,price,state,desc_txt,up_date,imgs,sort) values('"+param.pname+"',"+param.price+","+param.state+",'"+param.desc+"',CURDATE(),'"+param.imgs+"',"+param.sort+");"
+    }else if(param.pname && param.price && param.desc && param.imgs && param.state){
+        searchSql = "insert into products(pname,price,desc_txt,up_date,imgs,state) values('"+param.pname+"',"+param.price+",'"+param.desc+"',CURDATE(),'"+param.imgs+"',"+param.state+");"
+    }else if(param.pname && param.price && param.desc && param.imgs && param.sort){
+        searchSql = "insert into products(pname,price,desc_txt,up_date,imgs,sort) values('"+param.pname+"',"+param.price+",'"+param.desc+"',CURDATE(),'"+param.imgs+"',"+param.sort+");"
+    }
+    if(searchSql != ''){
+        query(searchSql,callback)
+    }
+    
 }
 
 /**
@@ -74,7 +78,42 @@ exports.addPro = function(param){
 *修改商品
 */
 
-exports.editPro = function(id,param){
-    var searchSql = "update products set pname='"+param.pname+"',price="+param.price+",state="+param.state+",desc='"+param.desc+"',update=CURDATE(),imgs="+param.imgs+" where pid="+id;
+exports.editPro = function(id,param,callback){
+    // var searchSql = "update products set pname='"+param.pname+"',price="+param.price+",state="+param.state+",desc='"+param.desc+"',update=CURDATE(),imgs="+param.imgs+" where pid="+id+";";
+    var searchSql = ''
+    if(param.pname && param.price && param.state && param.desc && param.imgs && param.sort){
+        searchSql = "update products set pname='"+param.pname+"', price = "+param.price+", state="+param.state+", desc_txt='"+param.desc+"', up_date=CURDATE(), imgs='"+param.imgs+"', sort="+param.sort+" where pid="+id;
+        // searchSql = "update products set pname='"+param.pname+"',price="+param.price+",state="+param.state+",desc='"+param.desc+"',update=CURDATE(),imgs="+param.imgs+" where pid="+id+";";
+    }else if(param.pname && param.price && param.desc && param.imgs && param.state){
+        searchSql = "update products set pname='"+param.pname+"', price = "+param.price+", state="+param.state+", desc_txt='"+param.desc+"', up_date=CURDATE(), imgs='"+param.imgs+"' where pid="+id;
+    }else if(param.pname && param.price && param.desc && param.imgs && param.sort){
+        searchSql = "update products set pname='"+param.pname+"', price = "+param.price+", desc_txt='"+param.desc+"', up_date=CURDATE(), imgs='"+param.imgs+"', sort=1 where pid="+id;
+    }
+    query(searchSql,callback)
+}
+
+/**
+*
+*获得商品
+*/
+
+exports.descPro = function(id,callback){
+    var searchSql = "select * from products where pid = " + id;
+    query(searchSql,callback)
+}
+
+/**
+*
+*获得商品总类
+*/
+
+exports.getSorts = function(key,callback){
+    var searchSql = null
+    if(key && key == 'all'){
+        searchSql = "select * from sorts"
+    }else{
+        searchSql = "select name from sorts"
+    }
+   
     query(searchSql,callback)
 }

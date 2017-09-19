@@ -15,8 +15,9 @@ block content
                     | 
                     .theadbox
                       .ops
-                        span.addIcon.icons
-                          i.glyphicon.glyphicon-plus
+                        a(href='/uploadImg')
+                          span.addIcon.icons
+                            i.glyphicon.glyphicon-plus
                         span.searchIcon.icons
                           i.glyphicon.glyphicon-search
                       .searchForm
@@ -31,8 +32,10 @@ block content
                       //- |                             
                       //- a.btn-close(href="#")
                       //-   i.halflings-icon.white.remove
-                  |                     
+                  |          
                   .box-content.prolist
+                    .logoutDiv 
+                      | 退出
                     table.table.table-striped.table-bordered.bootstrap-datatable.datatable
                       thead
                         tr
@@ -53,150 +56,170 @@ block content
                           th 操作
                       |    
                       tbody
-                        tr
-                          td 1
-                          |                                 
-                          td.center Gym shoes
-                          |                                 
-                          td.center Member
-                          |                                 
-                          td.center $666.00
-                          |                                 
-                          td.center beautiful
-                          |                                 
-                          td.center
-                            span.label.label-success 充足
-                          |                                 
-                          td.center 2012/01/01
-                          |                                 
-                          td.center
-                            a.btn.btn-success(href="#")
-                              i.halflings-icon.white.zoom-in
-                            |                                   
-                            a.btn.btn-info(href="#")
-                              i.halflings-icon.white.edit
-                            |                                   
-                            a.btn.btn-danger(href="#")
-                              i.halflings-icon.white.trash
-                        |                           
-                        tr
-                          td 2
-                          |                                 
-                          td.center leather shoes
-                          |                                 
-                          td.center Member
-                          |                                 
-                          td.center $666.00
-                          |                                 
-                          td.center beautiful
-                          |                                 
-                          td.center
-                            span.label.label-warning 较少
-                          |                                 
-                          td.center 2012/01/01
-                          |                                 
-                          td.center
-                            a.btn.btn-success(href="#")
-                              i.halflings-icon.white.zoom-in
-                            |                                   
-                            a.btn.btn-info(href="#")
-                              i.halflings-icon.white.edit
-                            |                                   
-                            a.btn.btn-danger(href="#")
-                              i.halflings-icon.white.trash
-                        |                           
-                        tr
-                          td 3
-                          |                                 
-                          td.center Gym shoes
-                          |                                 
-                          td.center Member
-                          |                                 
-                          td.center $666.00
-                          |                                 
-                          td.center beautiful
-                          |                                 
-                          td.center
-                            span.label.label-success 充足
-                          |                                 
-                          td.center 2012/01/01
-                          |                                 
-                          td.center
-                            a.btn.btn-success(href="#")
-                              i.halflings-icon.white.zoom-in
-                            |                                   
-                            a.btn.btn-info(href="#")
-                              i.halflings-icon.white.edit
-                            |                                   
-                            a.btn.btn-danger(href="#")
-                              i.halflings-icon.white.trash
-                        |                           
-                        tr
-                          td 4
-                          |                                 
-                          td.center leather shoes
-                          |                                 
-                          td.center Member
-                          |                                 
-                          td.center $666.00
-                          |                                 
-                          td.center beautiful
-                          |                                 
-                          td.center
-                            span.label.label-warning 较少
-                          |                                 
-                          td.center 2012/01/01
-                          |                                 
-                          td.center
-                            a.btn.btn-success(href="#")
-                              i.halflings-icon.white.zoom-in
-                            |                                   
-                            a.btn.btn-info(href="#")
-                              i.halflings-icon.white.edit
-                            |                                   
-                            a.btn.btn-danger(href="#")
-                              i.halflings-icon.white.trash
-                        |                           
-                        tr
-                          td 5
-                          |                                 
-                          td.center Gym shoes
-                          |                                 
-                          td.center Staff
-                          |                                 
-                          td.center $666.00
-                          |                                 
-                          td.center beautiful
-                          |                                 
-                          td.center
-                            span.label.label-important 缺货
-                          |                                 
-                          td.center 2012/01/01
-                          |                                 
-                          td.center
-                            a.btn.btn-success(href="#")
-                              i.halflings-icon.white.zoom-in
-                            |                                   
-                            a.btn.btn-info(href="#")
-                              i.halflings-icon.white.edit
-                            |                                   
-                            a.btn.btn-danger(href="#")
-                              i.halflings-icon.white.trash
-              .row-fluid
-                div(style='text-align:center')
-                    - if(pageCount==1)
-                        ul.pagination
-                            -var suffix = search ? ('search='+search):'';
-                            li
-                                a(href='/strategQuery?#{suffix}') &laquo;
-                                -for(var i=1; i<=pageCount; i++)
-                                    if(index == i)
-                                        li.active
-                                            span #{i}
-                                    -else
-                                        li
-                                            a(href='/strategQuery?index=#{i}&size=#{size}&#{suffix}') #{i}
-                            li
-                                a(href='/strategQuery?index=#{pageCount}&size=#{size}&#{suffix}') &raquo
+                        -for(var i in JSON.parse(vals))
+                          -var curId = parseInt(i)+1;
+                          tr 
+                            td #{curId}
+                            |                                 
+                            td.center #{JSON.parse(sorts)[JSON.parse(vals)[i].sort]}
+                            |                                 
+                            td.center #{JSON.parse(vals)[i].pname}
+                            |                                 
+                            td.center ￥#{JSON.parse(vals)[i].price.toFixed(2) }
+                            |                                 
+                            td.center.overHid #{JSON.parse(vals)[i].desc_txt}
+                            |                                 
+                            td.center
+                              case JSON.parse(vals)[i].state
+                                when 1
+                                  span.label.label-success 销 售
+                                  //- span.label.label-success #{JSON.parse(vals)[i].state}
+                                when 2
+                                  //- span.label.label-warning #{JSON.parse(vals)[i].state}
+                                  span.label.label-warning 待 售
+                                when 3
+                                  //- span.label.label-important #{JSON.parse(vals)[i].state}
+                                  span.label.label-important 停 售
+                            |                                 
+                            td.center #{JSON.parse(vals)[i].up_date.substring(0,10)}
+                            |                                 
+                            td.center
+                              a.btn.btn-success(href="/manage/descPro/#{JSON.parse(vals)[i].pid}")
+                                i.halflings-icon.white.zoom-in
+                              |                                   
+                              a.btn.btn-info(href="/manage/editPro/#{JSON.parse(vals)[i].pid}")
+                                i.halflings-icon.white.edit
+                              |                                   
+                              a.btn.btn-danger(href="/manage/delPro/#{JSON.parse(vals)[i].pid}")
+                                i.halflings-icon.white.trash
+                        //- |                           
+                        //- tr
+                        //-   td 2
+                        //-   |                                 
+                        //-   td.center leather shoes
+                        //-   |                                 
+                        //-   td.center Member
+                        //-   |                                 
+                        //-   td.center $666.00
+                        //-   |                                 
+                        //-   td.center beautiful
+                        //-   |                                 
+                        //-   td.center
+                        //-     span.label.label-warning 较少
+                        //-   |                                 
+                        //-   td.center 2012/01/01
+                        //-   |                                 
+                        //-   td.center
+                        //-     a.btn.btn-success(href="#")
+                        //-       i.halflings-icon.white.zoom-in
+                        //-     |                                   
+                        //-     a.btn.btn-info(href="#")
+                        //-       i.halflings-icon.white.edit
+                        //-     |                                   
+                        //-     a.btn.btn-danger(href="#")
+                        //-       i.halflings-icon.white.trash
+                        //- |                           
+                        //- tr
+                        //-   td 3
+                        //-   |                                 
+                        //-   td.center Gym shoes
+                        //-   |                                 
+                        //-   td.center Member
+                        //-   |                                 
+                        //-   td.center $666.00
+                        //-   |                                 
+                        //-   td.center beautiful
+                        //-   |                                 
+                        //-   td.center
+                        //-     span.label.label-success 充足
+                        //-   |                                 
+                        //-   td.center 2012/01/01
+                        //-   |                                 
+                        //-   td.center
+                        //-     a.btn.btn-success(href="#")
+                        //-       i.halflings-icon.white.zoom-in
+                        //-     |                                   
+                        //-     a.btn.btn-info(href="#")
+                        //-       i.halflings-icon.white.edit
+                        //-     |                                   
+                        //-     a.btn.btn-danger(href="#")
+                        //-       i.halflings-icon.white.trash
+                        //- |                           
+                        //- tr
+                        //-   td 4
+                        //-   |                                 
+                        //-   td.center leather shoes
+                        //-   |                                 
+                        //-   td.center Member
+                        //-   |                                 
+                        //-   td.center $666.00
+                        //-   |                                 
+                        //-   td.center beautiful
+                        //-   |                                 
+                        //-   td.center
+                        //-     span.label.label-warning 较少
+                        //-   |                                 
+                        //-   td.center 2012/01/01
+                        //-   |                                 
+                        //-   td.center
+                        //-     a.btn.btn-success(href="#")
+                        //-       i.halflings-icon.white.zoom-in
+                        //-     |                                   
+                        //-     a.btn.btn-info(href="#")
+                        //-       i.halflings-icon.white.edit
+                        //-     |                                   
+                        //-     a.btn.btn-danger(href="#")
+                        //-       i.halflings-icon.white.trash
+                        //- |                           
+                        //- tr
+                        //-   td 5
+                        //-   |                                 
+                        //-   td.center Gym shoes
+                        //-   |                                 
+                        //-   td.center Staff
+                        //-   |                                 
+                        //-   td.center $666.00
+                        //-   |                                 
+                        //-   td.center beautiful
+                        //-   |                                 
+                        //-   td.center
+                        //-     span.label.label-important 缺货
+                        //-   |                                 
+                        //-   td.center 2012/01/01
+                        //-   |                                 
+                        //-   td.center
+                        //-     a.btn.btn-success(href="#")
+                        //-       i.halflings-icon.white.zoom-in
+                        //-     |                                   
+                        //-     a.btn.btn-info(href="#")
+                        //-       i.halflings-icon.white.edit
+                        //-     |                                   
+                        //-     a.btn.btn-danger(href="#")
+                        //-       i.halflings-icon.white.trash
 
+              //- .row-fluid
+              //-   div(style='text-align:center')
+              //-       - if(pageCount>1)
+              //-           ul.pagination
+              //-               -var suffix = search ? ('search='+search):'';
+              //-               li
+              //-                   a(href='/strategQuery?#{suffix}') &laquo;
+              //-                   -for(var i=1; i<=pageCount; i++)
+              //-                       if(index == i)
+              //-                           li.active
+              //-                               span #{i}
+              //-                       -else
+              //-                           li
+              //-                               a(href='/strategQuery?index=#{i}&size=#{size}&#{suffix}') #{i}
+              //-               li
+              //-                   a(href='/strategQuery?index=#{pageCount}&size=#{size}&#{suffix}') &raquo
+    script.
+      if('#{msg}' != '')
+        alert('#{msg}')
+      console.log('valssss:',!{vals}[0].up_date)
+      console.log('length:',!{vals}[0].up_date.length)
+      //- for(var i in !{sorts})
+      //-   console.log('iiiiii:',i)
+      //-   console.log('iiiiii:',!{vals}[i].pid)
+      //- console.log('pageCount:',#{pageCount})
     script(type='text/javascript', src='/conm/proList.js')

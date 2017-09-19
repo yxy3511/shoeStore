@@ -4,15 +4,12 @@ var multiparty = require('multiparty');
 var util = require('util');
 var fs = require('fs');
 
-/* 上传页面 */
-router.get('/uploadImg', function(req, res, next) {
-    res.render('uploadImg');    
-});
-
-var images = []
+global.imagesArr = []
 /* 上传*/
 router.post('/uploading', function(req, res, next){
-    images = []
+    console.log('enter')
+    //写这没有2,1-2问题
+    var images = []
     //生成multiparty对象，并配置上传目标路径
     var form = new multiparty.Form({uploadDir: './public/files/'});
     //上传完成后处理 
@@ -25,17 +22,16 @@ router.post('/uploading', function(req, res, next){
         }else if(images){
             for(var i in images){
                 var filesTmp = JSON.stringify(images[i],null,2); 
-                console.log('filesTmp:',filesTmp)  
                 for(var j in images[i]['inputFile']){
-                    console.log('j:',j)
-                    var index =  parseInt(j)+imgArr.length 
+                    // var index =  parseInt(j)+imgArr.length
+                    var index =  j
                     var inputFile = images[i]['inputFile'][j];
                     var uploadedPath = inputFile['path'];
                     if(inputFile['size'] == 0){
                         continue;
                     }
                     //存数据库存这个 
-                    imgArr[index] = './files/' + inputFile['originalFilename'];
+                    imgArr[index] = '/files/' + inputFile['originalFilename'];
                     var renamePath = './public/files/' + inputFile['originalFilename'];
                     //重命名为真实文件名
                     fs.rename(uploadedPath, renamePath, function(err) {
@@ -51,6 +47,7 @@ router.post('/uploading', function(req, res, next){
             }
             
         }
+        global.imagesArr.push(imgArr)
         dstPath.imgs = imgArr;
         //方法1
         //格式必须为 binary 否则会出错
@@ -73,12 +70,26 @@ router.post('/uploading', function(req, res, next){
             });
         }*/
         //方法3
-        console.log('enter')
+        var cnt = 0;
+        var all = {}
+        for(var l in global.imagesArr){
+            for(var z in global.imagesArr[l]){
+                all[cnt] = global.imagesArr[l][z]
+                cnt += 1
+            }
+        }
+        dstPath.len = cnt;
+        dstPath.allImgs = JSON.stringify(all);
         // res.render('uploadImg',dstPath)
         res.send(dstPath)
+        // res.end();
     });
 });
 
- 
+
+/* 上传页面 */
+router.get('/uploadImg', function(req, res, next) {
+    res.render('uploadImg');    
+});
 
 module.exports = router;
