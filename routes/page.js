@@ -82,7 +82,7 @@ toContact=function(req,res){
 }
 getSorts = function(req,res){
     try{
-        proListContent.getSorts(function(err,vals){
+        proListContent.getSorts('name',function(err,vals){
             if(err){
                 console.log(err)
             }else{
@@ -101,68 +101,66 @@ getSorts = function(req,res){
 
 searchPro = function(req,res,next){
     try{
-        var key = req.query.key 
-        if(key != null){
-            proListContent.searchPro(key,function(err,vals){
-                if(err){
-                    console.log(err)
-                }else if(vals.length > 0){
-                    var resArr = {}
-                    for(var i in vals){
-                        resArr[i] = vals[i]
-                    }
-                    //获取sorts
-                    proListContent.getSorts('all',function(e,val){
-                        if(e){
-                            console.log(e)
-                        }else{
-                            var sortArr = {}
-                            for(var j in val){
-                                sortArr[val[j].id] = val[j].name
-                            }
-                             res.render('products',{
-                                vals: JSON.stringify(resArr),
-                                sorts: JSON.stringify(sortArr)
-                            })
-                            // res.render('tbodyPro',vals[0])
-                        }
-                    })
-                   
-                }else{
-                    // res.redirect('/manage/proList')
-                    proListContent.getProList(function(err,vals){
-                        if(err){
-                            console.log(err)
-                        }else{
-                            var resArr = {}
-                            for(var i in vals){
-                                resArr[i] = vals[i]
-                            }
-
-                            if(vals.length > 0){
-                                //获取sorts
-                                proListContent.getSorts('all',function(e,val){
-                                    if(e){
-                                        console.log(e)
-                                    }else{
-                                        var sortArr = {}
-                                        for(var j in val){
-                                            sortArr[val[j].id] = val[j].name
-                                        }
-                                        res.render('products',{
-                                            vals: JSON.stringify(resArr),
-                                            sorts: JSON.stringify(sortArr),
-                                            msg:'查询无结果！'
-                                        })
-                                    }
-                                })
-                                
-                            }
-                        }
-                    })
+        var key = req.query.key
+        proListContent.searchPro(key,function(err,vals){
+            if(err){
+                console.log(err)
+            }else if(vals.length > 0){
+                var resArr = {}
+                for(var i in vals){
+                    resArr[i] = vals[i]
                 }
-            })
-        }
+                //获取sorts
+                proListContent.getSorts('all',function(e,val){
+                    if(e){
+                        console.log(e)
+                    }else{
+                        var sortArr = {}
+                        for(var j in val){
+                            sortArr[val[j].id] = val[j].name
+                        }
+                         res.render('products',{
+                            vals: JSON.stringify(resArr),
+                            sorts: JSON.stringify(sortArr)
+                        })
+                        // res.render('tbodyPro',vals[0])
+                    }
+                })
+               
+            }else{
+                // res.redirect('/manage/proList')
+                proListContent.getProList(0,function(err,vals){
+                    if(err){
+                        console.log(err)
+                    }else{
+                        var resArr = {}
+                        for(var i in vals){
+                            resArr[i] = vals[i]
+                        }
+
+                        if(vals.length > 0){
+                            //获取sorts
+                            proListContent.getSorts('all',function(e,val){
+                                if(e){
+                                    console.log(e)
+                                }else{
+                                    var sortArr = {}
+                                    for(var j in val){
+                                        sortArr[val[j].id] = val[j].name
+                                    }
+                                    res.render('products',{
+                                        vals: JSON.stringify(resArr),
+                                        sorts: JSON.stringify(sortArr),
+                                        msg:'查询无结果！'
+                                    })
+                                }
+                            })
+                            
+                        }
+                    }
+                })
+            }
+        })
         
     }catch(e){
         console.log(e)

@@ -1054,3 +1054,15 @@ ol.carousel-indicators{
 .logo:hover{
     color: #fff !important;
 }
+
+/* -------------页脚------------------ */
+footer h3{
+    color:#fff;
+}
+footer .QRImg{
+    max-width:150px;
+    max-height:150px;
+}
+footer .copy{
+    margin-top:20px;
+}

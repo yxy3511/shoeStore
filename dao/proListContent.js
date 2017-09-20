@@ -42,7 +42,7 @@ exports.getProList = function(key,callback){
 */
 exports.searchPro = function(key,callback){
     var sql = null;
-    if(parseInt(key)){
+    if(key && parseInt(key)){
         sql = 'select * from products where price = ' + parseInt(key) + " or state = "+ parseInt(key) + " or pname like '%"+key+"%' or desc_txt like '%"+key+"%' order by up_date desc";
         
     }else{

@@ -19,7 +19,7 @@ block content
                 button.bnt
                   span.glyphicon.glyphicon-remove
         -for(var i in JSON.parse(vals))
-          -console.log(JSON.parse(JSON.parse(vals)[i].imgs)[0])
+          // -console.log(JSON.parse(JSON.parse(vals)[i].imgs)[0])
           -var curId = parseInt(i); 
           -if(curId % 3 == 0)           
             .row
@@ -169,5 +169,7 @@ block content
         //-           p Higher, faster, stronger
         //-           | 
   script.
-    console.log(JSON.parse(!{vals}[0].imgs))
+    //- console.log(JSON.parse(!{vals}[0].imgs))
+    if('#{msg}' != '')
+        alert('#{msg}')    
   script(type='text/javascript', src="/conm/products.js")

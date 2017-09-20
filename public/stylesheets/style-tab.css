@@ -3101,7 +3101,9 @@ ul.messagesList li span.date {
 	white-space: nowrap;
 	text-overflow: ellipsis;
 }
-
+.noInfo{
+	text-align: center;
+}
 /* ------------------退出块--------------------------- */
 .logoutDiv,.addDiv{
 	background-color: #fff;

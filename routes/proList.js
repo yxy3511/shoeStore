@@ -204,17 +204,16 @@ searchPro = function(req,res,next){
                             for(var j in val){
                                 sortArr[val[j].id] = val[j].name
                             }
-                             res.render('proList',{
+                            res.render('proList',{
                                 vals: JSON.stringify(resArr),
                                 sorts: JSON.stringify(sortArr)
                             })
-                            // res.render('tbodyPro',vals[0])
                         }
                     })
                    
                 }else{
                     // res.redirect('/manage/proList')
-                    proListContent.getProList('all',function(err,vals){
+                    proListContent.getProList(0,function(err,vals){
                         if(err){
                             console.log(err)
                         }else{
@@ -272,6 +271,16 @@ searchPro = function(req,res,next){
 delImg = function(req,res,next){
     var imgId = parseInt(req.params.mid)
     var cnt = 0;
+    /*var all = {}
+    for(var l in global.imagesArr){
+        for(var z in global.imagesArr[l]){
+            all[cnt] = global.imagesArr[l][z]
+            cnt += 1
+        }
+    }
+    console.log('before:',all)
+    console.log('mid:',imgId)
+    delete all[imgId];*/
     var imgs = {}
     for(var l in global.imagesArr){
         for(var z in global.imagesArr[l]){
@@ -279,6 +288,8 @@ delImg = function(req,res,next){
             cnt += 1
         }
     }
+    console.log('before:',imgs)
+    console.log('mid:',imgId)
     delete imgs[imgId];
     var all = {}
     var index = 0 
@@ -288,7 +299,6 @@ delImg = function(req,res,next){
     }
     global.imagesArr = [];
     global.imagesArr.push(all)
-    console.log(imgId)
     res.send({vals:JSON.stringify(global.imagesArr)})
 }
 
