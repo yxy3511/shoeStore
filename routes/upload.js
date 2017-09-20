@@ -3,11 +3,12 @@ var router = express.Router();
 var multiparty = require('multiparty');
 var util = require('util');
 var fs = require('fs');
+var proListContent = require('./../dao/proListContent.js');
 
 global.imagesArr = []
 /* 上传*/
 router.post('/uploading', function(req, res, next){
-    console.log('enter')
+    // global.imagesArr = []
     //写这没有2,1-2问题
     var images = []
     //生成multiparty对象，并配置上传目标路径
@@ -89,7 +90,27 @@ router.post('/uploading', function(req, res, next){
 
 /* 上传页面 */
 router.get('/uploadImg', function(req, res, next) {
-    res.render('uploadImg');    
+    try{
+        //获取类型
+        proListContent.getSorts('all',function(err,vals){
+            if(err){
+                console.log(err)
+            }else{
+                var sortArr = {}
+                for(var j in vals){
+                    sortArr[vals[j].id] = vals[j].name
+                }
+                //获取状态
+                res.render('uploadImg',{
+                    sorts: JSON.stringify(sortArr)
+                }); 
+            }
+        })
+
+    }catch(e){
+        console.log(e)
+    }
+       
 });
 
 module.exports = router;

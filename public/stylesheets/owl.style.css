@@ -32,7 +32,7 @@ h6 {
     color: #232323;
 }
 
-p {
+p,pre {
     font-family: 'Roboto', sans-serif;
     font-size: 15px;
     font-weight: 300;
@@ -40,9 +40,14 @@ p {
     letter-spacing: 0.2px;
     color: #797979;
 }
-
+/* -------商品详情 pre-------------------*/
+pre{
+    border: none;
+    margin: 0;
+    padding: 0;
+}
 a:hover, a:focus, a:active, a.active {
-    color: #fec503;
+    color: #fec503 !important;
 }
 
 a, a:hover, a:focus, a:active, a.active {
@@ -949,6 +954,7 @@ ol.carousel-indicators{
     width:100%;
 }
 /* -------------上传图片--------------- */
+/* 删除按钮见style-tab */
 .upload-container {
     display: inline-block;
     border: 1px dashed #a7a9aa;
@@ -956,7 +962,7 @@ ol.carousel-indicators{
     // background-repeat: no-repeat;
     width: 100px;
     height: 100px;
-    margin-left: 5px;
+    // margin-left: 5px;
     // display: inline-block;
     vertical-align: middle;  
 }
@@ -968,6 +974,9 @@ ol.carousel-indicators{
     height: 100%;
     margin: 0px;
     padding: 0px;
+}
+.upBox{
+    margin-left: 30px;
 }
 .upTex{
     display: inline-block;

@@ -20,8 +20,8 @@ var app = express();
 app.use(cookieParser('yxy3511'));
 app.use(session({
     secrect: 'yxy3511',
-    resave: false,  // 新增
-    saveUninitialized: false // 新增
+    resave: false, 
+    saveUninitialized: false 
 }));
 
 
@@ -41,11 +41,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')))
 
 app.use('/manage/?',function(req, res, next) {
-    console.log('sssseession:',req.session)
-    console.log('originalUrl:',req.originalUrl)
     var url = req.originalUrl;
-    console.log('res:',url.indexOf('/manage/descPro'))
-    if (url.indexOf('/manage/descPro') == -1 && !req.session.isLogged) {
+    // if (url.indexOf('/manage/descPro') == -1 && !req.session.isLogged) {
+    if (!req.session.isLogged) {
         // return res.redirect("/login");
         return res.render('login',{msg:'请先登录！'})
     }else{

@@ -9,21 +9,30 @@ block content
                 .box.span12
                   .box-header(data-original-title="")
                     h2
-                      i.halflings-icon.white.user
+                      button.muser
+                        i.halflings-icon.white.user
+                        .logoutDiv 
+                          | 退出
                       span.break
-                      | Members
+                      | 商品管理
                     | 
                     .theadbox
                       .ops
-                        a(href='/uploadImg')
+                        //- a(href='/uploadImg')
+                        span.manageAdd
                           span.addIcon.icons
                             i.glyphicon.glyphicon-plus
+                            .addDiv 
+                              p 
+                                a(href='/uploadImg') 添加商品
+                              p 管理用户
+                              p 管理分类
                         span.searchIcon.icons
                           i.glyphicon.glyphicon-search
                       .searchForm
                         .input-group.searchGroup(style='display:none;')
                           input#inputKey.form-control.searchInput(name="key", autocomplete="on", type="text", placeholder="输入关键字")
-                          span.input-group-addon.searchAddon
+                          span.input-group-addon.searchAddon.delSearch
                             button.searchClose
                               span.glyphicon.glyphicon-remove
                       //- |                             
@@ -34,8 +43,6 @@ block content
                       //-   i.halflings-icon.white.remove
                   |          
                   .box-content.prolist
-                    .logoutDiv 
-                      | 退出
                     table.table.table-striped.table-bordered.bootstrap-datatable.datatable
                       thead
                         tr
@@ -216,8 +223,8 @@ block content
     script.
       if('#{msg}' != '')
         alert('#{msg}')
-      console.log('valssss:',!{vals}[0].up_date)
-      console.log('length:',!{vals}[0].up_date.length)
+      //- console.log('valssss:',!{vals}[0].up_date)
+      //- console.log('length:',!{vals}[0].up_date.length)
       //- for(var i in !{sorts})
       //-   console.log('iiiiii:',i)
       //-   console.log('iiiiii:',!{vals}[i].pid)

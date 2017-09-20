@@ -14,18 +14,12 @@ $(function(){
             $('#searchIcon').show(); 
             $('#searchInput').css('visibility','hidden');
         });
-        // $('#searchIcon').show();
     })
-    /*$(document).dblclick(function(){
-        $('#searchInput').css('visibility','hidden') 
-        $('#searchInput').hide('slow','linear');
-        $('#searchIcon').show();
-    })*/
     //回车搜索
     $('#searchIn').on('keypress',function(event){
         if(event.keyCode == 13){
             var keyVal = $('#searchIn').val();
-            window.location = '/searchPro?key='+keyVal
+            window.location = '/proSearch?key='+keyVal
         }   
     })
 

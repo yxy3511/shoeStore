@@ -37,12 +37,10 @@ registering = function(req,res){
                 });
             }else if(vals.length > 0){
                 //用户名已被使用
-                console.log('vals.length:',vals.length)
                 res.render('register',{
                     msg:'此用户名已被注册！'
                 });
             }else if(vals.length == 0){
-                console.log('rows:',vals.length)
                 loginContent.addUser(params,function(err,vals){
                     if(err){
                         console.log(err)
@@ -56,14 +54,6 @@ registering = function(req,res){
 
         })
 
-        /*loginContent.addUser(params,function(err,res){
-            if(err){
-                console.log(err)
-            }else if(res.affectedRows > 0){
-                res.render('login')
-            }
-
-        })*/
     }catch(e){
         console.log(e)
     }

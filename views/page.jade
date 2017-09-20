@@ -153,87 +153,101 @@ block content
           .col-lg-12.text-center
             .section-title
               h2
-                a(href="/products") Products
+                a(href="/products/0") Products
               | 						
               p
                 | There is no perfection in the world, but we are always pursuing perfection.
-        | 			
-        .row
+        | 		
+        -for(var i in JSON.parse(vals))
+          -var curId = parseInt(i); 
+          -if(curId % 3 == 0)           
+            .row
           // start portfolio item
-          a.col-md-4(href="/products")
+          a.col-md-4(href="/proDesc/#{JSON.parse(vals)[i].pid}")
             .ot-portfolio-item
               figure.effect-bubba
-                img.img-responsive(src="images/demo/portfolio-1.jpg", alt="img02")
-                | 							
+                img.img-responsive(src="#{JSON.parse(JSON.parse(vals)[i].imgs)[0] ? JSON.parse(JSON.parse(vals)[i].imgs)[0] : 'images/demo/portfolio-2.jpg'}")
+                |               
                 figcaption
-                  h2 Leather Shoes
-                  | 								
-                  p Leather manufacturing
-          // end portfolio item
-          // start portfolio item
-          .col-md-4
-            .ot-portfolio-item
-              figure.effect-bubba
-                img.img-responsive(src="images/demo/portfolio-2.jpg", alt="img02")
-                | 							
-                figcaption
-                  h2 Gym Shoes
-                  | 								
-                  p Exercise more fun
-                  | 								
-          // end portfolio item
-          // start portfolio item
-          .col-md-4
-            .ot-portfolio-item
-              figure.effect-bubba
-                img.img-responsive(src="images/demo/portfolio-3.jpg", alt="img02")
-                | 							
-                figcaption
-                  h2 Crocs & Beach Shoes
-                  | 								
-                  p Enjoy yourself more
-                  | 								
-          // end portfolio item
-        | 			
-        .row
-          // start portfolio item
-          .col-md-4
-            .ot-portfolio-item
-              figure.effect-bubba
-                img.img-responsive(src="images/demo/portfolio-4.jpg", alt="img02")
-                | 							
-                figcaption
-                  h2 Sandals
-                  | 								
-                  p Cool summer
-                  | 								
-          // end portfolio item
-          // start portfolio item
-          .col-md-4
-            .ot-portfolio-item
-              figure.effect-bubba
-                img.img-responsive(src="images/demo/portfolio-5.jpg", alt="img02")
-                | 							
-                figcaption
-                  h2 High-heeled Shoes
-                  | 								
-                  p Beautiful summer
-                  | 								
-          // end portfolio item
-          // start portfolio item
-          .col-md-4
-            .ot-portfolio-item
-              figure.effect-bubba
-                img.img-responsive(src="images/demo/portfolio-2.jpg", alt="img02")
-                | 							
-                figcaption
-                  h2 Running shoes
-                  | 								
-                  p Higher, faster, stronger
-                  | 								
-          // end portfolio item
-      // end container
-    |         
+                  h2 #{JSON.parse(vals)[i].pname}
+                  |                 
+                  p.descTxt #{JSON.parse(vals)[i].desc_txt}	
+    //-     .row
+    //-       // start portfolio item
+    //-       a.col-md-4(href="/products/0")
+    //-         .ot-portfolio-item
+    //-           figure.effect-bubba
+    //-             img.img-responsive(src="images/demo/portfolio-1.jpg", alt="img02")
+    //-             | 							
+    //-             figcaption
+    //-               h2 Leather Shoes
+    //-               | 								
+    //-               p Leather manufacturing
+    //-       // end portfolio item
+    //-       // start portfolio item
+    //-       .col-md-4
+    //-         .ot-portfolio-item
+    //-           figure.effect-bubba
+    //-             img.img-responsive(src="images/demo/portfolio-2.jpg", alt="img02")
+    //-             | 							
+    //-             figcaption
+    //-               h2 Gym Shoes
+    //-               | 								
+    //-               p Exercise more fun
+    //-               | 								
+    //-       // end portfolio item
+    //-       // start portfolio item
+    //-       .col-md-4
+    //-         .ot-portfolio-item
+    //-           figure.effect-bubba
+    //-             img.img-responsive(src="images/demo/portfolio-3.jpg", alt="img02")
+    //-             | 							
+    //-             figcaption
+    //-               h2 Crocs & Beach Shoes
+    //-               | 								
+    //-               p Enjoy yourself more
+    //-               | 								
+    //-       // end portfolio item
+    //-     | 			
+    //-     .row
+    //-       // start portfolio item
+    //-       .col-md-4
+    //-         .ot-portfolio-item
+    //-           figure.effect-bubba
+    //-             img.img-responsive(src="images/demo/portfolio-4.jpg", alt="img02")
+    //-             | 							
+    //-             figcaption
+    //-               h2 Sandals
+    //-               | 								
+    //-               p Cool summer
+    //-               | 								
+    //-       // end portfolio item
+    //-       // start portfolio item
+    //-       .col-md-4
+    //-         .ot-portfolio-item
+    //-           figure.effect-bubba
+    //-             img.img-responsive(src="images/demo/portfolio-5.jpg", alt="img02")
+    //-             | 							
+    //-             figcaption
+    //-               h2 High-heeled Shoes
+    //-               | 								
+    //-               p Beautiful summer
+    //-               | 								
+    //-       // end portfolio item
+    //-       // start portfolio item
+    //-       .col-md-4
+    //-         .ot-portfolio-item
+    //-           figure.effect-bubba
+    //-             img.img-responsive(src="images/demo/portfolio-2.jpg", alt="img02")
+    //-             | 							
+    //-             figcaption
+    //-               h2 Running shoes
+    //-               | 								
+    //-               p Higher, faster, stronger
+    //-               | 								
+    //-       // end portfolio item
+    //-   // end container
+    //- |         
     //- section
     //-   .container
     //-     .row

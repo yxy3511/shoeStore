@@ -14,15 +14,25 @@ var query=require("./mysql.js");
 
 /**
  *
+ *首页获取商品
+ */
+exports.getPros= function(key,callback){
+    var searchSql = "select * from products order by up_date desc LIMIT "+key;
+    query(searchSql,callback)
+}
+
+/**
+ *
  *获取商品列表
  */
 exports.getProList = function(key,callback){
     // var searchSql = sql ? ' select * from products where '+sql : ' select * from products';
-    var searchSql = 'select * from products' ;
-    if(key == 'sort'){
-        searchSql = 'select sort,group_concat(pname),group_concat(price) from products group by sort'
+    var searchSql = null
+    if(key == 0){
+        searchSql = 'select * from products order by up_date desc' ;
+    }else{
+        searchSql = "select * from products where sort = "+key+" order by up_date desc"
     }
-    
     query(searchSql,callback)
 }
 
@@ -33,10 +43,10 @@ exports.getProList = function(key,callback){
 exports.searchPro = function(key,callback){
     var sql = null;
     if(parseInt(key)){
-        sql = 'select * from products where price = ' + parseInt(key) + " or state = "+ parseInt(key) + " or pname like '%"+key+"%' or desc_txt like '%"+key+"%'";
+        sql = 'select * from products where price = ' + parseInt(key) + " or state = "+ parseInt(key) + " or pname like '%"+key+"%' or desc_txt like '%"+key+"%' order by up_date desc";
         
     }else{
-        sql = "select * from products where pname like '%" + key +"%' or desc_txt like '%"+key+"%'";
+        sql = "select * from products where pname like '%" + key +"%' or desc_txt like '%"+key+"%' order by up_date desc";
     }
     
     query(sql,callback)
@@ -61,11 +71,11 @@ exports.delPro = function(key,callback){
 exports.addPro = function(param,callback){
     var searchSql = ''
     if(param.pname && param.price && param.state && param.desc && param.imgs && param.sort){
-        searchSql = "insert into products(pname,price,state,desc_txt,up_date,imgs,sort) values('"+param.pname+"',"+param.price+","+param.state+",'"+param.desc+"',CURDATE(),'"+param.imgs+"',"+param.sort+");"
+        searchSql = "insert into products(pname,price,state,desc_txt,up_date,imgs,sort) values('"+param.pname+"',"+param.price+","+param.state+",'"+param.desc+"',now(),'"+param.imgs+"',"+param.sort+");"
     }else if(param.pname && param.price && param.desc && param.imgs && param.state){
-        searchSql = "insert into products(pname,price,desc_txt,up_date,imgs,state) values('"+param.pname+"',"+param.price+",'"+param.desc+"',CURDATE(),'"+param.imgs+"',"+param.state+");"
+        searchSql = "insert into products(pname,price,desc_txt,up_date,imgs,state) values('"+param.pname+"',"+param.price+",'"+param.desc+"',now(),'"+param.imgs+"',"+param.state+");"
     }else if(param.pname && param.price && param.desc && param.imgs && param.sort){
-        searchSql = "insert into products(pname,price,desc_txt,up_date,imgs,sort) values('"+param.pname+"',"+param.price+",'"+param.desc+"',CURDATE(),'"+param.imgs+"',"+param.sort+");"
+        searchSql = "insert into products(pname,price,desc_txt,up_date,imgs,sort) values('"+param.pname+"',"+param.price+",'"+param.desc+"',now(),'"+param.imgs+"',"+param.sort+");"
     }
     if(searchSql != ''){
         query(searchSql,callback)
@@ -82,12 +92,12 @@ exports.editPro = function(id,param,callback){
     // var searchSql = "update products set pname='"+param.pname+"',price="+param.price+",state="+param.state+",desc='"+param.desc+"',update=CURDATE(),imgs="+param.imgs+" where pid="+id+";";
     var searchSql = ''
     if(param.pname && param.price && param.state && param.desc && param.imgs && param.sort){
-        searchSql = "update products set pname='"+param.pname+"', price = "+param.price+", state="+param.state+", desc_txt='"+param.desc+"', up_date=CURDATE(), imgs='"+param.imgs+"', sort="+param.sort+" where pid="+id;
+        searchSql = "update products set pname='"+param.pname+"', price = "+param.price+", state="+param.state+", desc_txt='"+param.desc+"', up_date=now(), imgs='"+param.imgs+"', sort="+param.sort+" where pid="+id;
         // searchSql = "update products set pname='"+param.pname+"',price="+param.price+",state="+param.state+",desc='"+param.desc+"',update=CURDATE(),imgs="+param.imgs+" where pid="+id+";";
     }else if(param.pname && param.price && param.desc && param.imgs && param.state){
-        searchSql = "update products set pname='"+param.pname+"', price = "+param.price+", state="+param.state+", desc_txt='"+param.desc+"', up_date=CURDATE(), imgs='"+param.imgs+"' where pid="+id;
+        searchSql = "update products set pname='"+param.pname+"', price = "+param.price+", state="+param.state+", desc_txt='"+param.desc+"', up_date=now(), imgs='"+param.imgs+"' where pid="+id;
     }else if(param.pname && param.price && param.desc && param.imgs && param.sort){
-        searchSql = "update products set pname='"+param.pname+"', price = "+param.price+", desc_txt='"+param.desc+"', up_date=CURDATE(), imgs='"+param.imgs+"', sort=1 where pid="+id;
+        searchSql = "update products set pname='"+param.pname+"', price = "+param.price+", desc_txt='"+param.desc+"', up_date=now(), imgs='"+param.imgs+"', sort=1 where pid="+id;
     }
     query(searchSql,callback)
 }

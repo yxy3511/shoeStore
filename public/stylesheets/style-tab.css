@@ -835,7 +835,8 @@ h6 {
   	padding: 10px;
   	background: #578EBE;
     box-shadow: none;
-	overflow: hidden;
+	// overflow: hidden;
+	height: 55px;
 }
 
 .box-header h2{
@@ -856,25 +857,6 @@ h6 {
 	opacity: .8;
 	filter: alpha(opacity=80);
 	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
-	cursor: pointer;
-}
-/* ------------------退出块--------------------------- */
-.logoutDiv{
-	background-color: #fff;
-	color: #578EBE;
-	width: 90px;
-	height: 40px;
-	opacity: 0.9;
-	position: absolute;
-	top: -15px;
-	left: 20px;
-	border: 1px solid #eee;
-	text-align: center;
-	vertical-align: middle;
-	padding-top:7px;
-	visibility: hidden;
-}
-.logoutDiv:hover{
 	cursor: pointer;
 }
 
@@ -3061,11 +3043,14 @@ ul.messagesList li span.date {
     border-radius: 3px !important;
 }
 .searchAddon{
-    position: absolute;
-    left: 130px !important;
     z-index: 2 !important;
     background-color: transparent  !important;
     border: none !important;
+}
+/* --搜索框删除按钮-- */
+.searchAddon.delSearch{
+	position: absolute !important;
+    left: 130px !important;
 }
 .searchClose{
     background-color: transparent  !important;
@@ -3104,9 +3089,94 @@ ul.messagesList li span.date {
     display: inline-block;
 }
 /* ---------表格-------------- */
+.datatable{
+	// margin-top: -30px;
+	position: relative;
+	top: 0px;
+	left: 0px;
+}
 .overHid{
 	max-width:200px;
 	overflow: hidden;
 	white-space: nowrap;
 	text-overflow: ellipsis;
 }
+
+/* ------------------退出块--------------------------- */
+.logoutDiv,.addDiv{
+	background-color: #fff;
+	color: #578EBE;	
+	opacity: 0.9;
+	border: 1px solid #eee;
+	text-align: center;
+	vertical-align: middle;
+	visibility: hidden;
+	z-index: 60 !important;
+}
+.addDiv p a{
+	color: #578EBE;	
+}
+.addDiv p{
+	margin: 0px;
+	padding:0px;
+	background-color: #fff;
+	color: #578EBE;	
+	opacity: 1;
+	border-bottom: 1px #eee solid;
+	height: 35px;
+	line-height: 35px;
+}
+.addDiv{
+	// display: inline-block;
+	float:right;
+	position: absolute;
+	top: 30px;
+	left: -30px;
+	// padding-top:7px;
+	width: 90px;
+	// height: 90px;
+}
+.logoutDiv{
+	position: absolute;
+	top: 62px;
+	left: 45px;
+	// padding-top:7px;
+	width: 90px;
+	height: 35px;
+	line-height: 35px;
+}
+ .logoutDiv:hover{
+ 	color: #fed136;
+	// cursor: pointer;
+}
+ 
+
+/* ------------表格人像-------------- */
+h2 button.muser{
+	background: transparent;
+	border: none;
+}
+
+/* ----------上传图片-------------- */
+.input-group-addon.imgDelBtn{
+	width: 25px;
+    height: 25px;
+	display: inline-block !important;
+	position: relative;
+    top: -48px; 
+    left: 112px;
+    color: #eee;
+    background-color: #393939 !important;
+    border-radius: 50% !important;
+    opacity: 0.8;
+}
+.input-group-addon.imgDelBtn:hover{
+	opacity: 0.9;
+}
+
+ .input-group-addon.imgDelBtn button{
+	margin: 0px;
+	padding: 0px;
+	margin-left: -6px;
+	margin-top: -2px;
+} 

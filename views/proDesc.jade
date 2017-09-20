@@ -105,8 +105,7 @@ block content
               |               
               p  
                 | ￥#{price.toFixed(2) }
-                br
-                br
+              pre
                 | #{desc_txt}
 
       //- .row
@@ -121,6 +120,7 @@ block content
       //-     span.pagedown()
       //-       i.iconFont.icon-pagedown
       script.
+        console.log(!{imgs})
         for(var i in !{imgs})
           console.log(i)    
   script(type='text/javascript', src="/conm/proDesc.js")

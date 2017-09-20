@@ -9,91 +9,56 @@ var express = require('express');
 var router = express.Router();
 var proListContent = require('./../dao/proListContent.js');
  
-// toProListEdit=function(req,res){
-//     res.render('proListEdit', {});
-// }
 toProList = function(req,res){
     res.render('proList')
 }
 
 getProList = function(req,res,next){
     try{
-        proListContent.getProList(function(err,vals){
+        proListContent.getProList(0,function(err,vals){
             // console.log('valllll:',vals)
-            //頁數
-            var totalCount = vals.length
-            var pageLine = 10
-            var pageCount = -1
-            if(parseInt(totalCount/pageLine) == 0){
-                pageCount = 1
-            }else if(totalCount%pageLine > 0 && totalCount%pageLine < pageLine){
-                pageCount = parseInt(totalCount/pageLine) + 1
+            if(err){
+                console.log(err)
             }else{
-                pageCount = parseInt(totalCount/pageLine)
-            }
-            var resArr = {}
-            for(var i in vals){
-                // console.log('time:',typeof vals[i].up_date)
-                // vals[i].up_date = vals[i].up_date.pattern("yyyy-MM-dd")
-                // vals[i].up_date = new Date(vals[i].up_date).format("yyyy-MM-dd");
-                resArr[i] = vals[i]
-            }
-
-            if(vals.length > 0){
+                //頁數
+                var totalCount = vals.length
+                var pageLine = 10
+                var pageCount = -1
+                if(parseInt(totalCount/pageLine) == 0){
+                    pageCount = 1
+                }else if(totalCount%pageLine > 0 && totalCount%pageLine < pageLine){
+                    pageCount = parseInt(totalCount/pageLine) + 1
+                }else{
+                    pageCount = parseInt(totalCount/pageLine)
+                }
+                var resArr = {}
+                for(var i in vals){
+                    resArr[i] = vals[i]
+                }
                 //获取sorts
                 proListContent.getSorts('all',function(e,val){
-                    var sortArr = {}
-                    for(var j in val){
-                        sortArr[val[j].id] = val[j].name
+                    if(e){
+                        console.log(e)
+                    }else{
+                        var sortArr = {}
+                        for(var j in val){
+                            sortArr[val[j].id] = val[j].name
+                        }
+                        res.render('proList',{
+                        // res.render('tbodyPro',{
+                            vals: JSON.stringify(resArr),
+                            sorts: JSON.stringify(sortArr),
+                            pageCount: pageCount,
+                            totalCount: totalCount
+                        })
                     }
-                    res.render('proList',{
-                    // res.render('tbodyPro',{
-                        vals: JSON.stringify(resArr),
-                        sorts: JSON.stringify(sortArr),
-                        pageCount: pageCount,
-                        totalCount: totalCount
-                    })
+                    
                 })
+                    
                 
             }
+            
         })
-        /*//获取商品列表
-        var pname = req.query.pname || null
-        var price = req.query.price || null
-        var desc = req.query.desc || null
-        var sort = req.query.sort || null
-        // var state = req.query.state || null
-        // var imgs = req.query.imgs || null
-
-        var str = {};
-
-        pname ? (str.pname = pname) :  null
-        price ? (str.price = price) :  null
-        desc ? (str.desc = desc) :  null
-        sort ? (str.sort = sort) :  null
-        // state ? str.state = state :  null
-        // imgs ? str.imgs = imgs :  null
-        var cunt = 0;
-        var queryStr = '';
-        for(var i in str){
-            console.log('i '+i)
-            if(cunt == 0){
-                queryStr = '?' + i+'='+str.i
-            }else{
-                queryStr = queryStr + ',' + i + '=' + str.i
-            }
-        }
-        console.log('queryStr'+queryStr)
-        if(queryStr == ''){
-            proListContent.getProList(function(qerr,vals,fields){
-                res.render('proList',vals)
-            })
-        }else{
-            proListContent.searchPro(queryStr,function(qerr,vals,fields){
-                res.render('proList',vals)
-            })
-        }*/
-        
         
     }catch(e){
         console.log(e)
@@ -116,9 +81,10 @@ savePro = function(req,res,next){
         desc ? (params.desc = desc) : null
         imgs ? (params.imgs = imgs) : null
         sort ? (params.sort = sort) : null
+        global.imagesArr = []
         if(id == 0){
             proListContent.addPro(params,function(err,vals){
-                global.imagesArr = []
+                // global.imagesArr = []
                 if(err){
                     res.render('error',{
                         message: 'Error',
@@ -133,7 +99,7 @@ savePro = function(req,res,next){
             })
         }else{
             proListContent.editPro(id,params,function(err,vals){
-                global.imagesArr = []
+                // global.imagesArr = []
                 if(err){
                     console.log(err)
                 }else if(vals.affectedRows > 0){
@@ -184,13 +150,27 @@ descPro = function(req,res,next){
 editPro = function(req,res,next){
     try{
         var id = req.params.id || null
+        global.imagesArr = []
         if(id != null){
             proListContent.descPro(id,function(err,vals){
                 if(err){
                     console.log(err)
                 }else if(vals.length > 0){
-                    //vals是数组
-                    res.render("uploadImg",vals[0])
+                    //把图片取出来复制给global.imagesArr
+                    global.imagesArr.push(JSON.parse(vals[0].imgs));
+                    proListContent.getSorts('all',function(e,val){
+                        if(e){
+                            console.log(e)
+                        }else{
+                            var sortArr = {}
+                            for(var j in val){
+                                sortArr[val[j].id] = val[j].name
+                            }
+                            vals[0].sorts = JSON.stringify(sortArr)
+                            //vals是数组
+                            res.render("uploadImg",vals[0])
+                        }
+                    })
                 }
             })
             
@@ -217,55 +197,68 @@ searchPro = function(req,res,next){
                     }
                     //获取sorts
                     proListContent.getSorts('all',function(e,val){
-                        var sortArr = {}
-                        for(var j in val){
-                            sortArr[val[j].id] = val[j].name
+                        if(e){
+                            console.log(e)
+                        }else{
+                            var sortArr = {}
+                            for(var j in val){
+                                sortArr[val[j].id] = val[j].name
+                            }
+                             res.render('proList',{
+                                vals: JSON.stringify(resArr),
+                                sorts: JSON.stringify(sortArr)
+                            })
+                            // res.render('tbodyPro',vals[0])
                         }
-                         res.render('proList',{
-                            vals: JSON.stringify(resArr),
-                            sorts: JSON.stringify(sortArr)
-                        })
-                        // res.render('tbodyPro',vals[0])
                     })
                    
                 }else{
                     // res.redirect('/manage/proList')
-                    proListContent.getProList(function(err,vals){
-                        // console.log('valllll:',vals)
-                        //頁數
-                        var totalCount = vals.length
-                        var pageLine = 10
-                        var pageCount = -1
-                        if(parseInt(totalCount/pageLine) == 0){
-                            pageCount = 1
-                        }else if(totalCount%pageLine > 0 && totalCount%pageLine < pageLine){
-                            pageCount = parseInt(totalCount/pageLine) + 1
+                    proListContent.getProList('all',function(err,vals){
+                        if(err){
+                            console.log(err)
                         }else{
-                            pageCount = parseInt(totalCount/pageLine)
-                        }
-                        var resArr = {}
-                        for(var i in vals){
-                            resArr[i] = vals[i]
-                        }
+                            // console.log('valllll:',vals)
+                            //頁數
+                            var totalCount = vals.length
+                            var pageLine = 10
+                            var pageCount = -1
+                            if(parseInt(totalCount/pageLine) == 0){
+                                pageCount = 1
+                            }else if(totalCount%pageLine > 0 && totalCount%pageLine < pageLine){
+                                pageCount = parseInt(totalCount/pageLine) + 1
+                            }else{
+                                pageCount = parseInt(totalCount/pageLine)
+                            }
+                            var resArr = {}
+                            for(var i in vals){
+                                resArr[i] = vals[i]
+                            }
 
-                        if(vals.length > 0){
-                            //获取sorts
-                            proListContent.getSorts('all',function(e,val){
-                                var sortArr = {}
-                                for(var j in val){
-                                    sortArr[val[j].id] = val[j].name
-                                }
-                                res.render('proList',{
-                                // res.render('tbodyPro',{
-                                    vals: JSON.stringify(resArr),
-                                    sorts: JSON.stringify(sortArr),
-                                    pageCount: pageCount,
-                                    totalCount: totalCount,
-                                    msg:'查询无结果！'
+                            if(vals.length > 0){
+                                //获取sorts
+                                proListContent.getSorts('all',function(e,val){
+                                    if(e){
+                                        console.log(e)
+                                    }else{
+                                        var sortArr = {}
+                                        for(var j in val){
+                                            sortArr[val[j].id] = val[j].name
+                                        }
+                                        res.render('proList',{
+                                        // res.render('tbodyPro',{
+                                            vals: JSON.stringify(resArr),
+                                            sorts: JSON.stringify(sortArr),
+                                            pageCount: pageCount,
+                                            totalCount: totalCount,
+                                            msg:'查询无结果！'
+                                        })
+                                    }
                                 })
-                            })
-                            
+                                
+                            }
                         }
+                        
                     })
                 }
             })
@@ -276,6 +269,28 @@ searchPro = function(req,res,next){
     }
 }
 
+delImg = function(req,res,next){
+    var imgId = parseInt(req.params.mid)
+    var cnt = 0;
+    var imgs = {}
+    for(var l in global.imagesArr){
+        for(var z in global.imagesArr[l]){
+            imgs[cnt] = global.imagesArr[l][z]
+            cnt += 1
+        }
+    }
+    delete imgs[imgId];
+    var all = {}
+    var index = 0 
+    for(var i in imgs){
+        all[index] = imgs[i]
+        index += 1
+    }
+    global.imagesArr = [];
+    global.imagesArr.push(all)
+    console.log(imgId)
+    res.send({vals:JSON.stringify(global.imagesArr)})
+}
 
 router.get('/proList',getProList);
 router.get('/delPro/:id',delPro);
@@ -284,4 +299,5 @@ router.post('/savePro',savePro);
 router.get('/descPro/:id',descPro);
 router.get('/editPro/:id',editPro);
 router.get('/searchPro',searchPro);
+router.get('/delImg/:mid',delImg);
 module.exports = router

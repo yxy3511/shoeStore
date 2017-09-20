@@ -13,27 +13,49 @@ rePage=function(req,res){
 	res.redirect('/page');
 }
 toPage=function(req,res){
-    res.render('page');
+    try{
+        //获取商品前九个，按时间排
+        proListContent.getPros(9,function(err,vals){
+            if(err){
+                console.log(err)
+            }else{
+                if(vals.length > 0){
+                    var resArr = {}
+                    for(var i in vals){
+                        resArr[i] = vals[i]
+                    }
+                    if(vals.length > 0){
+                        res.render('page',{
+                            vals: JSON.stringify(resArr)
+                        })
+                    }
+                }
+            }
+        })
+    }catch(e){
+        console.log(e)
+    }
+    
 }
 toAbout=function(req,res){
 	res.render('aboutUs');
 }
 toProducts=function(req,res){
     try{
-        proListContent.getProList('sort',function(err,vals){
-            var resArr = {}
-            for(var i in vals){
-                /*---------------到这 分类查询----------------------*/
-                resArr[vals[i].sort] = {
-                    pname:vals[i]['group_concat(pname)']
+        var sid = req.params.sid ? parseInt(req.params.sid) : 0
+        proListContent.getProList(sid,function(err,vals){
+            if(err){
+                console.log(err)
+            }else{
+                var resArr = {}
+                for(var i in vals){
+                    resArr[i] = vals[i]
                 }
-            }
-            console.log('vvaaaalsssss:',vals)
-            console.log('JSON.stringify(resArr):',JSON.stringify(resArr))
-            if(vals.length > 0){
-                res.render('products',{
-                    vals: JSON.stringify(resArr)
-                })
+                if(vals.length > 0){
+                    res.render('products',{
+                        vals: JSON.stringify(resArr)
+                    })
+                }
             }
         }) 
     }catch(e){
@@ -41,7 +63,19 @@ toProducts=function(req,res){
     }                                                                                             
 }
 toProDesc=function(req,res){
-    res.render('proDesc',req.params.id);
+    try{
+        var id = req.params.id
+        proListContent.descPro(id,function(err,vals){
+            if(err){
+                console.log(err)
+            }else if(vals.length > 0){
+                //vals是数组
+                res.render("proDesc",vals[0])
+            }
+        })
+    }catch(e){
+        console.log(e)
+    }
 }
 toContact=function(req,res){
 	res.render('contact');
@@ -49,12 +83,15 @@ toContact=function(req,res){
 getSorts = function(req,res){
     try{
         proListContent.getSorts(function(err,vals){
-            console.log(vals)
-            var resArr = {}
-            for(var i in vals){
-                resArr[i] = vals[i]
+            if(err){
+                console.log(err)
+            }else{
+                var resArr = {}
+                for(var i in vals){
+                    resArr[i] = vals[i]
+                }
+                res.render('layout',{vals:JSON.stringify(resArr)})
             }
-            res.render('layout',{vals:JSON.stringify(resArr)})
         })
 
     }catch(e){
@@ -64,7 +101,7 @@ getSorts = function(req,res){
 
 searchPro = function(req,res,next){
     try{
-        var key = req.query.key
+        var key = req.query.key 
         if(key != null){
             proListContent.searchPro(key,function(err,vals){
                 if(err){
@@ -76,41 +113,51 @@ searchPro = function(req,res,next){
                     }
                     //获取sorts
                     proListContent.getSorts('all',function(e,val){
-                        var sortArr = {}
-                        for(var j in val){
-                            sortArr[val[j].id] = val[j].name
+                        if(e){
+                            console.log(e)
+                        }else{
+                            var sortArr = {}
+                            for(var j in val){
+                                sortArr[val[j].id] = val[j].name
+                            }
+                             res.render('products',{
+                                vals: JSON.stringify(resArr),
+                                sorts: JSON.stringify(sortArr)
+                            })
+                            // res.render('tbodyPro',vals[0])
                         }
-                         res.render('products',{
-                            vals: JSON.stringify(resArr),
-                            sorts: JSON.stringify(sortArr)
-                        })
-                        // res.render('tbodyPro',vals[0])
                     })
                    
                 }else{
                     // res.redirect('/manage/proList')
                     proListContent.getProList(function(err,vals){
-                        // console.log('valllll:',vals)
-                        var resArr = {}
-                        for(var i in vals){
-                            resArr[i] = vals[i]
-                        }
+                        if(err){
+                            console.log(err)
+                        }else{
+                            var resArr = {}
+                            for(var i in vals){
+                                resArr[i] = vals[i]
+                            }
 
-                        if(vals.length > 0){
-                            //获取sorts
-                            proListContent.getSorts('all',function(e,val){
-                                var sortArr = {}
-                                for(var j in val){
-                                    sortArr[val[j].id] = val[j].name
-                                }
-                                res.render('products',{
-                                // res.render('tbodyPro',{
-                                    vals: JSON.stringify(resArr),
-                                    sorts: JSON.stringify(sortArr),
-                                    msg:'查询无结果！'
+                            if(vals.length > 0){
+                                //获取sorts
+                                proListContent.getSorts('all',function(e,val){
+                                    if(e){
+                                        console.log(e)
+                                    }else{
+                                        var sortArr = {}
+                                        for(var j in val){
+                                            sortArr[val[j].id] = val[j].name
+                                        }
+                                        res.render('products',{
+                                            vals: JSON.stringify(resArr),
+                                            sorts: JSON.stringify(sortArr),
+                                            msg:'查询无结果！'
+                                        })
+                                    }
                                 })
-                            })
-                            
+                                
+                            }
                         }
                     })
                 }
@@ -121,13 +168,36 @@ searchPro = function(req,res,next){
         console.log(e)
     }
 }
+
+getSortsList = function(req,res,next){
+    try{
+        proListContent.getSorts('all',function(err,vals){
+            if(err){
+                console.log(err)
+            }else{
+                var resArr = {}
+                for(var i in vals){
+                    resArr[vals[i].id] = vals[i].name
+                }
+                var resObj = {}
+                res.send({vals:JSON.stringify(resArr)})
+                // res.render('layout',{vals:JSON.stringify(resArr)})
+            }
+        })
+
+    }catch(e){
+        console.log(e)
+    }
+}
+
 router.get('/',rePage);
 router.get('/page',toPage);
 router.get('/aboutUs',toAbout);
-router.get('/products',toProducts);
-// router.get('/proDesc/:id',toProDesc);
+router.get('/products/:sid',toProducts);
+router.get('/proDesc/:id',toProDesc);
 router.get('/contact',toContact);
 router.get('/getSorts',getSorts);
-router.get('/searchPro',searchPro);
+router.get('/proSearch',searchPro);
+router.get('/getSortsList',getSortsList);
 module.exports = router
 

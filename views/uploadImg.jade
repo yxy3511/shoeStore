@@ -68,7 +68,10 @@ block content
                             label.control-label(for="psort") 商品分类
                             |                               
                             .controls
-                              input#psort.span4.typeahead(type="number" name='sort' value="#{sort ? sort : '' }")
+                              select#psort.form-control(name='sort')
+                                -for(var j in JSON.parse(sorts))
+                                  option(value='#{j}') #{JSON.parse(sorts)[j]}
+                              //- input#psort.span4.typeahead(type="number" name='sort' value="#{sort ? sort : '' }")
                           |   
                           .control-group
                             label.control-label(for="pstate") 商品状态
@@ -115,7 +118,7 @@ block content
                                   .upload-container.upImgs
                                     a(href='#{imgs[i]}')
                                       img#imgId.upImg(src="#{imgs[i] ? imgs[i] : '/images/addBg.png' }")
-                                .upload-container
+                                #upBox.upload-container.upBox
                                   .upTex
                                     span.upIcon
                                         i.fa.fa-plus
@@ -133,8 +136,8 @@ block content
                           .form-actions.upBtns
                             button.btn.btn-primary.subBtn(type="submit") Save changes
                             |                               
-                            button.btn.cancelBtn(click="window.location.href='/manage/proList'") Cancel
+                            button.btn.cancelBtn Cancel
                   script.
-                    console.log(!{imgs})
+                    console.log(!{sorts})
 
     script(type='text/javascript', src="/conm/upload.js")

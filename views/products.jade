@@ -19,14 +19,15 @@ block content
                 button.bnt
                   span.glyphicon.glyphicon-remove
         -for(var i in JSON.parse(vals))
+          -console.log(JSON.parse(JSON.parse(vals)[i].imgs)[0])
           -var curId = parseInt(i); 
           -if(curId % 3 == 0)           
             .row
           // start portfolio item
-          a.col-md-4(href="/manage/descPro/#{JSON.parse(vals)[i].pid}")
+          a.col-md-4(href="/proDesc/#{JSON.parse(vals)[i].pid}")
             .ot-portfolio-item
               figure.effect-bubba
-                img.img-responsive(src="#{JSON.parse(JSON.parse(vals)[i].imgs)[0] ? JSON.parse(JSON.parse(vals)[i].imgs)[0] : 'images/demo/portfolio-2.jpg'}")
+                img.img-responsive(src="#{JSON.parse(JSON.parse(vals)[i].imgs)[0] ? JSON.parse(JSON.parse(vals)[i].imgs)[0] : '/images/demo/portfolio-2.jpg'}")
                 | 							
                 figcaption
                   h2 #{JSON.parse(vals)[i].pname}
