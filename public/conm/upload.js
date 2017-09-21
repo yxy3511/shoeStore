@@ -8,7 +8,7 @@ $(function(){
         var parent = document.getElementById('imgsBox') 
         for(var i in imgs){
             if(i){
-                //建新的节点
+                //建新的节点//对别处有影响
                 var divBlock = document.createElement("div")
                 divBlock.className =  'upload-container upImgs'   
                 parent.prepend(divBlock);  
@@ -19,7 +19,6 @@ $(function(){
                 divBlock.appendChild(aBlock); 
 
                 var imgBlock = document.createElement("img")
-                // imgBlock.setAttribute('id', 'imgId')
                 imgBlock.setAttribute('class', 'upImg')
                 imgBlock.setAttribute('src',imgs[i])
                 aBlock.appendChild(imgBlock); 
@@ -49,18 +48,6 @@ $(function(){
         window.location.href='/manage/proList'
     })
     //在外层绑定
-    /*$('#imgsBox').on('click',function(event){
-        //阻止提交表单
-        if(event.target.className == 'glyphicon glyphicon-remove iconSpan' || event.target.className == 'input-group-addon searchAddon imgDelBtn' || event.target.className == 'input-group-addon searchAddon imgDelBtn'){
-            if ( event && event.preventDefault ){
-                event.preventDefault(); 
-            }else{
-                //IE中阻止函数器默认动作的方式 
-                window.event.returnValue = false;
-            }
-        }
-        console.log(event.target.tagName)
-    })*/
     $("#imgsBox").on("click","button",function(event) {
         if ( event && event.preventDefault ){
             event.preventDefault(); 
@@ -68,11 +55,12 @@ $(function(){
             //IE中阻止函数器默认动作的方式 
             window.event.returnValue = false;
         }
+        //总长-index-1
+        var allLen = ($(this).parent().parent().children().length-1)/2;
+        var param = allLen-$(this).parent().index()/2-1;
+        // var param = $(this).parent().index()/2;
         $(this).parent().next().remove()
         $(this).parent().remove()
-        //----------------删除的图不对--------------------
-        var param = $(this).parent().index()/2;
-        console.log('param:',param)
         $.ajax({
             type : 'get',
             url : '/manage/delImg/'+param,
@@ -92,7 +80,7 @@ $(function(){
         });    
         return false;
     });
-    //删除图片
+    //删除图片最原先
     /*$('.imgDelBtn').on('click',function(e){
         if ( e && e.preventDefault ){
             e.preventDefault(); 
@@ -100,10 +88,11 @@ $(function(){
             //IE中阻止函数器默认动作的方式 
             window.event.returnValue = false;
         }
-        $(this).next().remove()
-        $(this).remove()
+        //param错
         var param = $(this).index()/2;
         console.log('default:',$(this).index())
+        $(this).next().remove()
+        $(this).remove()
         $.ajax({
             type : 'get',
             url : '/manage/delImg/'+param,
