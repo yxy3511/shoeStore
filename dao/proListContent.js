@@ -127,3 +127,16 @@ exports.getSorts = function(key,callback){
    
     query(searchSql,callback)
 }
+
+//修改类型
+exports.upSorts = function(sid,text,callback){
+    var searchSql = "update sorts set name='"+text+"' where id="+sid;
+    query(searchSql,callback)
+}
+
+//增加类型
+exports.addSorts = function(text,callback){
+    var searchSql = "insert into sorts(name) values('"+text+"');";
+    query(searchSql,callback)
+}
+

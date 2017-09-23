@@ -968,6 +968,7 @@ ol.carousel-indicators{
 }
 .upImgs{
     // padding-top:5px;
+    margin-bottom: 10px;
 }
 .upImg{
     width: 100%;

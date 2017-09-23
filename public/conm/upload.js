@@ -26,7 +26,8 @@ $(function(){
                 //删除按钮
                 var addonSpan = document.createElement("span")
                 addonSpan.className = 'input-group-addon searchAddon imgDelBtn'  
-                parent.prepend(addonSpan);
+                // parent.prepend(addonSpan);
+                parent.insertBefore(addonSpan, divBlock.nextSibling); 
 
                 var btnClose = document.createElement("button")
                 btnClose.className = 'searchClose closeBtn'   
@@ -57,9 +58,12 @@ $(function(){
         }
         //总长-index-1
         var allLen = ($(this).parent().parent().children().length-1)/2;
-        var param = allLen-$(this).parent().index()/2-1;
+        var curIndex = ($(this).parent().index()+1)/2;
         // var param = $(this).parent().index()/2;
-        $(this).parent().next().remove()
+        // var param = allLen-($(this).parent().index()/2)-1;
+        var param = allLen-(($(this).parent().index()+1)/2);
+        // $(this).parent().next().remove()
+        $(this).parent().prev().remove()
         $(this).parent().remove()
         $.ajax({
             type : 'get',
@@ -134,7 +138,7 @@ $(function(){
         var formData = new FormData(document.forms.namedItem("picForm"));
         $.ajax({
             type : 'post',
-            url : '/uploading',
+            url : '/manage/uploading',
             data: formData ,
             processData:false,
             async:false,

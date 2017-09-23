@@ -8,9 +8,69 @@
 var express = require('express');
 var router = express.Router();
 var proListContent = require('./../dao/proListContent.js');
+var loginContent = require('./../dao/loginContent.js');
  
 toProList = function(req,res){
-    res.render('proList')
+    // res.render('proList')
+     try{
+        var mid = req.params.msg || null
+        proListContent.getProList(0,function(err,vals){
+            // console.log('valllll:',vals)
+            if(err){
+                console.log(err)
+            }else{
+                //頁數
+                var totalCount = vals.length
+                var pageLine = 10
+                var pageCount = -1
+                if(parseInt(totalCount/pageLine) == 0){
+                    pageCount = 1
+                }else if(totalCount%pageLine > 0 && totalCount%pageLine < pageLine){
+                    pageCount = parseInt(totalCount/pageLine) + 1
+                }else{
+                    pageCount = parseInt(totalCount/pageLine)
+                }
+                var resArr = {}
+                for(var i in vals){
+                    resArr[i] = vals[i]
+                }
+                //获取sorts
+                proListContent.getSorts('all',function(e,val){
+                    if(e){
+                        console.log(e)
+                    }else{
+                        var sortArr = {}
+                        for(var j in val){
+                            sortArr[val[j].id] = val[j].name
+                        }
+                        var msg = null
+                        if(mid == 0){
+                            msg= '保存失败，商品名不能为空！'
+                        }else if(mid == 1){
+                            msg= '保存失败，商品价格不能为空！'
+                        }else if(mid == 2){
+                            msg= '保存失败，商品描述不能为空！'
+                        }else if(mid == 3){
+                            msg= '保存失败，商品图片不能为空！'
+                        }
+                        res.render('proList',{
+                            // res.render('tbodyPro',{
+                            vals: JSON.stringify(resArr),
+                            sorts: JSON.stringify(sortArr),
+                            msg: msg
+                        })
+                    }
+                    
+                })
+                    
+                
+            }
+            
+        })
+        
+    }catch(e){
+        console.log(e)
+    }
 }
 
 getProList = function(req,res,next){
@@ -52,10 +112,7 @@ getProList = function(req,res,next){
                             totalCount: totalCount
                         })
                     }
-                    
-                })
-                    
-                
+                })                
             }
             
         })
@@ -65,6 +122,7 @@ getProList = function(req,res,next){
     }
 }
 savePro = function(req,res,next){
+    global.imagesArr = []
     try{
         var id = req.query.id || null
         var pname = req.body.pname || null
@@ -81,7 +139,44 @@ savePro = function(req,res,next){
         desc ? (params.desc = desc) : null
         imgs ? (params.imgs = imgs) : null
         sort ? (params.sort = sort) : null
-        global.imagesArr = []
+
+        // params.pname = pname
+        // params.price = price
+        // params.state = state
+        // params.desc = desc
+        // params.imgs = imgs
+        // params.sort = sort
+
+        /*if(!pname || !price || !desc || !imgs){
+            if(!pname){
+                msg= '保存失败，商品名不能为空1！'
+            }else if(!price){
+                msg= '保存失败，商品价格不能为空1！'
+            }else if(!desc){
+                msg= '保存失败，商品描述不能为空1！'
+            }else if(!imgs){
+                msg= '保存失败，商品图片不能为空1！'
+            }
+            // var msg = msg
+            // res.render('uploadImg')
+            params.msg = msg
+            res.render('uploadImg',params)
+            
+        }*/
+        if(!pname || !price || !desc || !imgs){
+            // toProList()
+            if(!pname){
+                msg= 0
+            }else if(!price){
+                msg= 1
+            }else if(!desc){
+                msg= 2
+            }else if(!imgs){
+                msg= 3
+            }
+            res.redirect('/manage/toProList/'+msg)
+        }
+            
         if(id == 0){
             proListContent.addPro(params,function(err,vals){
                 // global.imagesArr = []
@@ -269,38 +364,308 @@ searchPro = function(req,res,next){
 }
 
 delImg = function(req,res,next){
-    var imgId = parseInt(req.params.mid)
-    var cnt = 0;
-    /*var all = {}
-    for(var l in global.imagesArr){
-        for(var z in global.imagesArr[l]){
-            all[cnt] = global.imagesArr[l][z]
-            cnt += 1
+    try{
+        var imgId = parseInt(req.params.mid)
+        var cnt = 0;
+        /*var all = {}
+        for(var l in global.imagesArr){
+            for(var z in global.imagesArr[l]){
+                all[cnt] = global.imagesArr[l][z]
+                cnt += 1
+            }
         }
-    }
-    console.log('before:',all)
-    console.log('mid:',imgId)
-    delete all[imgId];*/
-    var imgs = {}
-    for(var l in global.imagesArr){
-        for(var z in global.imagesArr[l]){
-            imgs[cnt] = global.imagesArr[l][z]
-            cnt += 1
+        console.log('before:',all)
+        console.log('mid:',imgId)
+        delete all[imgId];*/
+        var imgs = {}
+        for(var l in global.imagesArr){
+            for(var z in global.imagesArr[l]){
+                imgs[cnt] = global.imagesArr[l][z]
+                cnt += 1
+            }
         }
+        delete imgs[imgId];
+        var all = {}
+        var index = 0 
+        for(var i in imgs){
+            all[index] = imgs[i]
+            index += 1
+        }
+        global.imagesArr = [];
+        global.imagesArr.push(all)
+        res.send({vals:JSON.stringify(global.imagesArr)})
+    }catch(e){
+        console.log(e)
     }
-    console.log('before:',imgs)
-    console.log('mid:',imgId)
-    delete imgs[imgId];
-    var all = {}
-    var index = 0 
-    for(var i in imgs){
-        all[index] = imgs[i]
-        index += 1
-    }
-    global.imagesArr = [];
-    global.imagesArr.push(all)
-    res.send({vals:JSON.stringify(global.imagesArr)})
 }
+
+getSortList = function(req,res,next){
+    try{
+         proListContent.getSorts('all',function(e,val){
+            if(e){
+                console.log(e)
+            }else{
+                var sortArr = {}
+                for(var j in val){
+                    sortArr[val[j].id] = val[j].name
+                }
+                res.render('sorts',{
+                    sorts: JSON.stringify(sortArr),
+                })
+            }
+            
+        })
+    }catch(e){
+        console.log(e)
+    }
+}
+
+saveSort = function(req,res,next){
+    try{
+        var sid = req.params.sid
+        var text = req.params.text
+        proListContent.upSorts(sid,text,function(err,vals){
+            if(err){
+                console.log(err)
+            }else{
+                proListContent.getSorts('all',function(e,val){
+                    if(e){
+                        console.log(e)
+                    }else{
+                        var sortArr = {}
+                        for(var j in val){
+                            sortArr[val[j].id] = val[j].name
+                        }
+                        res.render('sorts',{
+                            sorts: JSON.stringify(sortArr),
+                        })
+                    }
+                    
+                })
+            }
+            
+        })
+    }catch(err){
+        console.log(err)
+    }
+}
+
+addSort = function(req,res,next){
+    try{
+        // var sid = req.params.sid
+        var text = req.params.text
+        proListContent.addSorts(text,function(err,vals){
+            if(err){
+                console.log(err)
+            }else{
+                proListContent.getSorts('all',function(e,val){
+                    if(e){
+                        console.log(e)
+                    }else{
+                        var sortArr = {}
+                        for(var j in val){
+                            sortArr[val[j].id] = val[j].name
+                        }
+                        res.render('sorts',{
+                            sorts: JSON.stringify(sortArr),
+                        })
+                    }
+                    
+                })
+            }
+            
+        })
+    }catch(err){
+        console.log(err)
+    }
+}
+
+
+
+getUserList = function(req,res,next){
+    try{
+         loginContent.searchUser('all',function(e,val){
+            if(e){
+                console.log(e)
+            }else{
+                var userArr = {}
+                for(var j in val){
+                    userArr[j] = {
+                        uname: val[j].uname,
+                        pwd: val[j].pwd,
+                        role: val[j].role,
+                        uid: val[j].uid
+                    }
+                }
+                res.render('user',{
+                    users: JSON.stringify(userArr),
+                })
+            }
+            
+        })
+    }catch(e){
+        console.log(e)
+    }
+}
+// editUser = function(req,res,next){
+//     try{
+//         var sid = req.params.uid
+//         var text = req.params.text
+//         var opera = req.params.opera
+//         proListContent.editUser(opera,sid,text,function(err,vals){
+//             if(err){
+//                 console.log(err)
+//             }else{
+//                 proListContent.getSorts('all',function(e,val){
+//                     if(e){
+//                         console.log(e)
+//                     }else{
+//                         var sortArr = {}
+//                         for(var j in val){
+//                             sortArr[val[j].id] = val[j].name
+//                         }
+//                         res.render('sorts',{
+//                             sorts: JSON.stringify(sortArr),
+//                         })
+//                     }
+                    
+//                 })
+//             }
+            
+//         })
+//     }catch(err){
+//         console.log(err)
+//     }
+// }
+/*----------------做到这里-----------------------*/
+
+saveUser = function(req,res,next){
+    console.log('sssend:',req.body)
+    try{
+        var uid = req.body.uid
+        var uname = req.body.uname
+        var pwd = req.body.pwd
+        var role = req.body.role
+        var msg = null
+        loginContent.searchUser(uname,function(err,vals){
+            console.log('vvvvvals:',vals)
+            if(err){
+                console.log(err)
+            }else if(vals.length > 0){
+                //用户名已被使用
+                msg = '此用户名已被注册！'
+            }
+        })
+        var text = {}
+        text.uid = uid
+        text.uname = uname
+        text.pwd = pwd
+        text.role = JSON.parse(role)
+        console.log('mmmmmmmmmsg:',msg)
+        if(msg != null){
+            loginContent.searchUser('all',function(e,val){
+                if(e){
+                    console.log(e)
+                }else{
+                    var userArr = {}
+                    for(var j in val){
+                        userArr[j] = {uname: val[j].uname,pwd: val[j].pwd,role:val[j].role}
+                    }
+                    res.render('user',{
+                        users: JSON.stringify(userArr),
+                        msg: msg
+                    })
+                }
+                
+            })
+        }else{
+            loginContent.saveUser(text,function(err,vals){
+                if(err){
+                    console.log(err)
+                }else{
+                    loginContent.searchUser('all',function(e,val){
+                        if(e){
+                            console.log(e)
+                        }else{
+                            var userArr = {}
+                            for(var j in val){
+                                userArr[j] = {uname: val[j].uname,pwd: val[j].pwd,role:val[j].role}
+                            }
+                            res.render('user',{
+                                users: JSON.stringify(userArr),
+                            })
+                        }
+                        
+                    })
+                }
+                
+            })
+        }
+    }catch(err){
+        console.log(err)
+    }
+}
+
+/*addUser = function(req,res,next){
+    try{
+        // var sid = req.params.sid
+        var text = req.params.text
+        proListContent.addUser(text,function(err,vals){
+            if(err){
+                console.log(err)
+            }else{
+                proListContent.getSorts('all',function(e,val){
+                    if(e){
+                        console.log(e)
+                    }else{
+                        var sortArr = {}
+                        for(var j in val){
+                            sortArr[val[j].id] = val[j].name
+                        }
+                        res.render('sorts',{
+                            sorts: JSON.stringify(sortArr),
+                        })
+                    }
+                    
+                })
+            }
+            
+        })
+    }catch(err){
+        console.log(err)
+    }
+}*/
+
+/*delUser = function(req,res,next){
+    try{
+        // var sid = req.params.sid
+        var text = req.params.text
+        proListContent.delUser(text,function(err,vals){
+            if(err){
+                console.log(err)
+            }else{
+                proListContent.getSorts('all',function(e,val){
+                    if(e){
+                        console.log(e)
+                    }else{
+                        var sortArr = {}
+                        for(var j in val){
+                            sortArr[val[j].id] = val[j].name
+                        }
+                        res.render('sorts',{
+                            sorts: JSON.stringify(sortArr),
+                        })
+                    }
+                    
+                })
+            }
+            
+        })
+    }catch(err){
+        console.log(err)
+    }
+}*/
+
 
 router.get('/proList',getProList);
 router.get('/delPro/:id',delPro);
@@ -310,4 +675,13 @@ router.get('/descPro/:id',descPro);
 router.get('/editPro/:id',editPro);
 router.get('/searchPro',searchPro);
 router.get('/delImg/:mid',delImg);
+router.get('/toProList/:msg',toProList)
+router.get('/editSorts',getSortList)
+router.get('/saveSort/:sid/:text',saveSort)
+router.get('/addSort/:text',addSort)
+
+router.get('/getUser',getUserList)
+// router.get('/editUser/:opera/:uid/:text',editUser)
+router.post('/saveUser',saveUser)
+// router.get('/addUser/:text',addUser)
 module.exports = router

@@ -45,7 +45,7 @@ app.use('/manage/?',function(req, res, next) {
 /*--------touter--------------*/
 app.use('/manage',proList)
 app.use('/',page)
-app.use('/',upload)
+app.use('/manage',upload)
 app.use('/',login)
 
 // app.set('port', process.env.PORT || 8300);
@@ -81,7 +81,7 @@ app.use(function(err, req, res, next) {
 
 // connect to the database
 // mongoose.connect('mongodb://localhost/data_collect');
-app.set('port', 3000);
+app.set('port', 8080);
 var server = app.listen(app.get('port'), function () {
     console.log('Express server listening on port ' + app.get('port'));
 });

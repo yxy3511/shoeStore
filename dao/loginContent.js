@@ -24,7 +24,38 @@ exports.addUser = function(params,callback){
 }
 
 
-exports.searchUser = function(uname,callback){
-    var sql = "select * from users where uname = '"+uname+"';"
+exports.searchUser = function(key,callback){
+    var sql = null
+    if(key && key=='all'){
+        sql = "select * from users"
+    }else{
+        sql = "select * from users where uname = '"+key+"'"
+    }
     query(sql,callback)
 }
+
+//保存
+exports.saveUser = function(text,callback){
+    var sql = null
+    var md5Pass = text.pwd ? cryptico.createHash('md5').update(text.pwd).digest('base64') : '';
+    if(text.uid && text.uid==0){
+        sql = "insert into users(uname,pwd,role) values('"+text.uname+"','"+md5Pass+"',"+text.role+");"
+    }else{
+        sql = "update users set uname='"+text.uname+"',pwd='"+md5Pass+"',role="+text.role+" where uid="+text.uid;
+    }
+    query(sql,callback)
+}
+
+/**
+*
+*获得用户
+*/
+
+/*exports.getUsers = function(key,callback){
+    var searchSql = null
+    if(key && key == 'all'){
+        searchSql = "select * from users"
+    }
+   
+    query(searchSql,callback)
+}*/
