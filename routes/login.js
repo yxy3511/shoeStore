@@ -8,6 +8,7 @@
 var express = require('express');
 var router = express.Router();
 var loginContent = require('./../dao/loginContent.js');
+var proListContent = require('./../dao/proListContent.js');
 var cryptico = require('crypto');
 // var md5 = cryptico.createHash('md5');
 
@@ -45,9 +46,40 @@ registering = function(req,res){
                     if(err){
                         console.log(err)
                     }else if(vals.affectedRows > 0){
-                        res.render('login',{
+                        loginContent.searchUser('all',function(e,val){
+                        if(e){
+                            console.log(e)
+                        }else{
+                            proListContent.getRoles(function(err,vals){
+                                if(err){
+                                    console.log(err)
+                                }else{
+                                    var roleArr = {}
+                                    for(var i in vals){
+                                        roleArr[vals[i].id] = vals[i].rname
+                                    }
+
+                                    var userArr = {}
+                                    for(var j in val){
+                                        userArr[j] = {
+                                            uname: val[j].uname,
+                                            pwd: val[j].pwd,
+                                            role: roleArr[val[j].role],
+                                            uid: val[j].uid
+                                        }
+                                    }
+                                    res.render('user',{
+                                        users: JSON.stringify(userArr),
+                                        msg:'注册成功！'
+                                    })
+                                }
+                            })
+                        }
+                        
+                    })
+                       /* res.render('login',{
                             msg:'注册成功！'
-                        })
+                        })*/
                     }
                 })    
             }
@@ -99,7 +131,7 @@ loggingIn = function(req,res){
     }
 }
 router.get('/login',toLogin);
-router.get('/register',toRegister);
+router.get('/manage/register',toRegister);
 router.post('/registering',registering);
 router.post('/logging',loggingIn);
 

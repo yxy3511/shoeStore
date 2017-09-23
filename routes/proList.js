@@ -480,25 +480,65 @@ addSort = function(req,res,next){
     }
 }
 
+delSort = function(req,res,next){
+    try{
+        var sid = req.params.sid
+        proListContent.delSort(sid,function(err,vals){
+            if(err){
+                console.log(err)
+            }else{
+                proListContent.getSorts('all',function(e,val){
+                    if(e){
+                        console.log(e)
+                    }else{
+                        var sortArr = {}
+                        for(var j in val){
+                            sortArr[val[j].id] = val[j].name
+                        }
+                        res.render('sorts',{
+                            sorts: JSON.stringify(sortArr),
+                        })
+                    }
+                    
+                })
+            }
+            
+        })
+    }catch(err){
+        console.log(err)
+    }
+}
+
 
 
 getUserList = function(req,res,next){
     try{
-         loginContent.searchUser('all',function(e,val){
+        loginContent.searchUser('all',function(e,val){
             if(e){
                 console.log(e)
             }else{
-                var userArr = {}
-                for(var j in val){
-                    userArr[j] = {
-                        uname: val[j].uname,
-                        pwd: val[j].pwd,
-                        role: val[j].role,
-                        uid: val[j].uid
+                proListContent.getRoles(function(err,vals){
+                    if(err){
+                        console.log(err)
+                    }else{
+                        var roleArr = {}
+                        for(var i in vals){
+                            roleArr[vals[i].id] = vals[i].rname
+                        }
+
+                        var userArr = {}
+                        for(var j in val){
+                            userArr[j] = {
+                                uname: val[j].uname,
+                                pwd: val[j].pwd,
+                                role: roleArr[val[j].role],
+                                uid: val[j].uid
+                            }
+                        }
+                        res.render('user',{
+                            users: JSON.stringify(userArr),
+                        })
                     }
-                }
-                res.render('user',{
-                    users: JSON.stringify(userArr),
                 })
             }
             
@@ -548,7 +588,6 @@ saveUser = function(req,res,next){
         var role = req.body.role
         var msg = null
         loginContent.searchUser(uname,function(err,vals){
-            console.log('vvvvvals:',vals)
             if(err){
                 console.log(err)
             }else if(vals.length > 0){
@@ -561,15 +600,24 @@ saveUser = function(req,res,next){
         text.uname = uname
         text.pwd = pwd
         text.role = JSON.parse(role)
-        console.log('mmmmmmmmmsg:',msg)
         if(msg != null){
             loginContent.searchUser('all',function(e,val){
                 if(e){
                     console.log(e)
                 }else{
+                    var roleArr = {}
+                    for(var i in vals){
+                        roleArr[vals[i].id] = vals[i].rname
+                    }
+
                     var userArr = {}
                     for(var j in val){
-                        userArr[j] = {uname: val[j].uname,pwd: val[j].pwd,role:val[j].role}
+                        userArr[j] = {
+                            uname: val[j].uname,
+                            pwd: val[j].pwd,
+                            role: roleArr[val[j].role],
+                            uid: val[j].uid
+                        }
                     }
                     res.render('user',{
                         users: JSON.stringify(userArr),
@@ -587,9 +635,19 @@ saveUser = function(req,res,next){
                         if(e){
                             console.log(e)
                         }else{
+                            var roleArr = {}
+                            for(var i in vals){
+                                roleArr[vals[i].id] = vals[i].rname
+                            }
+
                             var userArr = {}
                             for(var j in val){
-                                userArr[j] = {uname: val[j].uname,pwd: val[j].pwd,role:val[j].role}
+                                userArr[j] = {
+                                    uname: val[j].uname,
+                                    pwd: val[j].pwd,
+                                    role: roleArr[val[j].role],
+                                    uid: val[j].uid
+                                }
                             }
                             res.render('user',{
                                 users: JSON.stringify(userArr),
@@ -636,24 +694,33 @@ saveUser = function(req,res,next){
     }
 }*/
 
-/*delUser = function(req,res,next){
+delUser = function(req,res,next){
     try{
-        // var sid = req.params.sid
-        var text = req.params.text
-        proListContent.delUser(text,function(err,vals){
+        var uid = req.params.uid
+        loginContent.delUser(uid,function(err,vals){
             if(err){
                 console.log(err)
             }else{
-                proListContent.getSorts('all',function(e,val){
+                loginContent.searchUser('all',function(e,val){
                     if(e){
                         console.log(e)
                     }else{
-                        var sortArr = {}
-                        for(var j in val){
-                            sortArr[val[j].id] = val[j].name
+                        var roleArr = {}
+                        for(var i in vals){
+                            roleArr[vals[i].id] = vals[i].rname
                         }
-                        res.render('sorts',{
-                            sorts: JSON.stringify(sortArr),
+
+                        var userArr = {}
+                        for(var j in val){
+                            userArr[j] = {
+                                uname: val[j].uname,
+                                pwd: val[j].pwd,
+                                role: roleArr[val[j].role],
+                                uid: val[j].uid
+                            }
+                        }
+                        res.render('user',{
+                            users: JSON.stringify(userArr),
                         })
                     }
                     
@@ -664,7 +731,7 @@ saveUser = function(req,res,next){
     }catch(err){
         console.log(err)
     }
-}*/
+}
 
 
 router.get('/proList',getProList);
@@ -679,8 +746,10 @@ router.get('/toProList/:msg',toProList)
 router.get('/editSorts',getSortList)
 router.get('/saveSort/:sid/:text',saveSort)
 router.get('/addSort/:text',addSort)
+router.get('/delSort/:sid',delSort)
 
 router.get('/getUser',getUserList)
+router.get('/delUser/:uid',delUser)
 // router.get('/editUser/:opera/:uid/:text',editUser)
 router.post('/saveUser',saveUser)
 // router.get('/addUser/:text',addUser)

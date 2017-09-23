@@ -78,8 +78,13 @@ $(function(){
         }   
     })
 
-    $('.addSortName').blur(function(e){
+    /*$('.addSortName').blur(function(e){
         $('.addSortName').attr('disabled','disabled')
+    })*/
+    $('.addSort').click(function(e){
+        var text = $('.addSortName').val()
+        var sid = $('.newId').innerText
+        window.location = '/manage/addSort/'+text
     })
     //回车保存
     $('.addSortName').on('keypress',function(e){

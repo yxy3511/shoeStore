@@ -55,6 +55,24 @@ toProducts=function(req,res){
                     res.render('products',{
                         vals: JSON.stringify(resArr)
                     })
+                }else{
+                    proListContent.getProList(0,function(e,val){
+                        if(e){
+                            console.log(e)
+                        }else{
+                            var resObj = {}
+                            for(var j in val){
+                                resObj[j] = val[j]
+                            }
+                            if(val.length > 0){
+                                res.render('products',{
+                                    vals: JSON.stringify(resObj),
+                                    msg: '查询无结果！'
+                                })
+                            }
+                        }
+                    })
+                    // res.redirect('/products/0')
                 }
             }
         }) 

@@ -1,7 +1,7 @@
 extends layout
 
 block content
-  section#portfolio.light-bg
+  section.light-bg
       .container
         .row(id='product')
           .col-lg-12.text-center
@@ -10,10 +10,11 @@ block content
               | 						
               p
                 | There is no perfection in the world, but we are always pursuing perfection.
+                
           .col-lg-3#searchForm
             //- form.form-horizontal(action="", method="get")
             span#searchIcon.glyphicon.glyphicon-search
-            #searchInput.input-group.search-input-group(style='visibility:hidden;max-width:300px;')
+            #searchInput.input-group.search-input-group
               input#searchIn.form-control(name="key", autocomplete="on", type="text", placeholder="输入要搜索的内容关键字")
               span#closeIcon.input-group-addon
                 button.bnt

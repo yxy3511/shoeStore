@@ -1,6 +1,6 @@
 $(function(){
 
-    $('.userEdit').click(function(e){
+    /*$('.userEdit').click(function(e){
         for(var i =1; i<$(this).parent().siblings().length; i++){
             $(this).parent().siblings()[i].childNodes[0].removeAttribute('disabled')
             if(i == 1){
@@ -19,5 +19,5 @@ $(function(){
         if(e.keyCode == 13){
             $('#eUserBtn').trigger("click");
         }   
-    })
+    })*/
 })

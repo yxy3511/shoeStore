@@ -46,6 +46,12 @@ exports.saveUser = function(text,callback){
     query(sql,callback)
 }
 
+exports.delUser = function(uid,callback){
+    var sql = null
+    sql = "DELETE FROM users WHERE uid ="+uid;
+    query(sql,callback)
+}
+
 /**
 *
 *获得用户

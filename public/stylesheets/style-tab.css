@@ -3109,6 +3109,10 @@ ul.messagesList li span.date {
 	background: transparent;
 	border:none;
 }
+.manageAdd:focus{
+	border: none;
+	outline: none;
+}
 .logoutDiv,.addDiv{
 	background-color: #fff;
 	color: #578EBE;	
@@ -3189,16 +3193,43 @@ h2 button.muser{
 	margin-top: -2px;
 } 
 /* -----------类型表------------- */
-input.sortName,input.addSortName,input.userTd{
+input.sortName,input.userTd{
 	text-align: center;
 	background: transparent;
 	background-color: transparent !important;
 	border: none;
-	height: 30px;
+	/*height: 30px;*/
+	/*line-height: 30px;*/
 	width:100%;
-	line-height: 30px;
 }
 input.sortName:focus,input.addSortName:focus,input.userTd:focus{
 	border: 1px solid #eee !important;
 	text-decoration: none;
+}
+input.addSortName{
+	background: transparent;
+	background-color: transparent !important;
+	border:1px solid #eee;
+	border-radius: 3px;
+	height:30px;
+	line-height: 30px;
+	width: 80%;
+	text-align: center;
+}
+
+.sortTr a,.userTr a{
+	display: inline-block;
+	margin-left: 3px;
+}
+/* ----------表头------------------- */
+section.manage{
+	padding: 5px;
+	min-width: 740px;
+	min-height: 500px;
+}
+
+@media only screen and (max-width : 739px) {
+	.manageBody footer{
+		width:740px;
+	}
 }

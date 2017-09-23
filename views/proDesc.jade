@@ -76,13 +76,13 @@ block content
               .carousel-inner(role="listbox")
                 -for(var i in JSON.parse(imgs))
                   if(i == 0)
-                    .item.active
+                    .item.active.carouselImg
                       img(src="#{JSON.parse(imgs)[i]}", alt="1")
                       |       
                       .carousel-caption
                         //- | 图片1
                   -else
-                    .item
+                    .item.carouselImg
                       img(src="#{JSON.parse(imgs)[i]}", alt="2")
                       |       
                       .carousel-caption
@@ -99,7 +99,7 @@ block content
             //-   span.glyphicon.glyphicon-chevron-right(aria-hidden="true")
             //-   |     
             //-   span.sr-only Next  
-          #proDesc.col-md-5
+          .proDesc.col-md-5
             .skills-text
               h2 #{pname}
               |               

@@ -140,3 +140,13 @@ exports.addSorts = function(text,callback){
     query(searchSql,callback)
 }
 
+//删除类型
+exports.delSort = function(sid,callback){
+    var searchSql = "delete from sorts where id ="+sid;
+    query(searchSql,callback)
+}
+
+exports.getRoles = function(callback){
+    var searchSql = "select * from roles";
+    query(searchSql,callback)
+}

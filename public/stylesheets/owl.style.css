@@ -832,11 +832,7 @@ h2 a:hover{
     border-style: none none solid none;
     opacity: 0.8;
 }
-#searchForm{
-    position: relative;
-    left: 68%;
-    top: -144px;
-}
+
 /*  figure.effect-bubba img{
    min-width: 353px;
    min-height: 228.6px;
@@ -858,10 +854,11 @@ ol.carousel-indicators{
     justify-content:center;
     // width:320px;
     // height: 200px;
-    width: 640px;
-    height: 390px;
+    /*width: 640px;
+    height: 390px;*/
     margin: 0 auto;
     // border: 1px solid blue;
+    margin-bottom: 20px;
 }
 
 .carousel-inner>.item{
@@ -869,14 +866,14 @@ ol.carousel-indicators{
 }
 .carousel-inner>.item img {
     // display: block;
+    width: 100%;
     margin: 0 auto;
     // max-width: 300px;
     // max-height: 200px;
     max-width: 620px;
     max-height: 400px;
     // border: 1px solid pink;
-} 
-
+}
 .carousel-indicators li {
     background-color: #000;
     opacity: 0.6;
@@ -887,7 +884,111 @@ ol.carousel-indicators{
     opacity: 0.9;
 }
 
+.proDesc pre{
+    white-space:pre-wrap;
+    word-wrap:break-word;
+    background: transparent;
+}
+
 /* ---products 搜索框---- */
+@media only screen and (max-width : 990px) {
+    #searchInput{
+        /*width:100%;*/
+        /*max-width:200px;*/
+    }
+    #searchForm{
+        max-width: 50%;
+        display: block;
+        min-width: 300px;
+        margin: 0 auto;
+        margin:0px;
+        /*max-width: 300px;*/
+    }
+    .proDesc{
+        display: block;
+        text-align: center;
+    }
+    .proDesc pre{
+        text-align: left;
+    }
+
+    #proDescPage{
+        margin-top: 0px;
+        // position: relative;
+        // top:90px;
+        // left: 20%;
+        // padding-top:50px;
+    }
+    #Coolwpimg{
+        /*position:relative;*/
+        width:100%;
+        margin-top:60px;
+    }
+}
+
+@media only screen and (min-width : 991px) {
+    #searchForm{
+        position: relative;
+        left: 68%;
+        top: -144px;
+        max-width: 300px;
+    }
+    .carousel-inner{
+        width: 80%
+        max-width:620px;
+        min-width: 500px;
+    }
+    .proDesc{
+        display: flex;
+        height: 420px;
+        line-height: 420px;
+        // border: 1px solid yellow;
+        flex-direction: column;
+        justify-content:center;
+    }
+    .proDesc pre{
+        min-width: 300px;
+    }
+
+    #proDescPage{
+        margin-top: 90px;
+        // position: relative;
+        // top:90px;
+        // left: 20%;
+        // padding-top:50px;
+    }
+    /* ------contact--------- */
+    #Coolwpimg{
+        /*position:relative;*/
+        width:100%;
+        margin-top:60px;
+    }
+    #allmap {
+        // width: 100%;
+        // height: 100%;
+        // overflow: hidden;
+        margin:0;
+        font-family: "Open Sans", Sans-serif;
+    }
+
+    #address{
+        position: relative;
+        width:30%
+        max-width:400px;
+        min-width: 300px;
+        top: 180px;
+        bottom: 0;
+    }  
+        
+    #mapDiv{
+        padding: 0;
+    }
+    
+}
+
+#searchInput{
+    visibility:hidden;
+}
 .search-input-group .input-group-addon{
     background: white !important; 
 }
@@ -916,43 +1017,9 @@ ol.carousel-indicators{
     transition: width 0.2s ease-in-out;
 } */
 /* -------proDesc----------- */
-#proDesc{
-    display: flex;
-    height: 420px;
-    line-height: 420px;
-    // border: 1px solid yellow;
-    flex-direction: column;
-    justify-content:center;
-}
 
-#proDescPage{
-    margin-top: 90px;
-    // position: relative;
-    // top:90px;
-    // left: 20%;
-    // padding-top:50px;
-}
-/* ------contact--------- */
-#allmap {
-    // width: 100%;
-    // height: 100%;
-    // overflow: hidden;
-    margin:0;
-    font-family: "Open Sans", Sans-serif;
-}
 
-#address{
-    position: relative;
-    top: 180px;
-    bottom: 0;
-}  
-    
-#mapDiv{
-    padding: 0;
-}
-#Coolwpimg{
-    width:100%;
-}
+
 /* -------------上传图片--------------- */
 /* 删除按钮见style-tab */
 .upload-container {

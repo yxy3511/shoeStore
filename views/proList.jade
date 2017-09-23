@@ -1,227 +1,66 @@
-extends layout
+extends manageLayout
 
 block content
-    section.light-bg.content.manage
-        // start: Content
-        .container-fluid-full
-            #content.span10            
-              .row-fluid.sortable
-                .box.span12
-                  .box-header(data-original-title="")
-                    h2
-                      button.muser
-                        i.halflings-icon.white.user
-                        .logoutDiv 
-                          | 退出
-                      span.break
-                      | 商品管理
-                    | 
-                    .theadbox
-                      .ops
-                        //- a(href='/uploadImg')
-                        button.manageAdd
-                          span.addIcon.icons
-                            i.glyphicon.glyphicon-plus
-                          .addDiv 
-                            p.addPro 添加商品
-                            p.mUse 管理用户
-                            p.mSort 管理分类
-                        span.searchIcon.icons
-                          i.glyphicon.glyphicon-search
-                      .searchForm
-                        .input-group.searchGroup(style='display:none;')
-                          input#inputKey.form-control.searchInput(name="key", autocomplete="on", type="text", placeholder="输入关键字")
-                          span.input-group-addon.searchAddon.delSearch
-                            button.searchClose
-                              span.glyphicon.glyphicon-remove
-                      //- |                             
-                      //- a.btn-minimize(href="#")
-                      //-   i.halflings-icon.white.chevron-up
-                      //- |                             
-                      //- a.btn-close(href="#")
-                      //-   i.halflings-icon.white.remove
-                  |          
-                  .box-content.prolist
-                    -if(vals == "{}")
-                      p.noInfo 暂无商品信息
-                    -else
-                      table.table.table-striped.table-bordered.bootstrap-datatable.datatable
-                        thead
-                          tr
-                            th ID
-                            |                                   
-                            th 分类
-                            |                                   
-                            th 商品名
-                            |                                   
-                            th 价格
-                            |                                   
-                            th 描述
-                            |                                   
-                            th 库存
-                            |                                   
-                            th 更新日期
-                            |                                   
-                            th 操作
-                        |    
-                        tbody
-                          -for(var i in JSON.parse(vals))
-                            -var curId = parseInt(i)+1;
-                            tr 
-                              td #{curId}
-                              |                                 
-                              td.center #{JSON.parse(sorts)[JSON.parse(vals)[i].sort]}
-                              |                                 
-                              td.center #{JSON.parse(vals)[i].pname}
-                              |                                 
-                              td.center ￥#{JSON.parse(vals)[i].price.toFixed(2) }
-                              |                                 
-                              td.center.overHid #{JSON.parse(vals)[i].desc_txt}
-                              |                                 
-                              td.center
-                                case JSON.parse(vals)[i].state
-                                  when 1
-                                    span.label.label-success 销 售
-                                    //- span.label.label-success #{JSON.parse(vals)[i].state}
-                                  when 2
-                                    //- span.label.label-warning #{JSON.parse(vals)[i].state}
-                                    span.label.label-warning 待 售
-                                  when 3
-                                    //- span.label.label-important #{JSON.parse(vals)[i].state}
-                                    span.label.label-important 停 售
-                              |                                 
-                              td.center #{JSON.parse(vals)[i].up_date.substring(0,10)}
-                              |                                 
-                              td.center
-                                a.btn.btn-success(href="/manage/descPro/#{JSON.parse(vals)[i].pid}")
-                                  i.halflings-icon.white.zoom-in
-                                |                                   
-                                a.btn.btn-info(href="/manage/editPro/#{JSON.parse(vals)[i].pid}")
-                                  i.halflings-icon.white.edit
-                                |                                   
-                                a.btn.btn-danger(href="/manage/delPro/#{JSON.parse(vals)[i].pid}")
-                                  i.halflings-icon.white.trash
-                          //- |                           
-                          //- tr
-                          //-   td 2
-                          //-   |                                 
-                          //-   td.center leather shoes
-                          //-   |                                 
-                          //-   td.center Member
-                          //-   |                                 
-                          //-   td.center $666.00
-                          //-   |                                 
-                          //-   td.center beautiful
-                          //-   |                                 
-                          //-   td.center
-                          //-     span.label.label-warning 较少
-                          //-   |                                 
-                          //-   td.center 2012/01/01
-                          //-   |                                 
-                          //-   td.center
-                          //-     a.btn.btn-success(href="#")
-                          //-       i.halflings-icon.white.zoom-in
-                          //-     |                                   
-                          //-     a.btn.btn-info(href="#")
-                          //-       i.halflings-icon.white.edit
-                          //-     |                                   
-                          //-     a.btn.btn-danger(href="#")
-                          //-       i.halflings-icon.white.trash
-                          //- |                           
-                          //- tr
-                          //-   td 3
-                          //-   |                                 
-                          //-   td.center Gym shoes
-                          //-   |                                 
-                          //-   td.center Member
-                          //-   |                                 
-                          //-   td.center $666.00
-                          //-   |                                 
-                          //-   td.center beautiful
-                          //-   |                                 
-                          //-   td.center
-                          //-     span.label.label-success 充足
-                          //-   |                                 
-                          //-   td.center 2012/01/01
-                          //-   |                                 
-                          //-   td.center
-                          //-     a.btn.btn-success(href="#")
-                          //-       i.halflings-icon.white.zoom-in
-                          //-     |                                   
-                          //-     a.btn.btn-info(href="#")
-                          //-       i.halflings-icon.white.edit
-                          //-     |                                   
-                          //-     a.btn.btn-danger(href="#")
-                          //-       i.halflings-icon.white.trash
-                          //- |                           
-                          //- tr
-                          //-   td 4
-                          //-   |                                 
-                          //-   td.center leather shoes
-                          //-   |                                 
-                          //-   td.center Member
-                          //-   |                                 
-                          //-   td.center $666.00
-                          //-   |                                 
-                          //-   td.center beautiful
-                          //-   |                                 
-                          //-   td.center
-                          //-     span.label.label-warning 较少
-                          //-   |                                 
-                          //-   td.center 2012/01/01
-                          //-   |                                 
-                          //-   td.center
-                          //-     a.btn.btn-success(href="#")
-                          //-       i.halflings-icon.white.zoom-in
-                          //-     |                                   
-                          //-     a.btn.btn-info(href="#")
-                          //-       i.halflings-icon.white.edit
-                          //-     |                                   
-                          //-     a.btn.btn-danger(href="#")
-                          //-       i.halflings-icon.white.trash
-                          //- |                           
-                          //- tr
-                          //-   td 5
-                          //-   |                                 
-                          //-   td.center Gym shoes
-                          //-   |                                 
-                          //-   td.center Staff
-                          //-   |                                 
-                          //-   td.center $666.00
-                          //-   |                                 
-                          //-   td.center beautiful
-                          //-   |                                 
-                          //-   td.center
-                          //-     span.label.label-important 缺货
-                          //-   |                                 
-                          //-   td.center 2012/01/01
-                          //-   |                                 
-                          //-   td.center
-                          //-     a.btn.btn-success(href="#")
-                          //-       i.halflings-icon.white.zoom-in
-                          //-     |                                   
-                          //-     a.btn.btn-info(href="#")
-                          //-       i.halflings-icon.white.edit
-                          //-     |                                   
-                          //-     a.btn.btn-danger(href="#")
-                          //-       i.halflings-icon.white.trash
-
-                //- .row-fluid
-                //-   div(style='text-align:center')
-                //-       - if(pageCount>1)
-                //-           ul.pagination
-                //-               -var suffix = search ? ('search='+search):'';
-                //-               li
-                //-                   a(href='/strategQuery?#{suffix}') &laquo;
-                //-                   -for(var i=1; i<=pageCount; i++)
-                //-                       if(index == i)
-                //-                           li.active
-                //-                               span #{i}
-                //-                       -else
-                //-                           li
-                //-                               a(href='/strategQuery?index=#{i}&size=#{size}&#{suffix}') #{i}
-                //-               li
-                //-                   a(href='/strategQuery?index=#{pageCount}&size=#{size}&#{suffix}') &raquo
+    .box-content.prolist
+      -if(vals == "{}")
+        p.noInfo 暂无商品信息
+      -else
+        table.table.table-striped.table-bordered.bootstrap-datatable.datatable
+          thead
+            tr
+              th ID
+              |                                   
+              th 分类
+              |                                   
+              th 商品名
+              |                                   
+              th 价格
+              |                                   
+              th 描述
+              |                                   
+              th 库存
+              |                                   
+              th 更新日期
+              |                                   
+              th 操作
+          |    
+          tbody
+            -for(var i in JSON.parse(vals))
+              -var curId = parseInt(i)+1;
+              tr 
+                td #{curId}
+                |                                 
+                td.center #{JSON.parse(sorts)[JSON.parse(vals)[i].sort]}
+                |                                 
+                td.center #{JSON.parse(vals)[i].pname}
+                |                                 
+                td.center ￥#{JSON.parse(vals)[i].price.toFixed(2) }
+                |                                 
+                td.center.overHid #{JSON.parse(vals)[i].desc_txt}
+                |                                 
+                td.center
+                  case JSON.parse(vals)[i].state
+                    when 1
+                      span.label.label-success 销 售
+                      //- span.label.label-success #{JSON.parse(vals)[i].state}
+                    when 2
+                      //- span.label.label-warning #{JSON.parse(vals)[i].state}
+                      span.label.label-warning 待 售
+                    when 3
+                      //- span.label.label-important #{JSON.parse(vals)[i].state}
+                      span.label.label-important 停 售
+                |                                 
+                td.center #{JSON.parse(vals)[i].up_date.substring(0,10)}
+                |                                 
+                td.center
+                  a.btn.btn-success(href="/manage/descPro/#{JSON.parse(vals)[i].pid}")
+                    i.halflings-icon.white.zoom-in
+                  |                                   
+                  a.btn.btn-info(href="/manage/editPro/#{JSON.parse(vals)[i].pid}")
+                    i.halflings-icon.white.edit
+                  |                                   
+                  a.btn.btn-danger(href="/manage/delPro/#{JSON.parse(vals)[i].pid}")
+                    i.halflings-icon.white.trash
     script.
       if('#{msg}' != '')
         alert('#{msg}')
