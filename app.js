@@ -78,10 +78,10 @@ app.use(function(err, req, res, next) {
     
 });
 
-
 // connect to the database
 // mongoose.connect('mongodb://localhost/data_collect');
-app.set('port', 3000);
+// app.set('port', 3000);
+app.set('port', 8080);
 var server = app.listen(app.get('port'), function () {
     console.log('Express server listening on port ' + app.get('port'));
 });

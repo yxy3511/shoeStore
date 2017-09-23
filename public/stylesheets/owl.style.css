@@ -820,6 +820,10 @@ ul#menus a:hover,ul#menus a:focus {
         height: 400px;
     }
 }
+/* -------------------page--------------- */
+a#knowMore:hover{
+    color: #fff !important;
+}
 /* -------------products---------------- */
 h2 a{
     color: #232323;

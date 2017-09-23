@@ -67,7 +67,7 @@ toProducts=function(req,res){
                             if(val.length > 0){
                                 res.render('products',{
                                     vals: JSON.stringify(resObj),
-                                    msg: '查询无结果！'
+                                    msg: '暂无此类商品！'
                                 })
                             }
                         }

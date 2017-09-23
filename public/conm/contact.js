@@ -1,10 +1,10 @@
 $(function(){
     // 百度地图API功能
     var map = new BMap.Map("allmap");    // 创建Map实例
-    var point = new BMap.Point(116.4897199676,39.9252565439);//39.9252565439,116.4897199676
+    var point = new BMap.Point(119.3782479896,25.9977155183);//39.9252565439,116.4897199676
     map.centerAndZoom(point, 17);  // 初始化地图,设置中心点坐标和地图级别
     map.addControl(new BMap.MapTypeControl());   //添加地图类型控件
-    map.setCurrentCity("北京");          // 设置地图显示的城市 此项是必须设置的
+    map.setCurrentCity("福州");          // 设置地图显示的城市 此项是必须设置的
     map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
     map.enableScrollWheelZoom();    //启用滚轮放大缩小，默认禁用
     map.enableContinuousZoom();    //启用地图惯性拖拽，默认禁用  
@@ -13,7 +13,7 @@ $(function(){
     map.addOverlay(marker);
 
     //创建信息窗口   
-    var sContent ="鞋行天下有限公司 <br>地址：3422 Street, Barcelona 432, Spain, New Building North, 15th Floor<br>电话：101 377 655 22125 <br>";   
+    var sContent ="Shengyi Shoes <br>Addr: Room 1403, building 6, Shangchengguoji Garden, Fuxia Road, Fuzhou, China<br>Mobile: +86 18060608001 <br>";
     var infoWindow = new BMap.InfoWindow(sContent);  // 创建信息窗口对象   
     marker.addEventListener('click', function(){   
        this.openInfoWindow(infoWindow);  
