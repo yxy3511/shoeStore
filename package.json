@@ -1,9 +1,9 @@
 {
-  "name": "data_collect",
+  "name": "shoeStore",
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node ./bin/data_collect"
+    "start": "node ./bin/shoeStore"
   },
   "dependencies": {
     "body-parser": "~1.8.1",
