@@ -42,7 +42,7 @@
 	// var arr = url.split("//");
 	// var path = arr[1].substring(arr[1].indexOf("/"));
 	var path = window.location.pathname;
-	if (path == '/page') {
+	if (path == '/page' || path == '/atlas') {
 		$('#home').addClass('active');
 		$('#aboutUs').removeClass('active');
 		$('#products').removeClass('active');

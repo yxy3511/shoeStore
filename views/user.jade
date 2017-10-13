@@ -58,6 +58,7 @@ block content
                   //-         i.halflings-icon.white.edit
     script.
       if('#{msg}' != '')
-        alert('#{msg}')
+        //- alert('#{msg}')
+        setTimeout(alert('#{msg}'),8000)
     script(type='text/javascript', src='/conm/login.js')
     script(type='text/javascript', src='/conm/proList.js')

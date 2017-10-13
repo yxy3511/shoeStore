@@ -708,6 +708,7 @@ h6 {
 	min-height: 100%;
 	padding: 20px 20px;
 	position: relative;
+	width: 80% !important;
 }
 
 .breadcrumb {
@@ -3232,4 +3233,14 @@ section.manage{
 	.manageBody footer{
 		width:740px;
 	}
+}
+
+
+a.manageNav {
+	color:#fff;
+}
+
+.manage a:hover{
+	outline: none;
+	border: none;
 }

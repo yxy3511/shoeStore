@@ -95,6 +95,22 @@ toProDesc=function(req,res){
         console.log(e)
     }
 }
+getProDesc=function(req,res){
+    try{
+        var key = req.query.key
+        proListContent.getProId(key,function(err,vals){
+            if(err){
+                console.log(err)
+            }else{
+                console.log(vals[0]['pid'])
+                var id = vals[0]['pid']
+                res.redirect('/proDesc/'+id)
+            }
+        })
+    }catch(e){
+        console.log(e)
+    }
+}
 toContact=function(req,res){
 	res.render('contact');
 }
@@ -206,6 +222,42 @@ getSortsList = function(req,res,next){
     }
 }
 
+
+toAtlas = function(req,res){
+    try{
+        proListContent.getAllImgs(function(err,vals){
+            if(err){
+                console.log(err)
+            }else{
+                var imgs = {}
+                var cnt = 0 ;
+                if(vals.length > 0){
+                    // console.log('vvaallss:',vals)
+                    for(var first in vals){
+                        for( var sec in vals[first]){
+                            if(sec == 'imgs'){
+                                for(var index in JSON.parse(vals[first][sec])){
+                                    imgs[cnt] = {img:JSON.parse(vals[first][sec])[index],name:vals[first]['pname'],desc:vals[first]['desc_txt']}
+                                    // imgs[cnt] = JSON.parse(vals[first][sec])[index]
+                                    cnt ++
+                                        
+                                }
+                            }
+
+                        }
+                    }
+                    console.log(JSON.stringify(imgs))
+                    res.render('atlas',{imgs:JSON.stringify(imgs)})
+                }
+            }
+        })
+        
+    }catch(e){
+        console.log(e)
+    }
+    
+}
+
 router.get('/',rePage);
 router.get('/page',toPage);
 router.get('/aboutUs',toAbout);
@@ -215,5 +267,8 @@ router.get('/contact',toContact);
 router.get('/getSorts',getSorts);
 router.get('/proSearch',searchPro);
 router.get('/getSortsList',getSortsList);
+router.get('/atlas',toAtlas);
+router.get('/getProDesc',getProDesc);
+
 module.exports = router
 

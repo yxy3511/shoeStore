@@ -95,6 +95,7 @@ getProList = function(req,res,next){
                 for(var i in vals){
                     resArr[i] = vals[i]
                 }
+                // console.log('rrrreessArr:',resArr)
                 //获取sorts
                 proListContent.getSorts('all',function(e,val){
                     if(e){
@@ -140,12 +141,12 @@ savePro = function(req,res,next){
         imgs ? (params.imgs = imgs) : null
         sort ? (params.sort = sort) : null
 
-        // params.pname = pname
-        // params.price = price
-        // params.state = state
-        // params.desc = desc
-        // params.imgs = imgs
-        // params.sort = sort
+        /*params.pname = pname
+        params.price = price
+        params.state = state
+        params.desc = desc
+        params.imgs = imgs
+        params.sort = sort*/
 
         /*if(!pname || !price || !desc || !imgs){
             if(!pname){
@@ -163,17 +164,25 @@ savePro = function(req,res,next){
             res.render('uploadImg',params)
             
         }*/
+        var msg = null 
         if(!pname || !price || !desc || !imgs){
             // toProList()
             if(!pname){
                 msg= 0
+                // msg= '保存失败，商品名不能为空！'
             }else if(!price){
+                // msg= '保存失败，商品价格不能为空！'
                 msg= 1
             }else if(!desc){
+                // msg= msg= '保存失败，商品描述不能为空！'
                 msg= 2
             }else if(!imgs){
+                // msg= '保存失败，商品图片不能为空！'
                 msg= 3
             }
+            // params.msg = msg
+            // console.log('params:',params)
+            // res.render('uploadImg',{msg:msg})
             res.redirect('/manage/toProList/'+msg)
         }
             
@@ -513,6 +522,9 @@ delSort = function(req,res,next){
 
 getUserList = function(req,res,next){
     try{
+        var msg = req.session.manageMsg
+        req.session.manageMsg = null
+        console.log(msg)
         loginContent.searchUser('all',function(e,val){
             if(e){
                 console.log(e)
@@ -537,6 +549,7 @@ getUserList = function(req,res,next){
                         }
                         res.render('user',{
                             users: JSON.stringify(userArr),
+                            msg: msg
                         })
                     }
                 })
@@ -701,7 +714,7 @@ delUser = function(req,res,next){
             if(err){
                 console.log(err)
             }else{
-                loginContent.searchUser('all',function(e,val){
+                /*loginContent.searchUser('all',function(e,val){
                     if(e){
                         console.log(e)
                     }else{
@@ -722,9 +735,13 @@ delUser = function(req,res,next){
                         res.render('user',{
                             users: JSON.stringify(userArr),
                         })
+                        
                     }
                     
-                })
+                })*/
+                var msg = '删除成功！'
+                req.session.manageMsg = msg
+                res.redirect('/manage/getUser')
             }
             
         })

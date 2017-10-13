@@ -46,37 +46,40 @@ registering = function(req,res){
                     if(err){
                         console.log(err)
                     }else if(vals.affectedRows > 0){
-                        loginContent.searchUser('all',function(e,val){
-                        if(e){
-                            console.log(e)
-                        }else{
-                            proListContent.getRoles(function(err,vals){
-                                if(err){
-                                    console.log(err)
-                                }else{
-                                    var roleArr = {}
-                                    for(var i in vals){
-                                        roleArr[vals[i].id] = vals[i].rname
-                                    }
-
-                                    var userArr = {}
-                                    for(var j in val){
-                                        userArr[j] = {
-                                            uname: val[j].uname,
-                                            pwd: val[j].pwd,
-                                            role: roleArr[val[j].role],
-                                            uid: val[j].uid
+                        /*loginContent.searchUser('all',function(e,val){
+                            if(e){
+                                console.log(e)
+                            }else{
+                                proListContent.getRoles(function(err,vals){
+                                    if(err){
+                                        console.log(err)
+                                    }else{
+                                        var roleArr = {}
+                                        for(var i in vals){
+                                            roleArr[vals[i].id] = vals[i].rname
                                         }
+
+                                        var userArr = {}
+                                        for(var j in val){
+                                            userArr[j] = {
+                                                uname: val[j].uname,
+                                                pwd: val[j].pwd,
+                                                role: roleArr[val[j].role],
+                                                uid: val[j].uid
+                                            }
+                                        }
+                                        res.render('user',{
+                                            users: JSON.stringify(userArr),
+                                            msg:'注册成功！'
+                                        })
                                     }
-                                    res.render('user',{
-                                        users: JSON.stringify(userArr),
-                                        msg:'注册成功！'
-                                    })
-                                }
-                            })
-                        }
-                        
-                    })
+                                })
+                            }
+                            
+                        })*/
+                        var msg = '注册成功！'
+                        req.session.manageMsg = msg
+                        res.redirect('/manage/getUser')
                        /* res.render('login',{
                             msg:'注册成功！'
                         })*/

@@ -1,7 +1,7 @@
 extends manageLayout
 
 block content
-  section.content
+  section.manageSection
             //-.container-fluid-full
               //- #content.span10            
                   //-.row-fluid.sortable
@@ -13,7 +13,7 @@ block content
                           //-| Members  */           
             .box-content.upload
               form.form-horizontal(name='picForm' ,method='post', action='/manage/savePro?id=#{pid ? pid : 0}')
-                  fieldset
+                  fieldset.manageFieldset
                     //- .control-group
                     //-   label.control-label(for="typeahead") Auto complete 
                     //-   |                               
@@ -106,12 +106,14 @@ block content
                         textarea#textarea.span66(name='desc' class='cleditor' rows='8') #{desc_txt ? desc_txt : ''}
                     |                           
                     .form-actions.upBtns
+                      //- button.btn.btn-primary.subBtn(type='button') Save changes
                       button.btn.btn-primary.subBtn(type="submit") Save changes
                       |                               
                       button.btn.cancelBtn Cancel
             script.
               //- console.log(!{sorts})
-              //- if('#{msg}' != '')
-                //- alert('#{msg}')
+              console.log('pnama:',#{pname})
+              if('#{msg}' != '')
+                alert('#{msg}')
 
     script(type='text/javascript', src="/conm/upload.js")

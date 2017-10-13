@@ -77,9 +77,13 @@ a, a:hover, a:focus, a:active, a.active {
 }
 
 section {
-    padding: 70px 0;
+    // padding: 70px 0;
+    padding: 130px 0;
 }
-
+section.manageSection{
+    padding:7px;
+    min-height: 860px;
+}
 /*--------------------
 2. Navigation
 --------------------*/
@@ -373,6 +377,7 @@ figcaption {
     white-space: nowrap;
     font-size: 0;
     opacity: 0;
+
 }
 .ot-portfolio-item figure figcaption, .ot-portfolio-item figure figcaption > a {
     position: absolute;
@@ -383,14 +388,23 @@ figcaption {
 }
 
 figure.effect-bubba {
-	background: #000;
-	margin-bottom: 30px;
+    background: rgba(0,0,0,0.8);
+	// background: #000;
+    margin:0 auto; 
+    margin-bottom: 30px;
+    // max-height: 250px;
+    // min-height: 219px;
+    // max-width: 350px;
+    display: flex;
+    flex-direction:column;
+    justify-content:center;
 }
 
 figure.effect-bubba img {
-	opacity: 0.8;
+	// opacity: 0.8;
 	-webkit-transition: opacity 0.35s;
 	transition: opacity 0.35s;
+    
 }
 
 figure.effect-bubba:hover img {
@@ -446,6 +460,9 @@ figure.effect-bubba p {
 	transition: opacity 0.35s, transform 0.35s;
 	-webkit-transform: translate3d(0,20px,0);
 	transform: translate3d(0,20px,0);
+    white-space: nowrap !important;
+    overflow:hidden !important;
+    text-overflow: ellipsis !important;
 }
 
 figure.effect-bubba:hover figcaption::before,
@@ -804,23 +821,41 @@ ul#menus a:hover,ul#menus a:focus {
         min-height: 860px;
     }
     figure.effect-bubba img{
-        width: 353px;
-        height: 228.6px;
+        // width: 353px;
+        // height: 228.6px;
+
+        display: inline-block;
+        margin: 0 auto;
     }
-    figcaption p{
+      
+    figure.effect-bubba {
+        // max-height: 219px;
+        // max-width: 350px;
+        max-height: 250px;
+        min-height: 219px;
+        max-width: 350px;
+    }
+    /* figcaption p{
         white-space: nowrap !important;
         overflow:hidden !important;
         text-overflow: ellipsis !important;
-    }
+    } */
 }
 
 @media only screen and (max-width : 990px) {
     section.content {
         min-height: 860px;
     }
+    figure.effect-bubba {
+        // height: 219px;
+        heigth:80%;
+        width: 80%;
+    }
     figure.effect-bubba img{
-        width: 100%;
-        height: 400px;
+        // width: 100%;
+        // height: 400px;
+        display: inline-block;
+        margin: 0 auto;
     }
 }
 /* -------------------page--------------- */
@@ -867,7 +902,16 @@ ol.carousel-indicators{
     // border: 1px solid blue;
     margin-bottom: 20px;
 }
-
+.slidLi{
+    position: relative;
+}
+.slidImg{
+    width:50px;
+    // height: 30px;
+    position:absolute;
+    top:0px;
+    left:0px;
+}
 .carousel-inner>.item{
 
 }
@@ -883,12 +927,16 @@ ol.carousel-indicators{
 }
 .carousel-indicators li {
     background-color: #000;
-    opacity: 0.6;
+    // opacity: 0.6;
+    opacity: 0.8;
+    padding-left: 50px;
 }
 
 .carousel-indicators li:active {
     background-color: #fff;
-    opacity: 0.9;
+    // opacity: 0.9;
+    opacity: 1;
+    padding-left: 50px;
 }
 
 .proDesc pre{
@@ -914,12 +962,13 @@ ol.carousel-indicators{
     .proDesc{
         display: block;
         text-align: center;
+        margin-top: 30px;
     }
     .proDesc pre{
         text-align: left;
     }
 
-    #proDescPage{
+    .proDescPage{
         margin-top: 0px;
         // position: relative;
         // top:90px;
@@ -957,8 +1006,9 @@ ol.carousel-indicators{
         min-width: 300px;
     }
 
-    #proDescPage{
-        margin-top: 90px;
+    .proDescPage{
+        // margin-top: 90px;
+        padding-top: 190px;
         // position: relative;
         // top:90px;
         // left: 20%;

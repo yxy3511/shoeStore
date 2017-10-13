@@ -10,13 +10,16 @@ html
               .row-fluid.sortable
                 .box.span12
                   .box-header(data-original-title="")
-                    h2
+                    h2#manageMenu
                       button.muser
                         i.halflings-icon.white.user
                         .logoutDiv 
                           | 退出
-                      span.break
-                      | 商品管理
+                      a.manageNav(href='/manage/proList')
+                        span.break
+                        | 商品管理
+                      //- span
+                      //-   &nbsp;&gt; 二级菜单
                     | 
                     .theadbox
                       .ops

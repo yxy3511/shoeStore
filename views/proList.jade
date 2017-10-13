@@ -28,7 +28,8 @@ block content
             -for(var i in JSON.parse(vals))
               -var curId = parseInt(i)+1;
               tr 
-                td #{curId}
+                td #{JSON.parse(vals)[i].pid}
+                //- td #{curId}
                 |                                 
                 td.center #{JSON.parse(sorts)[JSON.parse(vals)[i].sort]}
                 |                                 
@@ -64,6 +65,7 @@ block content
     script.
       if('#{msg}' != '')
         alert('#{msg}')
+      console.log(!{vals})
       //- console.log('valssss:','#{vals}' == '{}')
       //- console.log('length:',!{vals}[0].up_date.length)
       //- for(var i in !{sorts})

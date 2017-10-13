@@ -150,3 +150,14 @@ exports.getRoles = function(callback){
     var searchSql = "select * from roles";
     query(searchSql,callback)
 }
+
+//获取所有图片
+exports.getAllImgs = function(callback){
+    var sql = 'select imgs,pname,desc_txt from products'
+    query(sql,callback)
+}
+
+exports.getProId = function(key,callback){
+    var sql = "select pid from products where imgs like '%"+key+"%'"
+    query(sql,callback)
+}
