@@ -1,37 +1,4 @@
 $(function(){
-    $('.subBtn').on('click',function(e){
-        // console.log('name:',$("input[name='pname']").val()=='' )
-        // console.log('allimg:',$("input[name='allImg']").val())
-        // console.log('price:',$("input[name='price']").val())
-        // console.log('desc:',$("textarea[name='desc']"))
-        var goNext = true
-        if('' == $("input[name='pname']").val()){
-            goNext = false
-            alert('商品名称不能为空！')
-        }else if('' == $("input[name='price']").val()){
-            goNext = false
-            alert('商品价格不能为空！')
-        }else if('' == $("input[name='allImg']").val()){
-            goNext = false
-            alert('商品图片不能为空！')
-        }else if('' == $("textarea[name='desc']").val()){
-            goNext = false
-            alert('商品描述不能为空！')
-        }
-        // console.log("goNext:",goNext)
-        return goNext
-    })
-    /*valChange = function(){
-        console.log('res:',null != $("input[name='pname']").val() &&　null != $("input[name='price']").val()　&& null != $("input[name='allImg']").val() && null != $("textarea[name='desc']").val())
-        console.log($("input[name='pname']").val())
-        console.log(null != $("input[name='allImg']").val())
-        console.log(null != $("input[name='price']").val())
-        console.log($("textarea[name='desc']").val()!='')
-        if(null != $("input[name='pname']").val() &&　null != $("input[name='price']").val()　&& null != $("input[name='allImg']").val() && '' != $("textarea[name='desc']").val()){
-            console.log('enter')
-            $('.subBtn').removeAttr('disabled')
-        }
-    }*/
    
     var path = window.location.pathname
     var curOperat = null 

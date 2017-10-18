@@ -1,4 +1,28 @@
 $(function(){
+    $('.subBtn').on('click',function(e){
+        // alert('eeeenter')
+        // console.log('name:',$("input[name='pname']").val()=='' )
+        // console.log('allimg:',$("input[name='allImg']").val().toString() == '{}')
+        // console.log('price:',$("input[name='price']").val())
+        // console.log('desc:',$("textarea[name='desc']"))
+        var goNext = true
+        if('' == $("input[name='pname']").val()){
+            goNext = false
+            alert('商品名称不能为空！')
+        }else if('' == $("input[name='price']").val()){
+            goNext = false
+            alert('商品价格不能为空！')
+        }else if('' == $("input[name='allImg']").val() || '{}' == $("input[name='allImg']").val().toString()){
+            goNext = false
+            alert('商品图片不能为空！')
+        }else if('' == $("textarea[name='desc']").val()){
+            goNext = false
+            alert('商品描述不能为空！')
+        }
+        // console.log("goNext:",goNext)
+        // e.preventDefault();
+        return goNext
+    })
     //建图片列表
     var imgsObj = $('#allImg').val() ? JSON.parse($('#allImg').val()) : ''
     if(imgsObj != ''){

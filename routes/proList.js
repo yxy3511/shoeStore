@@ -43,7 +43,7 @@ toProList = function(req,res){
                         for(var j in val){
                             sortArr[val[j].id] = val[j].name
                         }
-                        var msg = null
+                        /*var msg = null
                         if(mid == 0){
                             msg= '保存失败，商品名不能为空！'
                         }else if(mid == 1){
@@ -52,12 +52,12 @@ toProList = function(req,res){
                             msg= '保存失败，商品描述不能为空！'
                         }else if(mid == 3){
                             msg= '保存失败，商品图片不能为空！'
-                        }
+                        }*/
                         res.render('proList',{
                             // res.render('tbodyPro',{
                             vals: JSON.stringify(resArr),
                             sorts: JSON.stringify(sortArr),
-                            msg: msg
+                            // msg: msg
                         })
                     }
                     
@@ -75,6 +75,8 @@ toProList = function(req,res){
 
 getProList = function(req,res,next){
     try{
+        var msg = req.session.manageMsg
+        req.session.manageMsg = null
         proListContent.getProList(0,function(err,vals){
             // console.log('valllll:',vals)
             if(err){
@@ -110,7 +112,8 @@ getProList = function(req,res,next){
                             vals: JSON.stringify(resArr),
                             sorts: JSON.stringify(sortArr),
                             pageCount: pageCount,
-                            totalCount: totalCount
+                            totalCount: totalCount,
+                            msg: msg
                         })
                     }
                 })                
@@ -164,7 +167,7 @@ savePro = function(req,res,next){
             res.render('uploadImg',params)
             
         }*/
-        var msg = null 
+        /*var msg = null 
         if(!pname || !price || !desc || !imgs){
             // toProList()
             if(!pname){
@@ -184,7 +187,7 @@ savePro = function(req,res,next){
             // console.log('params:',params)
             // res.render('uploadImg',{msg:msg})
             res.redirect('/manage/toProList/'+msg)
-        }
+        }*/
             
         if(id == 0){
             proListContent.addPro(params,function(err,vals){
@@ -316,8 +319,9 @@ searchPro = function(req,res,next){
                     })
                    
                 }else{
-                    // res.redirect('/manage/proList')
-                    proListContent.getProList(0,function(err,vals){
+                    req.session.manageMsg = '查询无结果！'
+                    res.redirect('/manage/proList')
+                    /*proListContent.getProList(0,function(err,vals){
                         if(err){
                             console.log(err)
                         }else{
@@ -362,7 +366,7 @@ searchPro = function(req,res,next){
                             }
                         }
                         
-                    })
+                    })*/
                 }
             })
         }
