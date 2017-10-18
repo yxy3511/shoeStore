@@ -10,12 +10,15 @@ $(function(){
         curOperat = '添加商品'
     }
     if(null != curOperat){
-        setTimeout(function(){
-            var parent = document.getElementById('manageMenu')
-            var tLevel = document.createElement('span')
-            tLevel.innerHTML = '&nbsp;&gt;' + curOperat
-            parent.appendChild(tLevel); 
-         },1000)
+        var parent = document.getElementById('manageMenu')
+        // console.log(document.getElementsByClassName('newChild'))
+        if(document.getElementsByClassName('newChild').length != 0){
+            parent.removeChild(document.getElementsByClassName('newChild')[0])
+        }
+        var tLevel = document.createElement('span')
+        tLevel.setAttribute('class', 'newChild')
+        tLevel.innerHTML = '&nbsp;&gt;' + curOperat
+        parent.appendChild(tLevel); 
     }
    
     
