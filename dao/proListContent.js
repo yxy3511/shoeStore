@@ -161,3 +161,22 @@ exports.getProId = function(key,callback){
     var sql = "select pid from products where imgs like '%"+key+"%'"
     query(sql,callback)
 }
+
+//获得aboutUs页面内容
+exports.getAboutUs = function(callback){
+    var sql = 'select * from aboutUs order by up_date desc'
+    query(sql,callback)
+}
+
+
+//增加数据
+exports.addAboutUs = function(item,callback){
+    var sql = "insert into aboutUs(title,desc_txt,content,up_date) values('"+item.title+"','"+item.desc_txt+"','"+JSON.stringify(item.value)+"',now())"
+    console.log('ssssssssssql:',sql)
+    query(sql,callback)
+}
+exports.editAboutUs = function(item,callback){
+    var sql = "update aboutUs set title='"+item.title+"', desc_txt = '"+item.desc_txt+"', content='"+JSON.stringify(item.value)+"', up_date=now() where id="+1;
+    query(sql,callback)
+}
+

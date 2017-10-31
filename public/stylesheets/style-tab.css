@@ -701,14 +701,23 @@ h6 {
 
 /* Content and Main Elements
 =================================================================== */
-
+@media only screen and (max-width : 990px) {
+	#content{
+		width: 100% !important;
+	}
+}
+@media only screen and (min-width : 991px) {
+	#content{
+		width: 90% !important;
+	}
+}
 #content {
 	background: #ffffff;
 	filter: none;
 	min-height: 100%;
 	padding: 20px 20px;
 	position: relative;
-	width: 80% !important;
+	// width: 80% !important;
 }
 
 .breadcrumb {
@@ -3144,7 +3153,7 @@ ul.messagesList li span.date {
 	top: 30px;
 	left: -30px;
 	// padding-top:7px;
-	width: 90px;
+	width: 115px;
 	// height: 90px;
 }
 .logoutDiv{
@@ -3243,4 +3252,30 @@ a.manageNav {
 .manage a:hover{
 	outline: none;
 	border: none;
+}
+
+/* -------------编辑关于我们----------------- */
+.infoBlock{
+	// background-color: #eee;
+	padding: 5px;
+	margin-top:5px;
+	position: relative;
+}
+
+ .ciBox{
+ 	display: inline-block;
+ 	visibility: hidden;
+ 	margin-left: 55px !important;
+ 	margin-top: 5px !important;
+ 	border: none;
+ }  
+.imgBox{
+	display: inline-block;
+	position: absolute;
+	top:10px;
+	left:10px;
+	border: none;
+}
+.againRow:hover{
+	cursor: pointer;
 }

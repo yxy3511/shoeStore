@@ -11,6 +11,7 @@ var page= require('./routes/page');
 var upload = require('./routes/upload')
 var proList = require('./routes/proList')
 var login = require('./routes/login')
+var aboutUSEdit = require('./routes/editAboutUs')
 // var mongodb=require('mongodb');
 //以下代码顺序很重要
 var session = require('express-session');
@@ -46,6 +47,7 @@ app.use('/manage/?',function(req, res, next) {
 app.use('/manage',proList)
 app.use('/',page)
 app.use('/manage',upload)
+app.use('/manage',aboutUSEdit)
 app.use('/',login)
 
 // app.set('port', process.env.PORT || 8300);

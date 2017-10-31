@@ -37,11 +37,14 @@ $(function(){
         // e.stopPropagation();
         // console.log( $.data($('.aImg')[0]))
         if(window.location.pathname.indexOf('/atlas') != -1){
-            console.log('enter')
+            // console.log('enter')
             var imgSrc = e.target.src
+            // console.log(imgSrc)
             var originStr = window.location.origin
-            var res = imgSrc.substring(originStr.length,imgSrc.length+1)
-            window.location = '/getProDesc?key='+res
+            var res = imgSrc?imgSrc.substring(originStr.length,imgSrc.length+1):null
+            if(!!res){
+                window.location = '/getProDesc?key='+res
+            }
         }else{
             //做到这
         }

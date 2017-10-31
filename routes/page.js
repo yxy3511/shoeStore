@@ -38,7 +38,28 @@ toPage=function(req,res){
     
 }
 toAbout=function(req,res){
-	res.render('aboutUs');
+	// res.render('aboutUs');
+    var msg = req.session.manageMsg
+    req.session.manageMsg = null
+    //获得页面信息
+    proListContent.getAboutUs(function(err,vals){
+        if(err){
+            console.log(err)
+        }else{
+            console.log('vals.length:',vals.length)
+            if(vals.length > 0){
+                res.render('aboutUs',{
+                    vals: JSON.stringify(vals[0]),
+                    msg:msg
+                })
+            }else{
+                req.session.manageMsg = '暂无介绍'
+                res.render('aboutUs',{
+                    msg:msg
+                })
+            }
+        }
+    })
 }
 toProducts=function(req,res){
     try{

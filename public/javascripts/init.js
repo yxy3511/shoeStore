@@ -54,7 +54,7 @@
 		$('#products').removeClass('active');
 		$('#contact').removeClass('active');
 
-	} else if (path.indexOf('/products') != -1 || path.indexOf('/proDesc') != -1 || path.indexOf('/proSearch') != -1) {
+	} else if (path.indexOf('/products') != -1 || path.indexOf('/proDesc') != -1 || path.indexOf('/proSearch') != -1 || path.indexOf('/descPro') != -1 ) {
 		$('#products').addClass('active');
 		$('#home').removeClass('active');
 		$('#aboutUs').removeClass('active');

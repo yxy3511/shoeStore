@@ -3,50 +3,56 @@ extends layout
 block content
     section#aboutMe.light-bg.content
       .container
-        .row
-          .col-lg-12.text-center
-            .section-title
-              h2 ABOUT US
-              | 							
-              p
-                | A creative agency based on Candy Land, ready to boost your business with some beautifull templates. Lattes Agency is one of the best in town see more you will be amazed.
-        | 				
-        .row
-          // about module
-          .col-md-3.text-center
-            .mz-module-about
-              i.fa.fa-briefcase.ot-circle
-              | 							
-              h3 Web Development
-              | 							
-              p At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis
-          // end about module
-          // about module
-          .col-md-3.text-center
-            .mz-module-about
-              i.fa.fa-photo.ot-circle
-              | 							
-              h3 Visualisation
-              | 							
-              p
-                | Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe
-          // end about module
-          // about module
-          .col-md-3.text-center
-            .mz-module-about
-              i.fa.fa-camera-retro.ot-circle
-              | 							
-              h3 Photography
-              | 							
-              p Accusamus et iusto odio dignissimos ducimus qui blanditiis
-          // end about module
-          // about module
-          .col-md-3.text-center
-            .mz-module-about
-              i.fa.fa-cube.ot-circle
-              | 							
-              h3 UI/UX Design
-              | 							
-              p  Itaque earum rerum hic tenetur a sapiente, ut aut reiciendis maiores
-          // end about module
-      // /.container
+        -if(!!vals) 
+          .row
+            .col-lg-12.text-center
+              .section-title
+                h2= JSON.parse(vals)['title']
+                | 							
+                p= JSON.parse(vals)['desc_txt']
+          -for(var i in JSON.parse(JSON.parse(vals)['content']))
+            if(i%2 == 0)		
+              .row
+                // about module
+                -if(!!JSON.parse(JSON.parse(vals)['content'])[i]['img'] && ''!=JSON.parse(JSON.parse(vals)['content'])[i]['img'])
+                  .col-md-3.text-center.marginB
+                    .mz-module-about.aboutImg
+                      //- i.fa.fa-briefcase.ot-circle
+                      img(src="#{JSON.parse(JSON.parse(vals)['content'])[i]['img']}")
+                      | 	
+                .col-md-8.aboutLeft					
+                  h3= JSON.parse(JSON.parse(vals)['content'])[i]['title']
+                  | 							
+                  p= JSON.parse(JSON.parse(vals)['content'])[i]['value']
+            -else
+             .row
+               // about module
+               .col-md-8.aboutLeft         
+                 h3= JSON.parse(JSON.parse(vals)['content'])[i]['title']
+                 |               
+                 p= JSON.parse(JSON.parse(vals)['content'])[i]['value']
+               -if(!!JSON.parse(JSON.parse(vals)['content'])[i]['img'] && ''!=JSON.parse(JSON.parse(vals)['content'])[i]['img'])
+                 .col-md-3.text-center.marginB
+                   .mz-module-about.aboutImg
+                      img(src="#{JSON.parse(JSON.parse(vals)['content'])[i]['img']}")
+            //- .row
+            //-   // about module
+            //-   .col-md-3.text-center.marginB
+            //-     .mz-module-about.aboutImg
+            //-       //- i.fa.fa-briefcase.ot-circle
+            //-       img(src='/images/demo/author-4.jpg')
+            //-       |   
+            //-   .col-md-8.aboutLeft         
+            //-     h3 Web Development
+            //-     |               
+            //-     p At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis
+        -else
+          .center
+            h1.noContent= msg
+    script.
+      //- console.log(11,!{vals})
+      //- console.log(222,!!JSON.parse(!{vals}['content'])['img'])
+      //- console.log(333,'#{msg}')
+      if('#{msg}' != '' && '#{msg}' != '暂无介绍')
+          alert('#{msg}')
+

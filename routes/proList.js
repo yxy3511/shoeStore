@@ -594,10 +594,8 @@ getUserList = function(req,res,next){
 //         console.log(err)
 //     }
 // }
-/*----------------做到这里-----------------------*/
 
 saveUser = function(req,res,next){
-    console.log('sssend:',req.body)
     try{
         var uid = req.body.uid
         var uname = req.body.uname
@@ -755,6 +753,88 @@ delUser = function(req,res,next){
 }
 
 
+editAboutUs = function(req,res,next){
+    try{
+        proListContent.getAboutUs(function(err,vals){
+            if(err){
+                console.log(err)
+            }else{
+                res.render('editAboutUs',vals[0])
+            }
+        })
+            
+    }catch(err){
+        console.log(err)
+    }
+}
+
+addAboutUs = function(req,res,next){
+    try{
+        var item = {}
+        var params = {}
+        params.title = req.body.bname || null
+        params.desc_txt = req.body.desc_txt || null
+        params.subTitle = req.body.subTitle || null
+        params.info = req.body.info || null
+        params.allImg = JSON.parse(req.body.allImg) || ''
+
+        item.title = params.title 
+        item.desc_txt = params.desc_txt
+        item.value = []
+        if(params.info != '' && typeof params.info == 'string'){
+            var obj = {}
+            obj.value = params.info
+            obj.title = params.subTitle
+            obj.img = params.allImg[2]
+            item.value.push(obj)
+        }else{
+            for(var i = 0;i<params.info.length; i++){
+                if(params.info[i] != ''){
+                    var obj = {}
+                    obj.value = params.info[i]
+                    obj.title = params.subTitle[i]
+                    obj.img = params.allImg[i +2] || ''
+                    item.value.push(obj)
+                }
+                
+            }
+        }
+        
+        var state = 'edit'
+        proListContent.getAboutUs(function(err,val){
+            if(err){
+                console.log(err)
+            }else if(val.length == 0){
+                state = 'add'
+            }
+
+            if(state == 'add'){
+                proListContent.addAboutUs(item,function(err,vals){
+                    if(err){
+                        console.log(err)
+                    }else{
+                        req.session.manageMsg = '公司介绍添加成功！'
+                        res.redirect('/aboutUs')
+                    }
+                })
+            }else{
+                proListContent.editAboutUs(item,function(err,vals){
+                    if(err){
+                        console.log(err)
+                    }else{
+                        req.session.manageMsg = '公司介绍修改成功！'
+                        res.redirect('/aboutUs')
+                    }
+                })
+            }
+        })
+        
+            
+    }catch(err){
+        console.log(err)
+    }
+}
+
 router.get('/proList',getProList);
 router.get('/delPro/:id',delPro);
 router.post('/savePro',savePro);
@@ -768,6 +848,8 @@ router.get('/editSorts',getSortList)
 router.get('/saveSort/:sid/:text',saveSort)
 router.get('/addSort/:text',addSort)
 router.get('/delSort/:sid',delSort)
+router.get('/editAboutUs',editAboutUs)
+router.post('/addAboutUs',addAboutUs)
 
 router.get('/getUser',getUserList)
 router.get('/delUser/:uid',delUser)

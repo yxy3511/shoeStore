@@ -60,6 +60,7 @@ $(function(){
                 var iconSpan = document.createElement("span")
                 iconSpan.className = 'glyphicon glyphicon-remove iconSpan'   
                 btnClose.prepend(iconSpan);
+
             }
         }
     }

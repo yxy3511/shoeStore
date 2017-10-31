@@ -8,6 +8,8 @@ $(function(){
         curOperat = '分类管理'
     }else if(path == '/manage/uploadImg'){
         curOperat = '添加商品'
+    }else if(path == '/manage/editAboutUs'){
+        curOperat = '编辑公司介绍'
     }
     if(null != curOperat){
         var parent = document.getElementById('manageMenu')
@@ -64,6 +66,9 @@ $(function(){
     })
     $('.mSort').on('click',function(){
         window.location = '/manage/editSorts'
+    })
+    $('.editAU').on('click',function(){
+        window.location = '/manage/editAboutUs'
     })
     //搜索框出现
     $('.searchIcon').on('click',function(){

@@ -84,6 +84,9 @@ section.manageSection{
     padding:7px;
     min-height: 860px;
 }
+.marginB{
+    margin-bottom: 20px;
+}
 /*--------------------
 2. Navigation
 --------------------*/
@@ -840,6 +843,7 @@ ul#menus a:hover,ul#menus a:focus {
         overflow:hidden !important;
         text-overflow: ellipsis !important;
     } */
+
 }
 
 @media only screen and (max-width : 990px) {
@@ -857,6 +861,31 @@ ul#menus a:hover,ul#menus a:focus {
         display: inline-block;
         margin: 0 auto;
     }
+}
+
+
+.aboutLeft h3{
+    font-weight: 500;
+    font-size: 17px;
+    text-transform: uppercase;
+    color: #3A3A3A;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+}
+.aboutLeft p{
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 22px;
+    color: #969696;
+}
+
+.aboutImg img {
+    width:100%;
+    // max-width: 400px;
+    // max-height: 300px;
+}
+.noContent{
+    opacity: 0.6;
 }
 /* -------------------page--------------- */
 a#knowMore:hover{
