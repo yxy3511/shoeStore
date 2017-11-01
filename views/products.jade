@@ -172,5 +172,6 @@ block content
   script.
     //- console.log(JSON.parse(!{vals}[0].imgs))
     if('#{msg}' != '')
-        alert('#{msg}')    
+        window.wxc.xcConfirm('#{msg}', window.wxc.xcConfirm.typeEnum.info)
+        //- alert('#{msg}')    
   script(type='text/javascript', src="/conm/products.js")

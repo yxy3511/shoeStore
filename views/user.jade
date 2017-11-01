@@ -58,7 +58,7 @@ block content
                   //-         i.halflings-icon.white.edit
     script.
       if('#{msg}' != '')
+        setTimeout(window.wxc.xcConfirm('#{msg}', window.wxc.xcConfirm.typeEnum.info),8000);
         //- alert('#{msg}')
-        setTimeout(alert('#{msg}'),8000)
-    script(type='text/javascript', src='/conm/login.js')
+        //- setTimeout(alert('#{msg}'),8000)
     script(type='text/javascript', src='/conm/proList.js')

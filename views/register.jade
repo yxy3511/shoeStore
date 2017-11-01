@@ -1,19 +1,22 @@
-doctype html
-html.no-js(lang="en")
-  head
-    meta(charset="UTF-8")
-    meta(http-equiv="X-UA-Compatible", content="IE=edge")
-    |  
-    meta(name="viewport", content="width=device-width, initial-scale=1")
-    |  
-    title login
-    link(rel="stylesheet", type="text/css", href="/stylesheets/normalize.css")
-    link(rel="stylesheet", type="text/css", href="/stylesheets/demo.css")
-    // 必要样式
-    link(rel="stylesheet", type="text/css", href="/stylesheets/component.css")
-    //if IE
-      script(src="/stylesheets/html5.js")
-  body
+//- doctype html
+//- html.no-js(lang="en")
+//-   head
+//-     meta(charset="UTF-8")
+//-     meta(http-equiv="X-UA-Compatible", content="IE=edge")
+//-     |  
+//-     meta(name="viewport", content="width=device-width, initial-scale=1")
+//-     |  
+//-     title login
+//-     link(rel="stylesheet", type="text/css", href="/stylesheets/normalize.css")
+//-     link(rel="stylesheet", type="text/css", href="/stylesheets/demo.css")
+//-     // 必要样式
+//-     link(rel="stylesheet", type="text/css", href="/stylesheets/component.css")
+//-     //if IE
+//-       script(src="/stylesheets/html5.js")
+//-   body
+extends layoutwithbar
+
+block content
     .container.demo-1
       .content
         #large-header.large-header
@@ -44,13 +47,14 @@ html.no-js(lang="en")
                 a.act-but.submit(href="/login") 登 录
         script.
             if('#{msg}' != '')
-              alert('#{msg}')
-    // /container
-    script(src="/javascripts/TweenLite.min.js")
-    |       
-    script(src="/javascripts/EasePack.min.js")
-    |       
-    script(src="/javascripts/rAF.js")
-    |       
-    script(src="/javascripts/demo-1.js")      
+              window.wxc.xcConfirm('#{msg}', window.wxc.xcConfirm.typeEnum.info)
+              //- alert('#{msg}')
+    //- // /container
+    //- script(src="/javascripts/TweenLite.min.js")
+    //- |       
+    //- script(src="/javascripts/EasePack.min.js")
+    //- |       
+    //- script(src="/javascripts/rAF.js")
+    //- |       
+    //- script(src="/javascripts/demo-1.js")      
 

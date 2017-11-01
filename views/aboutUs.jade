@@ -54,5 +54,6 @@ block content
       //- console.log(222,!!JSON.parse(!{vals}['content'])['img'])
       //- console.log(333,'#{msg}')
       if('#{msg}' != '' && '#{msg}' != '暂无介绍')
-          alert('#{msg}')
+        setTimeout(window.wxc.xcConfirm('#{msg}', window.wxc.xcConfirm.typeEnum.info),8000);
+        //- alert('#{msg}')
 

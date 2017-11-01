@@ -1,13 +1,11 @@
 doctype html
-html
-	include inc/header
-	include inc/scripts
+html.no-js(lang="en")
+	include inc/loginHeader
+	include inc/loginScripts
 	body
 		//- 填内容
+		block content
+			//- include inc/footer
 
-		div.container
-			block content
-			include inc/footer
-
-		script(src='/javascripts/init.js')
+		script(src='/javascripts/demo-1.js')
 		block scripts

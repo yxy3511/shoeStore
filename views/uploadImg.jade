@@ -114,6 +114,7 @@ block content
               //- console.log(!{sorts})
               //- console.log('pnama:',#{pname})
               if('#{msg}' != '')
-                alert('#{msg}')
+                window.wxc.xcConfirm('#{msg}', window.wxc.xcConfirm.typeEnum.info)
+                //- alert('#{msg}')
 
     script(type='text/javascript', src="/conm/upload.js")

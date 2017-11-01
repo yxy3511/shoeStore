@@ -175,6 +175,7 @@ block content
       //- console.log(333,!{content}[0]['img'])
       //- console.log('pnama:',#{pname})
       if('#{msg}' != '')
-        alert('#{msg}')
+        window.wxc.xcConfirm('#{msg}', window.wxc.xcConfirm.typeEnum.info)
+        //- alert('#{msg}')
 
     script(type='text/javascript', src="/conm/editAboutUs.js")

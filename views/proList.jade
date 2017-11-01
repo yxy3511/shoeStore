@@ -64,7 +64,8 @@ block content
                     i.halflings-icon.white.trash
     script.
       if('#{msg}' != '')
-        alert('#{msg}')
+        window.wxc.xcConfirm('#{msg}', window.wxc.xcConfirm.typeEnum.info)
+        //- alert('#{msg}')
       //- console.log(!{vals})
       //- console.log('valssss:','#{vals}' == '{}')
       //- console.log('length:',!{vals}[0].up_date.length)
