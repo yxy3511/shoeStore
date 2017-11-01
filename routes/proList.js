@@ -772,14 +772,14 @@ addAboutUs = function(req,res,next){
     try{
         var item = {}
         var params = {}
-        params.title = req.body.bname || null
-        params.desc_txt = req.body.desc_txt || null
-        params.subTitle = req.body.subTitle || null
-        params.info = req.body.info || null
+        params.title = req.body.bname || ''
+        params.desc_txt = req.body.desc_txt || ''
+        params.subTitle = req.body.subTitle || ''
+        params.info = req.body.info || ''
         params.allImg = JSON.parse(req.body.allImg) || ''
 
-        item.title = params.title 
-        item.desc_txt = params.desc_txt
+        item.title = params.title || ''
+        item.desc_txt = params.desc_txt || ''
         item.value = []
         if(params.info != '' && typeof params.info == 'string'){
             var obj = {}
@@ -791,8 +791,8 @@ addAboutUs = function(req,res,next){
             for(var i = 0;i<params.info.length; i++){
                 if(params.info[i] != ''){
                     var obj = {}
-                    obj.value = params.info[i]
-                    obj.title = params.subTitle[i]
+                    obj.value = params.info[i] || ''
+                    obj.title = params.subTitle[i] || ''
                     obj.img = params.allImg[i +2] || ''
                     item.value.push(obj)
                 }

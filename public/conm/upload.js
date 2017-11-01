@@ -8,16 +8,20 @@ $(function(){
         var goNext = true
         if('' == $("input[name='pname']").val()){
             goNext = false
-            alert('商品名称不能为空！')
+            // alert('商品名称不能为空！')
+            window.wxc.xcConfirm('商品名称不能为空！', window.wxc.xcConfirm.typeEnum.info);
         }else if('' == $("input[name='price']").val()){
             goNext = false
-            alert('商品价格不能为空！')
+            // alert('商品价格不能为空！')
+            window.wxc.xcConfirm('商品价格不能为空！', window.wxc.xcConfirm.typeEnum.info);
         }else if('' == $("input[name='allImg']").val() || '{}' == $("input[name='allImg']").val().toString()){
             goNext = false
-            alert('商品图片不能为空！')
+            // alert('商品图片不能为空！')
+            window.wxc.xcConfirm('商品图片不能为空！', window.wxc.xcConfirm.typeEnum.info);
         }else if('' == $("textarea[name='desc']").val()){
             goNext = false
-            alert('商品描述不能为空！')
+            // alert('商品描述不能为空！')
+            window.wxc.xcConfirm('商品描述不能为空！', window.wxc.xcConfirm.typeEnum.info);
         }
         // console.log("goNext:",goNext)
         // e.preventDefault();

@@ -15,7 +15,7 @@ block content
               |                               
               .controls
                 textarea#desc_txt.span66(name='desc_txt' class='cleditor' rows='8') #{desc_txt ? desc_txt : ''}
-            -if(!!content)
+            -if(!!content && content != 'null' && content != '[]')
               -for(var i in JSON.parse(content))
                 .infoBlock.light-bg
                   .control-group

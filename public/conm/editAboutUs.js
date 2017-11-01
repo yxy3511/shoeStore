@@ -1,15 +1,30 @@
-$(function(){
+ $(function(){
     $('.subBtn').on('click',function(e){
         var goNext = true
         if('' == $("input[name='bname']").val()){
             goNext = false
-            alert('介绍页大标题不能为空！')
+            // alert('介绍页大标题不能为空！')
+            window.wxc.xcConfirm('介绍页大标题不能为空！', window.wxc.xcConfirm.typeEnum.info);
         }else if('' == $("input[name='desc_txt']").val()){
             goNext = false
-            alert('介绍页大描述不能为空！')
-        }/*else if(('' == $("input[name='curImg']").val() || '{}' == $("input[name='curImg']").val().toString()) || '' == $("input[name='subTile']").val() || '' == $("input[name='info']").val()){
-            goNext = false
-            alert('介绍内容不能为空！')
+            // alert('介绍页大描述不能为空！')
+            window.wxc.xcConfirm('介绍页大描述不能为空！', window.wxc.xcConfirm.typeEnum.info);
+        }/*else{
+            for(var i=0; i < $('.info').length; i++){
+                console.log(111,$('.info')[i].value == '')
+                if($('.info')[i].value == ''){
+                    goNext = false
+                    console.log(222, window.wxc.xcConfirm)
+                    console.log(333,window.wxc.xcConfirm.typeEnum.info)
+                    try{
+
+                        window.wxc.xcConfirm('介绍详情不能为空！', window.wxc.xcConfirm.typeEnum.info);
+                    }catch(e){
+                        console.log(e)
+                    }
+                    // alert('介绍内容不能为空！')
+                }
+            }
         }*/
         $('#allImg').attr('value',JSON.stringify(imgsAll))
         return goNext
@@ -30,7 +45,6 @@ $(function(){
         }
         var curIndex = $(this).parent().parent().parent().parent().index()
         var parent = $(this).parent().parent().parent().parent()[0]
-        console.log(parent)
         //隐藏图片框和删除按钮
         var curImgBox = parent.getElementsByClassName('ciBox')[0]
         curImgBox.setAttribute('style','visibility:hidden;');
@@ -44,18 +58,21 @@ $(function(){
     function setImg(parent,imgs){
         var siblings = $(parent).parent().children('.infoBlock')
         for(var i in imgs){
-            //出现图片框和删除按钮
-            var curImgBox = siblings[+i - 2].getElementsByClassName('ciBox')[0]
-            curImgBox.setAttribute('style','visibility:visible;');
-            //赋值
-            var curImg = siblings[+i - 2].getElementsByTagName('img')[0]
-            curImg.setAttribute('src',imgsAll[i])
+            if(!!imgsAll[i]){
+                //出现图片框和删除按钮
+                var curImgBox = siblings[+i - 2].getElementsByClassName('ciBox')[0]
+                curImgBox.setAttribute('style','visibility:visible;');
+                //赋值
+                var curImg = siblings[+i - 2].getElementsByTagName('img')[0]
+                curImg.setAttribute('src',imgsAll[i])
 
-            var curHref= siblings[+i - 2].getElementsByTagName('a')[0]
-            curHref.setAttribute('href',imgsAll[i])
-            //隐藏上传框
-            var curAdd = siblings[+i - 2].getElementsByClassName('imgBox')[0]
-            curAdd.setAttribute('style','display:none;');
+                var curHref= siblings[+i - 2].getElementsByTagName('a')[0]
+                curHref.setAttribute('href',imgsAll[i])
+                //隐藏上传框
+                var curAdd = siblings[+i - 2].getElementsByClassName('imgBox')[0]
+                curAdd.setAttribute('style','display:none;');
+            }
+            
         }
     }
     //创建节点在jade页面写
@@ -132,7 +149,7 @@ $(function(){
 
     $('.againRow ').on('click',function(){
         var topNode = $('#getImgIndex')
-        var infoBlock = $($('.infoBlock')[0]).clone(false)
+        var infoBlock = $($('.infoBlock')[0]).clone(true)
         //清空数据
         infoBlock.find('.imgBox').attr('style','display:inline-block;')
         infoBlock.find('.ciBox').attr('style','visibility:hidden;')
