@@ -787,7 +787,7 @@ addAboutUs = function(req,res,next){
             obj.title = params.subTitle
             obj.img = params.allImg[2]
             item.value.push(obj)
-        }else{
+        }else if(!!params.info){
             for(var i = 0;i<params.info.length; i++){
                 if(params.info[i] != ''){
                     var obj = {}
