@@ -8,14 +8,14 @@ block content
             .control-group
               label.control-label(for="typeahead") 介绍页大标题
               .controls
-                input#typeahead.span4.typeahead(type="text" name='bname' value="#{title ? title : '' }")
+                input#typeahead.span4.typeahead(type="text" name='bname' value="#{title ? title : 'About Us' }")
                 //- p.help-block Start typing to activate auto complete!
             .control-group.hidden-phone
               label.control-label(for="desc_txt") 介绍页描述
               |                               
               .controls
                 textarea#desc_txt.span66(name='desc_txt' class='cleditor' rows='8') #{desc_txt ? desc_txt : ''}
-            -if(!!content && content != 'null' && content != '[]')
+            -if(!!content && content != '[]')
               -for(var i in JSON.parse(content))
                 .infoBlock.light-bg
                   .control-group
@@ -170,7 +170,7 @@ block content
             |                               
             button.btn.cancelBtn Cancel
     script.
-      //- console.log(33333,#{title})
+      //- console.log(33333,!{content}[1]['value'])
       //- console.log(4444444,JSON.parse('!{content}')[0]['img'] != null)
       //- console.log(333,!{content}[0]['img'])
       //- console.log('pnama:',#{pname})

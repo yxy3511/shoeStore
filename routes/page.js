@@ -37,6 +37,15 @@ toPage=function(req,res){
     }
     
 }
+setSC = function(val){
+    var reg=new RegExp("<br>","g"); 
+    var res = []
+    for(var obj of val){
+        obj['value'] = obj['value'].replace(reg,"\r\n")
+        res.push(obj)
+    }
+    return JSON.stringify(res)
+}
 toAbout=function(req,res){
 	// res.render('aboutUs');
     var msg = req.session.manageMsg
@@ -48,6 +57,7 @@ toAbout=function(req,res){
         }else{
             console.log('vals.length:',vals.length)
             if(vals.length > 0){
+                vals[0].content = setSC(JSON.parse(vals[0].content))
                 res.render('aboutUs',{
                     vals: JSON.stringify(vals[0]),
                     msg:msg

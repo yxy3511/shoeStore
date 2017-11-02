@@ -182,7 +182,7 @@ section.manageSection{
 --------------------*/
 
 header {
-    background-image: url(../images/demo/bg-main.jpg);
+    background-image: url(../images/bg-main.jpg);
     background-repeat: none;
     background-attachment: scroll;
     background-position: center center;
@@ -492,7 +492,7 @@ figure.effect-bubba:hover p {
 }
 
 .bg-img1 {
-    background-image: url(../images/demo/office-bg.jpg);
+    // background-image: url(../images/demo/office-bg.jpg);
     background-size: cover !important;
     background-position: center center;
     background-repeat: no-repeat;
@@ -872,11 +872,18 @@ ul#menus a:hover,ul#menus a:focus {
     letter-spacing: 2px;
     margin-bottom: 20px;
 }
-.aboutLeft p{
+.aboutLeft p,.aboutLeft pre{
     font-size: 14px;
     font-weight: 300;
     line-height: 22px;
     color: #969696;
+}
+.aboutLeft pre{
+    display: inline-block;
+    width: 100%;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    background-color: #f8f8f8;
 }
 
 .aboutImg img {

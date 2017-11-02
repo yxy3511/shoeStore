@@ -23,14 +23,14 @@ block content
                 .col-md-8.aboutLeft					
                   h3= JSON.parse(JSON.parse(vals)['content'])[i]['title']
                   | 							
-                  p= JSON.parse(JSON.parse(vals)['content'])[i]['value']
+                  pre= JSON.parse(JSON.parse(vals)['content'])[i]['value']
             -else
              .row
                // about module
                .col-md-8.aboutLeft         
                  h3= JSON.parse(JSON.parse(vals)['content'])[i]['title']
                  |               
-                 p= JSON.parse(JSON.parse(vals)['content'])[i]['value']
+                 pre= JSON.parse(JSON.parse(vals)['content'])[i]['value']
                -if(!!JSON.parse(JSON.parse(vals)['content'])[i]['img'] && ''!=JSON.parse(JSON.parse(vals)['content'])[i]['img'])
                  .col-md-3.text-center.marginB
                    .mz-module-about.aboutImg

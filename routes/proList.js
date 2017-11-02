@@ -759,6 +759,7 @@ editAboutUs = function(req,res,next){
             if(err){
                 console.log(err)
             }else{
+                vals[0].content = setSC(JSON.parse(vals[0].content))
                 res.render('editAboutUs',vals[0])
             }
         })
@@ -767,7 +768,40 @@ editAboutUs = function(req,res,next){
         console.log(err)
     }
 }
+isNull = function(vals){
+    var val = vals
+    if(val['value'].length == 0 && val['img'] == '' && val['title'] == ''){
+        return true
+    }
+    return false
+}
 
+RemoveSC = function(val){
+    var reg=new RegExp("\r\n","g"); 
+    val= val.replace(reg,"<br>"); 
+    /*var str = val.toString()
+    str = str.replace("\n\r", "<br/>");
+    str = str.replace("\r\n", "<br/>");
+    str = str.replace("\n", "<br/>");
+    str = str.replace("\r", "<br/>");
+    str = str.replace("\t", "    ");
+    str = str.replace(" ", " ");
+    str = str.replace("\"", "\\" + "\"");
+    return str*/
+    return val
+}
+
+setSC = function(val){
+    var reg=new RegExp("<br>","g"); 
+    var res = []
+    for(var obj of val){
+        obj['value'] = obj['value'].replace(reg,"\r\n")
+        console.log(99999999,obj)
+        res.push(obj)
+    }
+    console.log(2333,res)
+    return JSON.stringify(res)
+}
 addAboutUs = function(req,res,next){
     try{
         var item = {}
@@ -777,25 +811,35 @@ addAboutUs = function(req,res,next){
         params.subTitle = req.body.subTitle || ''
         params.info = req.body.info || ''
         params.allImg = JSON.parse(req.body.allImg) || ''
-
         item.title = params.title || ''
         item.desc_txt = params.desc_txt || ''
         item.value = []
-        if(params.info != '' && typeof params.info == 'string'){
+        if(typeof params.info == 'string'){
             var obj = {}
-            obj.value = params.info
-            obj.title = params.subTitle
-            obj.img = params.allImg[2]
-            item.value.push(obj)
-        }else if(!!params.info){
+            obj.value = RemoveSC(params.info) || ''
+            obj.title = params.subTitle || ''
+            obj.img = params.allImg[2] || ''
+            if(! isNull(obj)){
+                item.value.push(obj)
+            }
+
+        }else{
             for(var i = 0;i<params.info.length; i++){
-                if(params.info[i] != ''){
+                /*if(params.info[i] != ''){
                     var obj = {}
                     obj.value = params.info[i] || ''
                     obj.title = params.subTitle[i] || ''
                     obj.img = params.allImg[i +2] || ''
                     item.value.push(obj)
+                }*/
+                var obj = {}
+                obj.value = RemoveSC(params.info[i]) || ''
+                obj.title = params.subTitle[i] || ''
+                obj.img = params.allImg[i +2] || ''
+                if(isNull(obj)){
+                    continue 
                 }
+                item.value.push(obj)
                 
             }
         }
