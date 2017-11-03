@@ -28,9 +28,9 @@ block content
                       .controls
                         input#typeahead.span4.typeahead(type="text" name='pname' value="#{pname ? pname : '' }")
                         |                               
-                        p.help-block Start typing to activate auto complete!
+                        //- p.help-block Start typing to activate auto complete!
                     |  
-                    .control-group
+                    //- .control-group
                       label.control-label(for="price") 商品价格
                       |                               
                       .controls
@@ -45,7 +45,7 @@ block content
                             option(value='#{j}') #{JSON.parse(sorts)[j]}
                         //- input#psort.span4.typeahead(type="number" name='sort' value="#{sort ? sort : '' }")
                     |   
-                    .control-group
+                    //- .control-group
                       label.control-label(for="pstate") 商品状态
                       |                               
                       .controls

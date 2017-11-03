@@ -21,10 +21,22 @@ toRegister=function(req,res){
 }
 registering = function(req,res){
     try{
-        var uname = req.body.rename || null
-        var pwd = req.body.repass || null
-        var againpwd = req.body.againpass || null
-
+        var uname = req.body.rename
+        var pwd = req.body.repass
+        var againpwd = req.body.againpass
+        if(uname == ''){
+            return res.render('register',{
+                    msg:'用户名不能为空！'
+                });
+        }else if(pwd == ''){
+            return res.render('register',{
+                    msg:'密码不能为空！'
+                });
+        }else if(againpwd == ''){
+            return res.render('register',{
+                    msg:'请再次输入密码！'
+                });
+        }
         var params = {}
         params.uname = uname
         params.pwd = pwd
@@ -32,14 +44,14 @@ registering = function(req,res){
         loginContent.searchUser(uname,function(err,vals){
             if(err){
                 console.log(err)
-            }else if(params.pwd != againpwd){
-                res.render('register',{
-                    msg:'两次密码输入不相同！'
-                });
             }else if(vals.length > 0){
                 //用户名已被使用
                 res.render('register',{
                     msg:'此用户名已被注册！'
+                });
+            }else if(params.pwd != againpwd){
+                res.render('register',{
+                    msg:'两次密码输入不相同！'
                 });
             }else if(vals.length == 0){
                 loginContent.addUser(params,function(err,vals){
@@ -96,9 +108,19 @@ registering = function(req,res){
 }
 loggingIn = function(req,res){
     try{
-        var uname = req.body.uname || null
-        var pwd = req.body.pwd || null
-
+        var uname = req.body.uname
+        var pwd = req.body.pwd
+        console.log(1111,uname)
+        console.log(222,pwd)
+        if(uname.length == 0){
+            return res.render('login',{
+                    msg: '用户名不能为空！'
+                })
+        }else if(pwd.length == 0){
+            return res.render('login',{
+                    msg: '密码不能为空！'
+                })
+        }
         var params = {}
         params.uname = uname
         params.pwd = pwd

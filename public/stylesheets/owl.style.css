@@ -704,7 +704,7 @@ font-size: 11px;
 }
 
 .btn:hover, .btn:focus, .btn:active, .btn.active, .open .dropdown-toggle.btn {
-    color: #fff;
+    color: #fff !important;
     background-color: #fec503;
     border-color: #f6bf01;
 }
@@ -817,6 +817,12 @@ ul#menus a:hover,ul#menus a:focus {
         color: #fec503;
     }
 }
+li.txt{
+    margin-top: 9px;
+}
+li.marginT{
+    margin: 9px 0px 0px 0px !important;
+}
 
 /* -------------about Me---------- */
 @media only screen and (min-width : 991px) {
@@ -897,6 +903,9 @@ ul#menus a:hover,ul#menus a:focus {
 /* -------------------page--------------- */
 a#knowMore:hover{
     color: #fff !important;
+}
+a.noLine:hover{
+    text-decoration: none !important;
 }
 /* -------------products---------------- */
 h2 a{

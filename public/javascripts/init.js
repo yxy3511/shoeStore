@@ -13,6 +13,7 @@
                 //建新的节点
                 var parent = document.getElementById('menus')
                 var liContent = document.createElement("li")
+                liContent.className = 'txt'
                 parent.appendChild(liContent);  
 
                 var aBlock = document.createElement("a")
@@ -22,7 +23,7 @@
                 liContent.appendChild(aBlock); 
 
                 var liBlock = document.createElement("li")
-                liBlock.className =  'divider'   
+                liBlock.className =  'divider marginT'   
                 // parent.prepend(liBlock);  
                 parent.insertBefore(liBlock, liContent.nextSibling)
                 /*if(cnt != 0){
@@ -61,7 +62,6 @@
 		$('#contact').removeClass('active');
 		var pArr = window.location.pathname.split('/');
 		var sid = parseInt(pArr[pArr.length-1])
-		console.log(sid)
 		$("[sid="+sid+"]").addClass('active');
 		
 	} else if (path == '/contact') {

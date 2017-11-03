@@ -14,11 +14,11 @@ block content
               |                                   
               th 商品名
               |                                   
-              th 价格
+              //- th 价格
               |                                   
               th 描述
               |                                   
-              th 库存
+              //- th 库存
               |                                   
               th 更新日期
               |                                   
@@ -35,11 +35,11 @@ block content
                 |                                 
                 td.center #{JSON.parse(vals)[i].pname}
                 |                                 
-                td.center ￥#{JSON.parse(vals)[i].price.toFixed(2) }
+                //- td.center ￥#{JSON.parse(vals)[i].price.toFixed(2) }
                 |                                 
                 td.center.overHid #{JSON.parse(vals)[i].desc_txt}
                 |                                 
-                td.center
+                //- td.center
                   case JSON.parse(vals)[i].state
                     when 1
                       span.label.label-success 销 售

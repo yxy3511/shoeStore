@@ -117,6 +117,10 @@ $(function(){
     })*/
     $('.addSort').click(function(e){
         var text = $('.addSortName').val()
+        if(text == ''){           
+            window.wxc.xcConfirm('类型名称不能为空！', window.wxc.xcConfirm.typeEnum.info)
+            return 
+        }
         var sid = $('.newId').innerText
         window.location = '/manage/addSort/'+text
     })

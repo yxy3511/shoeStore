@@ -76,6 +76,8 @@ exports.addPro = function(param,callback){
         searchSql = "insert into products(pname,price,desc_txt,up_date,imgs,state) values('"+param.pname+"',"+param.price+",'"+param.desc+"',now(),'"+param.imgs+"',"+param.state+");"
     }else if(param.pname && param.price && param.desc && param.imgs && param.sort){
         searchSql = "insert into products(pname,price,desc_txt,up_date,imgs,sort) values('"+param.pname+"',"+param.price+",'"+param.desc+"',now(),'"+param.imgs+"',"+param.sort+");"
+    }else if(param.pname && param.desc && param.imgs && param.sort){
+        searchSql = "insert into products(pname,price,desc_txt,up_date,imgs,sort) values('"+param.pname+"',"+0.00+",'"+param.desc+"',now(),'"+param.imgs+"',"+param.sort+");"
     }
     if(searchSql != ''){
         query(searchSql,callback)
@@ -98,6 +100,8 @@ exports.editPro = function(id,param,callback){
         searchSql = "update products set pname='"+param.pname+"', price = "+param.price+", state="+param.state+", desc_txt='"+param.desc+"', up_date=now(), imgs='"+param.imgs+"' where pid="+id;
     }else if(param.pname && param.price && param.desc && param.imgs && param.sort){
         searchSql = "update products set pname='"+param.pname+"', price = "+param.price+", desc_txt='"+param.desc+"', up_date=now(), imgs='"+param.imgs+"', sort=1 where pid="+id;
+    }else if(param.pname && param.desc && param.imgs && param.sort){
+        searchSql = "update products set pname='"+param.pname+"', price = "+0.00+", desc_txt='"+param.desc+"', up_date=now(), imgs='"+param.imgs+"', sort=1 where pid="+id;
     }
     query(searchSql,callback)
 }
@@ -180,3 +184,8 @@ exports.editAboutUs = function(item,callback){
     query(sql,callback)
 }
 
+//获得类型下的商品
+exports.getSortPro = function(sid,callback){
+    var sql = 'select pid from products where sort = '+sid;
+    query(sql,callback)
+}

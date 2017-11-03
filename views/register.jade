@@ -23,7 +23,7 @@ block content
           canvas#demo-canvas
           |                     
           .logo_box
-            h3 欢迎你
+            h3 添加用户
             |                       
             form(action="/registering", name="registerForm", method="post")
               .input_outer
@@ -42,8 +42,8 @@ block content
                 input.text(name="againpass", style="color: #FFFFFF !important; position:absolute; z-index:100;", value="", type="password", placeholder="请再次输入密码" autocomplete="off")
               |                             
               .mb2.register
-                button.act-but.submit(type='submit') 注 册
-              .mb2.login
+                button.act-but.submit(type='submit') 添加
+              //- .mb2.login
                 a.act-but.submit(href="/login") 登 录
         script.
             if('#{msg}' != '')

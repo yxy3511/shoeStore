@@ -414,6 +414,8 @@ delImg = function(req,res,next){
 
 getSortList = function(req,res,next){
     try{
+        var msg = req.session.manageMsg
+        req.session.manageMsg = null
          proListContent.getSorts('all',function(e,val){
             if(e){
                 console.log(e)
@@ -424,6 +426,7 @@ getSortList = function(req,res,next){
                 }
                 res.render('sorts',{
                     sorts: JSON.stringify(sortArr),
+                    msg: msg
                 })
             }
             
@@ -445,13 +448,14 @@ saveSort = function(req,res,next){
                     if(e){
                         console.log(e)
                     }else{
-                        var sortArr = {}
+                        res.redirect('/manage/editSorts')
+                        /*var sortArr = {}
                         for(var j in val){
                             sortArr[val[j].id] = val[j].name
                         }
                         res.render('sorts',{
                             sorts: JSON.stringify(sortArr),
-                        })
+                        })*/
                     }
                     
                 })
@@ -475,13 +479,14 @@ addSort = function(req,res,next){
                     if(e){
                         console.log(e)
                     }else{
-                        var sortArr = {}
+                        res.redirect('/manage/editSorts')
+                        /*var sortArr = {}
                         for(var j in val){
                             sortArr[val[j].id] = val[j].name
                         }
                         res.render('sorts',{
                             sorts: JSON.stringify(sortArr),
-                        })
+                        })*/
                     }
                     
                 })
@@ -496,27 +501,40 @@ addSort = function(req,res,next){
 delSort = function(req,res,next){
     try{
         var sid = req.params.sid
-        proListContent.delSort(sid,function(err,vals){
+        proListContent.getSortPro(sid,function(err,val){
             if(err){
                 console.log(err)
             }else{
-                proListContent.getSorts('all',function(e,val){
-                    if(e){
-                        console.log(e)
-                    }else{
-                        var sortArr = {}
-                        for(var j in val){
-                            sortArr[val[j].id] = val[j].name
+                if(val.length > 0){
+                    req.session.manageMsg = '存在此类型的商品，类型删除失败！'
+                    return res.redirect('/manage/editSorts')
+                }else{
+                    proListContent.delSort(sid,function(err,vals){
+                        if(err){
+                            console.log(err)
+                        }else{
+                            res.redirect('/manage/editSorts')
+                            /*proListContent.getSorts('all',function(e,val){
+                                if(e){
+                                    console.log(e)
+                                }else{
+                                    var sortArr = {}
+                                    for(var j in val){
+                                        sortArr[val[j].id] = val[j].name
+                                    }
+                                    res.render('sorts',{
+                                        sorts: JSON.stringify(sortArr),
+                                    })
+                                }
+                                
+                            })*/
                         }
-                        res.render('sorts',{
-                            sorts: JSON.stringify(sortArr),
-                        })
-                    }
-                    
-                })
+                        
+                    })
+                }
             }
-            
         })
+        
     }catch(err){
         console.log(err)
     }

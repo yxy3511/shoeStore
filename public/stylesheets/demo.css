@@ -33,3 +33,7 @@ p.ref {
 	text-align: center;
 	padding: 2em 1em;
 }
+.marginL{
+	display: inline-block;
+	margin-left: 10px;
+}

@@ -55,6 +55,6 @@ block content
                     .btn.btn-info.addSort
                       i.halflings-icon.white.edit
     script.
-      //- if('#{msg}' != '')
-      //-   alert('#{msg}')
+      if('#{msg}' != '')
+        window.wxc.xcConfirm('#{msg}', window.wxc.xcConfirm.typeEnum.info)
     script(type='text/javascript', src='/conm/proList.js')

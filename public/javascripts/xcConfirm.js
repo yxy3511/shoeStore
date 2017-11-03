@@ -84,7 +84,7 @@
 		var $cancel = $("<a>").addClass("sgBtn").addClass("cancel").text("取消");//取消按钮
 		var $input = $("<input>").addClass("inputBox");//输入框
 		var $clsBtn = $("<a>").addClass("clsBtn");//关闭按钮
-		
+		window.$isHas = !!window.$isHas
 		//建立按钮映射关系
 		var btns = {
 			ok: $ok,
@@ -98,8 +98,9 @@
 			if(popType["input"] === itype){
 				$txt.append($input);
 			}
-			
+			if($isHas) return 
 			creatDom();
+			$isHas = true
 			bind();
 		}
 		
@@ -141,6 +142,7 @@
 
 		//确认按钮事件
 		function doOk(){
+			$isHas = false
 			var $o = $(this);
 			var v = $.trim($input.val());
 			if ($input.is(":visible"))
@@ -153,6 +155,7 @@
 		
 		//取消按钮事件
 		function doCancel(){
+			$isHas = false
 			var $o = $(this);
 			config.onCancel();
 			$("#" + popId).remove(); 
@@ -161,6 +164,7 @@
 		
 		//关闭按钮事件
 		function doClose(){
+			$isHas = false
 			$("#" + popId).remove();
 			config.onClose(eventType.close);
 			$(window).unbind("keydown");

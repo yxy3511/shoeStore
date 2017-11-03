@@ -33,7 +33,10 @@ block content
                         i.halflings-icon.white.trash
                 tr 
                   td(colspan='5') 
-                    a(href='/manage/register') 添加用户
+                    //- a(href='/manage/register') 添加用户
+                    a(href='/manage/register')
+                      .btn.btn-info.addSort
+                        i.halflings-icon.white.edit 
                   //- form.form-inline.addUserForm
                   //-   td #{cnt+1}
                   //-     input.form-control(type="text", name='uid',style='visibility:hidden;width:30px;',value=0)
