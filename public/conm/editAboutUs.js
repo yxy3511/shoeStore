@@ -169,7 +169,8 @@
             //IE中阻止函数器默认动作的方式 
             window.event.returnValue = false;
         }
-        window.location.href='/manage/proList'
+        window.location.href='/manage/aboutUs'
+        // window.location.href='/manage/proList'
     })
     
 })

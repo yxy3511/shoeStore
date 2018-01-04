@@ -101,7 +101,10 @@ router.get('/uploadImg', function(req, res, next) {
                     sortArr[vals[j].id] = vals[j].name
                 }
                 //获取状态
-                res.render('uploadImg',{
+                // res.render('uploadImg',{
+                //     sorts: JSON.stringify(sortArr)
+                // }); 
+                res.render('proAdd',{
                     sorts: JSON.stringify(sortArr)
                 }); 
             }

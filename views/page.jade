@@ -161,21 +161,22 @@ block content
               | 						
               p
                 | There is no perfection in the world, but we are always pursuing perfection.
-        | 		
-        -for(var i in JSON.parse(vals))
-          -var curId = parseInt(i); 
-          -if(curId % 3 == 0)           
-            .row
-          // start portfolio item
-          a.col-md-4(href="/proDesc/#{JSON.parse(vals)[i].pid}")
-            .ot-portfolio-item
-              figure.effect-bubba
-                img.img-responsive(src="#{JSON.parse(JSON.parse(vals)[i].imgs)[0] ? JSON.parse(JSON.parse(vals)[i].imgs)[0] : 'images/demo/portfolio-2.jpg'}")
-                |               
-                figcaption
-                  h2 #{JSON.parse(vals)[i].pname}
-                  |                 
-                  p.descTxt #{JSON.parse(vals)[i].desc_txt}	
+        | 	
+        .imgsList
+            -for(var i in JSON.parse(vals))
+              -var curId = parseInt(i); 
+                 //- -if(curId % 3 == 0)           
+                  .row
+              // start portfolio item
+              a.imgcard(href="/proDesc/#{JSON.parse(vals)[i].pid}")
+                .ot-portfolio-item
+                  figure.effect-bubba
+                    img.img-responsive.lazyload(data-original="#{JSON.parse(JSON.parse(vals)[i].imgs)[0] ? JSON.parse(JSON.parse(vals)[i].imgs)[0] : 'images/demo/portfolio-2.jpg'}" src="#{JSON.parse(JSON.parse(vals)[i].imgs)[0] ? JSON.parse(JSON.parse(vals)[i].imgs)[0] : 'images/demo/portfolio-2.jpg'}")
+                    |               
+                    figcaption
+                      h2 #{JSON.parse(vals)[i].pname}
+                      |                 
+                      p.descTxt #{JSON.parse(vals)[i].desc_txt}	
     //-     .row
     //-       // start portfolio item
     //-       a.col-md-4(href="/products/0")
@@ -449,5 +450,11 @@ block content
     p#back-top
       a(href="#top")
         i.fa.fa-angle-up
+    script.
+      //懒加载
+      $(".lazyload").lazyload({
+          effect : "fadeIn",
+          threshold : 200
+      });
     //- script(type='text/javascript', src='/conm/page.js')
     

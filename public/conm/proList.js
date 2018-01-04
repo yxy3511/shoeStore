@@ -1,27 +1,26 @@
 $(function(){
-   
-    var path = window.location.pathname
-    var curOperat = null 
-    if(path == '/manage/getUser'){
-        curOperat = '用户管理'
-    }else if(path == '/manage/editSorts'){
-        curOperat = '分类管理'
-    }else if(path == '/manage/uploadImg'){
-        curOperat = '添加商品'
-    }else if(path == '/manage/editAboutUs'){
-        curOperat = '编辑公司介绍'
-    }
-    if(null != curOperat){
-        var parent = document.getElementById('manageMenu')
-        // console.log(document.getElementsByClassName('newChild'))
-        if(document.getElementsByClassName('newChild').length != 0){
-            parent.removeChild(document.getElementsByClassName('newChild')[0])
-        }
-        var tLevel = document.createElement('span')
-        tLevel.setAttribute('class', 'newChild')
-        tLevel.innerHTML = '&nbsp;&gt;' + curOperat
-        parent.appendChild(tLevel); 
-    }
+    // var path = window.location.pathname
+    // var curOperat = null 
+    // if(path == '/manage/getUser'){
+    //     curOperat = '用户管理'
+    // }else if(path == '/manage/editSorts'){
+    //     curOperat = '分类管理'
+    // }else if(path == '/manage/uploadImg'){
+    //     curOperat = '添加商品'
+    // }else if(path == '/manage/editAboutUs'){
+    //     curOperat = '编辑公司介绍'
+    // }
+    // if(null != curOperat){
+    //     var parent = document.getElementById('manageMenu')
+    //     // console.log(document.getElementsByClassName('newChild'))
+    //     if(document.getElementsByClassName('newChild').length != 0){
+    //         parent.removeChild(document.getElementsByClassName('newChild')[0])
+    //     }
+    //     var tLevel = document.createElement('span')
+    //     tLevel.setAttribute('class', 'newChild')
+    //     tLevel.innerHTML = '&nbsp;&gt;' + curOperat
+    //     parent.appendChild(tLevel); 
+    // }
    
     
     
@@ -112,6 +111,11 @@ $(function(){
         }   
     })
 
+
+    $('.txtAddSort').click(function(e){
+        $('.newSort').css('display','table-row')
+    })
+
     /*$('.addSortName').blur(function(e){
         $('.addSortName').attr('disabled','disabled')
     })*/
@@ -131,7 +135,9 @@ $(function(){
             // console.log(parseInt($(this).parent().prev()[0].innerText))
             var text = $(this).val()
             var sid = parseInt($(this).parent().prev()[0].innerText)
-            window.location = '/manage/addSort/'+text
+            if(text){
+                window.location = '/manage/addSort/'+text
+            }
         }   
     })
 })  

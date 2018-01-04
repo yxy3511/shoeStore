@@ -17,7 +17,8 @@ toLogin=function(req,res){
     res.render('login')
 }
 toRegister=function(req,res){
-    res.render('register')
+    // res.render('register')
+    res.render('newRegister')
 }
 registering = function(req,res){
     try{
@@ -51,6 +52,93 @@ registering = function(req,res){
                 });
             }else if(params.pwd != againpwd){
                 res.render('register',{
+                    msg:'两次密码输入不相同！'
+                });
+            }else if(vals.length == 0){
+                loginContent.addUser(params,function(err,vals){
+                    if(err){
+                        console.log(err)
+                    }else if(vals.affectedRows > 0){
+                        /*loginContent.searchUser('all',function(e,val){
+                            if(e){
+                                console.log(e)
+                            }else{
+                                proListContent.getRoles(function(err,vals){
+                                    if(err){
+                                        console.log(err)
+                                    }else{
+                                        var roleArr = {}
+                                        for(var i in vals){
+                                            roleArr[vals[i].id] = vals[i].rname
+                                        }
+
+                                        var userArr = {}
+                                        for(var j in val){
+                                            userArr[j] = {
+                                                uname: val[j].uname,
+                                                pwd: val[j].pwd,
+                                                role: roleArr[val[j].role],
+                                                uid: val[j].uid
+                                            }
+                                        }
+                                        res.render('user',{
+                                            users: JSON.stringify(userArr),
+                                            msg:'注册成功！'
+                                        })
+                                    }
+                                })
+                            }
+                            
+                        })*/
+                        var msg = '注册成功！'
+                        req.session.manageMsg = msg
+                        res.redirect('/manage/getUser')
+                       /* res.render('login',{
+                            msg:'注册成功！'
+                        })*/
+                    }
+                })    
+            }
+
+        })
+
+    }catch(e){
+        console.log(e)
+    }
+       
+}
+newRegistering = function(req,res){
+    try{
+        var uname = req.body.rename
+        var pwd = req.body.repass
+        var againpwd = req.body.againpass
+        if(uname == ''){
+            return res.render('newRegister',{
+                    msg:'用户名不能为空！'
+                });
+        }else if(pwd == ''){
+            return res.render('newRegister',{
+                    msg:'密码不能为空！'
+                });
+        }else if(againpwd == ''){
+            return res.render('newRegister',{
+                    msg:'请再次输入密码！'
+                });
+        }
+        var params = {}
+        params.uname = uname
+        params.pwd = pwd
+
+        loginContent.searchUser(uname,function(err,vals){
+            if(err){
+                console.log(err)
+            }else if(vals.length > 0){
+                //用户名已被使用
+                res.render('newRegister',{
+                    msg:'此用户名已被注册！'
+                });
+            }else if(params.pwd != againpwd){
+                res.render('newRegister',{
                     msg:'两次密码输入不相同！'
                 });
             }else if(vals.length == 0){
@@ -157,7 +245,8 @@ loggingIn = function(req,res){
 }
 router.get('/login',toLogin);
 router.get('/manage/register',toRegister);
-router.post('/registering',registering);
+router.post('/registering',newRegistering);
+// router.post('/registering',registering);
 router.post('/logging',loggingIn);
 
 module.exports = router

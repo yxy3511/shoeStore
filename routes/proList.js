@@ -12,6 +12,7 @@ var loginContent = require('./../dao/loginContent.js');
  
 toProList = function(req,res){
     // res.render('proList')
+
      try{
         var mid = req.params.msg || null
         proListContent.getProList(0,function(err,vals){
@@ -74,6 +75,7 @@ toProList = function(req,res){
 }
 
 getProList = function(req,res,next){
+    global.imagesArr = []
     try{
         var msg = req.session.manageMsg
         req.session.manageMsg = null
@@ -107,14 +109,20 @@ getProList = function(req,res,next){
                         for(var j in val){
                             sortArr[val[j].id] = val[j].name
                         }
-                        res.render('proList',{
-                        // res.render('tbodyPro',{
+                        res.render('newProlist',{
                             vals: JSON.stringify(resArr),
                             sorts: JSON.stringify(sortArr),
                             pageCount: pageCount,
                             totalCount: totalCount,
                             msg: msg
                         })
+                        /*res.render('proList',{
+                            vals: JSON.stringify(resArr),
+                            sorts: JSON.stringify(sortArr),
+                            pageCount: pageCount,
+                            totalCount: totalCount,
+                            msg: msg
+                        })*/
                     }
                 })                
             }
@@ -126,6 +134,7 @@ getProList = function(req,res,next){
     }
 }
 savePro = function(req,res,next){
+    console.log('enter savepro')
     global.imagesArr = []
     try{
         var id = req.query.id || null
@@ -246,7 +255,8 @@ descPro = function(req,res,next){
                 console.log(err)
             }else if(vals.length > 0){
                 //vals是数组
-                res.render("proDesc",vals[0])
+                // res.render("proDesc",vals[0])
+                res.render("newProdesc",vals[0])
             }
         })
     }catch(e){
@@ -275,14 +285,15 @@ editPro = function(req,res,next){
                             }
                             vals[0].sorts = JSON.stringify(sortArr)
                             //vals是数组
-                            res.render("uploadImg",vals[0])
+                            // res.render("uploadImg",vals[0])
+                            res.render("newProedit",vals[0])
                         }
                     })
                 }
             })
             
         }else{
-            res.render("uploadImg")
+            res.render("newProedit")
         }
         
         
@@ -424,7 +435,11 @@ getSortList = function(req,res,next){
                 for(var j in val){
                     sortArr[val[j].id] = val[j].name
                 }
-                res.render('sorts',{
+                /*res.render('sorts',{
+                    sorts: JSON.stringify(sortArr),
+                    msg: msg
+                })*/
+                res.render('newSorts',{
                     sorts: JSON.stringify(sortArr),
                     msg: msg
                 })
@@ -569,10 +584,14 @@ getUserList = function(req,res,next){
                                 uid: val[j].uid
                             }
                         }
-                        res.render('user',{
+                        res.render('newUser',{
                             users: JSON.stringify(userArr),
                             msg: msg
                         })
+                        // res.render('user',{
+                        //     users: JSON.stringify(userArr),
+                        //     msg: msg
+                        // })
                     }
                 })
             }
@@ -652,7 +671,11 @@ saveUser = function(req,res,next){
                             uid: val[j].uid
                         }
                     }
-                    res.render('user',{
+                    /*res.render('user',{
+                        users: JSON.stringify(userArr),
+                        msg: msg
+                    })*/
+                    res.render('newUser',{
                         users: JSON.stringify(userArr),
                         msg: msg
                     })
@@ -682,7 +705,10 @@ saveUser = function(req,res,next){
                                     uid: val[j].uid
                                 }
                             }
-                            res.render('user',{
+                            /*res.render('user',{
+                                users: JSON.stringify(userArr),
+                            })*/
+                            res.render('newUser',{
                                 users: JSON.stringify(userArr),
                             })
                         }
@@ -773,12 +799,19 @@ delUser = function(req,res,next){
 
 editAboutUs = function(req,res,next){
     try{
-        proListContent.getAboutUs(function(err,vals){
+        proListContent.getAboutUs(null,function(err,vals){
+            // console.log('-------',vals)
             if(err){
                 console.log(err)
             }else{
-                vals[0].content = setSC(JSON.parse(vals[0].content))
-                res.render('editAboutUs',vals[0])
+                if(vals.length == 0){
+                    res.render('newEditAboutus',vals)
+                }else{
+
+                    vals[0].content = setSC(JSON.parse(vals[0].content))
+                    // res.render('editAboutUs',vals[0])
+                    res.render('newEditAboutus',vals[0])
+                }
             }
         })
             
@@ -824,11 +857,15 @@ addAboutUs = function(req,res,next){
     try{
         var item = {}
         var params = {}
+        // console.log('-------',req.body)
+        params.id = +req.body.id
         params.title = req.body.bname || ''
         params.desc_txt = req.body.desc_txt || ''
         params.subTitle = req.body.subTitle || ''
         params.info = req.body.info || ''
         params.allImg = JSON.parse(req.body.allImg) || ''
+
+        item.id = params.id
         item.title = params.title || ''
         item.desc_txt = params.desc_txt || ''
         item.value = []
@@ -863,7 +900,7 @@ addAboutUs = function(req,res,next){
         }
         
         var state = 'edit'
-        proListContent.getAboutUs(function(err,val){
+        proListContent.getAboutUs(item.id,function(err,val){
             if(err){
                 console.log(err)
             }else if(val.length == 0){
@@ -897,6 +934,45 @@ addAboutUs = function(req,res,next){
     }
 }
 
+
+toAboutUs = function(req,res){
+    var msg = req.session.manageMsg
+    req.session.manageMsg = null
+    try{
+        proListContent.getAboutUs(null,function(err,val){
+            console.log('----------',val)
+            if(err){
+                console.log(err)
+            }else if(val.length > 0){
+                res.render('newAboutus',{
+                    msg: msg,
+                    vals: JSON.stringify(val)
+                })
+            }else{
+                res.render('newAboutus',{
+                    msg: msg,
+                    vals: val
+                })
+            }
+        })
+
+    }catch(err){
+        console.log(err)
+    }
+    
+}
+delAboutUs = function(req,res){
+    proListContent.delAboutUs(function(err,val){
+        if(err){
+            console.log(err)
+        }else{
+            req.session.manageMsg = '公司介绍清空成功！'
+            res.redirect('/manage/aboutUs')
+        }
+    })
+}
+
+
 router.get('/proList',getProList);
 router.get('/delPro/:id',delPro);
 router.post('/savePro',savePro);
@@ -912,6 +988,8 @@ router.get('/addSort/:text',addSort)
 router.get('/delSort/:sid',delSort)
 router.get('/editAboutUs',editAboutUs)
 router.post('/addAboutUs',addAboutUs)
+router.get('/aboutUs',toAboutUs)
+router.get('/delAboutus',delAboutUs)
 
 router.get('/getUser',getUserList)
 router.get('/delUser/:uid',delUser)

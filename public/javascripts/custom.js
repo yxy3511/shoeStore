@@ -34,8 +34,7 @@ function browser() {
 jQuery(document).ready(function($){
 	
 	if($('.messagesList').width()) {
-		
-		if(jQuery.browser.version.substring(0, 2) == "8.") {
+		if(jQuery.browser.version && jQuery.browser.version.substring(0, 2) == "8.") {
 
 			$('ul.messagesList li:nth-child(2n+1)').addClass('odd');
 			
@@ -46,7 +45,6 @@ jQuery(document).ready(function($){
 });	
 
 $(document).ready(function(){
-		
 			
 	$("#username").focus(function() {
 		
@@ -106,21 +104,21 @@ $(document).ready(function(){
 	});
 			
 	/* ---------- Acivate Functions ---------- */
-	template_functions();
-	init_masonry();
-	sparkline_charts();
-	charts();
-	calendars();
-	growlLikeNotifications();
-	widthFunctions();
+	// template_functions();
+	// init_masonry();
+	// sparkline_charts();
+	// charts();
+	// calendars();
+	// growlLikeNotifications();
+	// widthFunctions();
 	
-	if(jQuery.browser.version.substring(0, 2) == "8.") {
+	if(jQuery.browser && jQuery.browser.version.substring(0, 2) == "8.") {
 		 
 		//disable jQuery Knob
 		
 	} else {
 		
-		circle_progess();
+		// circle_progess();
 		
 	}
 	
@@ -1988,7 +1986,7 @@ function growlLikeNotifications() {
 
 
 /* ---------- Additional functions for data table ---------- */
-$.fn.dataTableExt.oApi.fnPagingInfo = function ( oSettings )
+/*$.fn.dataTableExt.oApi.fnPagingInfo = function ( oSettings )
 {
 	return {
 		"iStart":         oSettings._iDisplayStart,
@@ -2074,7 +2072,7 @@ $.extend( $.fn.dataTableExt.oPagination, {
 			}
 		}
 	}
-});
+});*/
 
 /* ---------- Page width functions ---------- */
 

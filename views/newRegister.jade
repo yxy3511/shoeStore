@@ -1,0 +1,66 @@
+
+extends newManageLayout
+
+block content
+  #content.span10
+    ul.breadcrumb.realtive
+      li
+        //- i.icon-home
+        |           
+        a(href="/manage/getUser") 用户列表
+        |  
+        | >          
+        //- i.icon-angle-right
+        | 
+      |         
+      li
+        | 添加用户
+      //- li.addLi
+        a(href="/manage/uploadImg") 添加商品
+    | 
+    section.manageSection
+        .container                    
+          .logo_box
+            //- h3 添加用户
+            |                       
+            form(action="/registering", name="registerForm", method="post")
+              .input_outer
+                span.u_user
+                |                               
+                //- input.text(name="rename", style="color: #FFFFFF !important", type="text",autofocus placeholder="请输入账户" autocomplete="off")
+                input.text(name="rename", type="text",autofocus placeholder="请输入账户" autocomplete="off")
+              |                             
+              .input_outer
+                span.us_uer
+                |                               
+                input.text(name="repass", style="position:absolute; z-index:100;", value="", type="password", placeholder="请输入密码" autocomplete="off")
+                //- input.text(name="repass", style="color: #FFFFFF !important; position:absolute; z-index:100;", value="", type="password", placeholder="请输入密码" autocomplete="off")
+              |                             
+              .input_outer
+                span.us_uer
+                |                               
+                input.text(name="againpass", style="position:absolute; z-index:100;", value="", type="password", placeholder="请再次输入密码" autocomplete="off")
+                //- input.text(name="againpass", style="color: #FFFFFF !important; position:absolute; z-index:100;", value="", type="password", placeholder="请再次输入密码" autocomplete="off")
+              |           
+              .form-actions.upBtns
+                //- button.btn.btn-primary.subBtn(type='button') Save changes
+                button.btn.btn-primary.subBtn(type="submit") Save changes
+                |                               
+                a.btn.cancelBtn(href="/manage/getUser") Cancel                 
+              //- .mb2.register
+                button.act-but.submit(type='submit') 添加
+              //- .mb2.login
+                a.act-but.submit(href="/login") 登 录
+        script.
+            if('#{msg}' != '')
+              window.wxc.xcConfirm('#{msg}', window.wxc.xcConfirm.typeEnum.info)
+              //- alert('#{msg}')
+    //- // /container
+    //- script(src="/javascripts/TweenLite.min.js")
+    //- |       
+    //- script(src="/javascripts/EasePack.min.js")
+    //- |       
+    //- script(src="/javascripts/rAF.js")
+    //- |       
+    //- script(src="/javascripts/demo-1.js")      
+

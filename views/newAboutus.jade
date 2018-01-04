@@ -1,0 +1,78 @@
+extends newManageLayout
+
+block content
+  #content.span10
+    ul.breadcrumb.realtive
+      li
+        i.icon-home
+        |           
+        //- a(href="index.html") Home
+        |  
+        |           
+        //- i.icon-angle-right
+        | 
+      |         
+      li
+        | 公司介绍
+      li.addLi
+        a(href="/manage/editAboutUs") 编辑介绍
+    section.manageSection
+      .box-content.prolist
+        -if(vals.length == 0)
+          p.noInfo 暂无介绍
+        -else
+          table.table.table-striped.table-bordered.bootstrap-datatable.datatable
+            thead
+              tr
+                th ID
+                |                                   
+                th 分类
+                |                                   
+                th 商品名
+                |                                   
+                //- th 价格
+                |                                   
+                th 描述
+                |                                   
+                //- th 库存
+                |                                   
+                th 更新日期
+                |                                   
+                th 操作
+            |    
+            tbody
+              -for(var i in JSON.parse(vals))
+                -var curId = parseInt(i)+1;
+                tr 
+                  td #{vals[i].id}
+                  //- td #{curId}
+                  |                                 
+                  td.center #{vals[i].id}
+                  |                                 
+                  td.center #{vals[i].id}
+                  |                                 
+                  //- td.center ￥#{JSON.parse(vals)[i].price.toFixed(2) }
+                  |                                 
+                  td.center.overHid #{vals[i].id}
+                  |                                 
+                  td.center #{vals[i].id}
+                  |                                 
+                  td.center
+                    a.btn.btn-success(href="/manage/descPro/#{vals[i].id}")
+                      i.halflings-icon.white.zoom-in
+                    |                                   
+                    a.btn.btn-info(href="/manage/editPro/#{vals[i].id}")
+                      i.halflings-icon.white.edit
+                    |                                   
+                    a.btn.btn-danger(href="/manage/delPro/#{vals[i].id}")
+                      i.halflings-icon.white.trash
+      script.
+        console.log(!{vals})
+        //- for(var i in !{vals}){
+        //-   console.log(!{vals}[i]['title'])
+        //- }
+        if('#{msg}' != '')
+          window.wxc.xcConfirm('#{msg}', window.wxc.xcConfirm.typeEnum.info)
+          //- alert('#{msg}')
+
+    script(type='text/javascript', src="/conm/editAboutUs.js")

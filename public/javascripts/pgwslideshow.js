@@ -9,7 +9,7 @@
 ;(function($){
     $(document).ready(function() {
         $('.pgwSlideshow').pgwSlideshow({
-          transitionEffect:'fading',
+          // transitionEffect:'fading',
           autoSlide:true
         });
     });

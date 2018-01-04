@@ -48,10 +48,11 @@ setSC = function(val){
 }
 toAbout=function(req,res){
 	// res.render('aboutUs');
+    var id = req.query.id
     var msg = req.session.manageMsg
     req.session.manageMsg = null
     //获得页面信息
-    proListContent.getAboutUs(function(err,vals){
+    proListContent.getAboutUs(id,function(err,vals){
         if(err){
             console.log(err)
         }else{
@@ -112,6 +113,7 @@ toProducts=function(req,res){
     }                                                                                             
 }
 toProDesc=function(req,res){
+
     try{
         var id = req.params.id
         proListContent.descPro(id,function(err,vals){

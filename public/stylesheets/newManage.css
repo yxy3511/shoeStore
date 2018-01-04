@@ -1,0 +1,99 @@
+.manageSection ul,li,table,div,span,h1,h2,h3,input{
+    margin: 0px;
+    padding: 0px;
+}
+.box-content.upload .upBtns{
+    background-color: transparent;
+    border-top: none;
+}
+
+#testid .nav-tabs{
+    border-bottom: 1px solid #ddd;
+}
+
+.manageSection pre{
+    border: none;
+}
+.manageSection img{
+    max-width: none;
+}
+.manageSection .logo_box input{
+    height: 37px;
+    color: #000;
+}
+.manageSection .logo_box .act-but{
+    background-color: #333;
+    opacity: 0.9;
+}
+.manageSection .logo_box .act-but:focus{
+    outline: none;
+    opacity: 1;
+}
+.manageSection .logo_box .register{
+    width: 250px;
+    margin: 0 auto;
+}
+.box-content.prolist input{
+    border: none;
+    box-shadow: none;
+    height: 32px;
+    margin-bottom: 0px;
+}
+.box-content.prolist .tc{
+    text-align: center;
+}
+.box-content.prolist th,.box-content.prolist td{
+    border: 1px solid #eee;
+    text-align: center;
+    vertical-align: middle;
+}
+.managePage .dropdown-menu li > a:hover,.managePage .dropdown-menu li > a:focus,.managePage .dropdown-submenu:hover > a{
+    background: rgba(8,8,8,0.6); 
+
+}
+.managePage .dropdown-menu > li:hover,.managePage .dropdown-menu > li:focus{
+    background: transparent;
+}
+
+.nav-tabs.nav-stacked  > li.active > a, .nav-tabs.nav-stacked  > li > ul > li.active > a{
+    background: rgba(8,8,8,0.6); 
+    border-bottom: none;
+    color: #fed136;
+}
+
+.nav-tabs.nav-stacked  > li:hover > a, .nav-tabs.nav-stacked  > li > ul > li:hover > a{
+    background: rgba(8,8,8,0.6); 
+    border-bottom: none;
+    color: #fed136;
+}
+.nav-tabs.nav-stacked  > li.active > a:hover, .nav-tabs.nav-stacked  > li > ul > li.active > a:hover{
+    background: rgba(8,8,8,0.6); 
+    border-bottom: none;
+    color: #fed136;
+}
+
+.realtive{
+    position: relative;
+}
+
+.addLi{
+    position: absolute;
+    right: 58px;
+    top: 8px;
+}
+.addLi:hover{
+    cursor: pointer;
+}
+
+
+.logo_box .form-actions{
+    background: transparent;
+    border-top: none;
+    text-align: center;
+}
+
+/* sort */
+.newSort{
+    display: none;
+    /*display: inline-block;*/
+}

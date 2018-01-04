@@ -82,7 +82,10 @@ section {
 }
 section.manageSection{
     padding:7px;
-    min-height: 860px;
+    /*min-height: 860px;*/
+}
+section .yumain{
+    position:  relative;
 }
 .marginB{
     margin-bottom: 20px;
@@ -356,6 +359,14 @@ header .intro-text .intro-heading {
 /*--------------------
 4.3. Portfolio
 --------------------*/
+.imgcard{
+    width: 350px;
+    height: 219px;
+    vertical-align: top;
+    margin-left: 10px;
+    margin-bottom: 30px;
+    display:  inline-block;
+}
 
 figure {
 	position: relative;
@@ -825,7 +836,7 @@ li.marginT{
 }
 
 /* -------------about Me---------- */
-@media only screen and (min-width : 991px) {
+/*@media only screen and (min-width : 991px) {
     section.content {
         min-height: 860px;
     }
@@ -844,15 +855,10 @@ li.marginT{
         min-height: 219px;
         max-width: 350px;
     }
-    /* figcaption p{
-        white-space: nowrap !important;
-        overflow:hidden !important;
-        text-overflow: ellipsis !important;
-    } */
 
-}
+}*/
 
-@media only screen and (max-width : 990px) {
+/*@media only screen and (max-width : 990px) {
     section.content {
         min-height: 860px;
     }
@@ -867,8 +873,26 @@ li.marginT{
         display: inline-block;
         margin: 0 auto;
     }
-}
+}*/
 
+section.content {
+    min-height: 860px;
+}
+figure.effect-bubba img{
+    /*width: 353px;*/
+    /*height: 228.6px;*/
+
+    display: inline-block;
+    margin: 0 auto;
+}
+  
+figure.effect-bubba {
+    /*max-height: 219px;*/
+    /*max-width: 350px;*/
+    max-height: 250px;
+    min-height: 219px;
+    max-width: 350px;
+}
 
 .aboutLeft h3{
     font-weight: 500;
@@ -894,8 +918,8 @@ li.marginT{
 
 .aboutImg img {
     width:100%;
-    // max-width: 400px;
-    // max-height: 300px;
+    /*max-width: 400px;*/
+    /*max-height: 300px;*/
 }
 .noContent{
     opacity: 0.6;
@@ -908,13 +932,14 @@ a.noLine:hover{
     text-decoration: none !important;
 }
 /* -------------products---------------- */
+
 h2 a{
     color: #232323;
 }
 h2 a:hover{
     text-decoration: none;
-    // color: #fec503;
-    // border: 1px dotted #232323;
+    /*color: #fec503;*/
+    /*border: 1px dotted #232323;*/
     border: 1px;
     border-style: none none solid none;
     opacity: 0.8;
@@ -996,14 +1021,13 @@ ol.carousel-indicators{
         /*width:100%;*/
         /*max-width:200px;*/
     }
-    #searchForm{
+    /*#searchForm{
         max-width: 50%;
         display: block;
         min-width: 300px;
         margin: 0 auto;
         margin:0px;
-        /*max-width: 300px;*/
-    }
+    }*/
     .proDesc{
         display: block;
         text-align: center;
@@ -1028,12 +1052,12 @@ ol.carousel-indicators{
 }
 
 @media only screen and (min-width : 991px) {
-    #searchForm{
+    /*#searchForm{
         position: relative;
         left: 68%;
         top: -144px;
         max-width: 300px;
-    }
+    }*/
     .carousel-inner{
         width: 80%
         max-width:620px;
@@ -1087,9 +1111,32 @@ ol.carousel-indicators{
     }
     
 }
+.imgsList{
+    /*position: absolute;*/
+    max-width: 1080px;
+    /*left: 0px;*/
+    /*top: 207px;*/
+    margin: 0 auto;
 
+}
+@media only screen and (max-width : 1199px){
+    .imgsList{
+        max-width: 720px
+    }
+}
+@media only screen and (max-width : 769px){
+    .imgsList{
+        max-width: 360px
+    }
+}
 #searchInput{
-    visibility:hidden;
+    /*visibility:hidden;*/
+    width: 300px;
+    /*line-height: 30px;*/
+    margin: 0 auto;
+    margin-bottom: 30px;
+    /*margin-left: 10px;*/
+
 }
 .search-input-group .input-group-addon{
     background: white !important; 
@@ -1146,7 +1193,7 @@ ol.carousel-indicators{
     padding: 0px;
 }
 .upBox{
-    margin-left: 30px;
+    /*margin-left: 30px;*/
 }
 .upTex{
     display: inline-block;
@@ -1186,6 +1233,8 @@ ol.carousel-indicators{
 
 .upBtns{
     margin:0px !important;
+    padding-left: 180px;
+    /*background-color: none !important;*/
 }
 .upBtns .cancelBtn{
     background-color: #a7a9aa !important;
