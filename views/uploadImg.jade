@@ -113,8 +113,13 @@ block content
             script.
               //- console.log(!{sorts})
               //- console.log('pnama:',#{pname})
-              if('#{msg}' != '')
-                window.wxc.xcConfirm('#{msg}', window.wxc.xcConfirm.typeEnum.info)
+              if('#{msg}' != '' && '#{msg}'.indexOf('成功') != -1){
+                autoAlert('#{msg}','green',1000)
+              }else if('#{msg}' != '' ){
+                autoAlert('#{msg}','orange',1000)
+              }
+              //- if('#{msg}' != '')
+                //- window.wxc.xcConfirm('#{msg}', window.wxc.xcConfirm.typeEnum.info)
                 //- alert('#{msg}')
 
     script(type='text/javascript', src="/conm/upload.js")

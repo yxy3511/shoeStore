@@ -63,8 +63,12 @@ block content
                   a.btn.btn-danger(href="/manage/delPro/#{JSON.parse(vals)[i].pid}")
                     i.halflings-icon.white.trash
     script.
-      if('#{msg}' != '')
-        window.wxc.xcConfirm('#{msg}', window.wxc.xcConfirm.typeEnum.info)
+      if('#{msg}' != '' && '#{msg}'.indexOf('成功') != -1){
+        autoAlert('#{msg}','green',1000)
+      }else if('#{msg}' != '' ){
+        autoAlert('#{msg}','orange',1000)
+      }
+        //- window.wxc.xcConfirm('#{msg}', window.wxc.xcConfirm.typeEnum.info)
         //- alert('#{msg}')
       //- console.log(!{vals})
       //- console.log('valssss:','#{vals}' == '{}')

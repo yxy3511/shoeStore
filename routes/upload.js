@@ -4,6 +4,10 @@ var multiparty = require('multiparty');
 var util = require('util');
 var fs = require('fs');
 var proListContent = require('./../dao/proListContent.js');
+const imagemin = require('imagemin');
+const imageminJpegtran = require('imagemin-jpegtran');
+const imageminPngquant = require('imagemin-pngquant');
+const imageminMozjpeg = require('imagemin-mozjpeg');
 
 global.imagesArr = []
 /* 上传*/
@@ -13,8 +17,10 @@ router.post('/uploading', function(req, res, next){
     var images = []
     //生成multiparty对象，并配置上传目标路径
     var form = new multiparty.Form({uploadDir: './public/files/'});
+
     //上传完成后处理 
     form.parse(req, function(err, fields, files) {
+        // console.log('useFiles:',files)
         images.push(files)
         var dstPath = {} 
         var imgArr = []
@@ -39,10 +45,33 @@ router.post('/uploading', function(req, res, next){
                         if(err){
                             console.log('rename error: ' + err);
                         } else {
+                            imagemin([renamePath], './public/files/', {
+                                plugins: [
+                                    imageminMozjpeg(),
+                                    imageminJpegtran(),
+                                    imageminPngquant({quality: '65-80'})
+                                ]
+                            }).then(files => {
+                                // console.log('files:',files);
+                                //=> [{data: <Buffer 89 50 4e …>, path: 'build/images/foo.jpg'}, …] 
+                                return {
+                                    status:true,
+                                    data: files
+                                }
+
+                            }).catch(err => {
+                                // console.log('err:',err);
+                                //=> [{data: <Buffer 89 50 4e …>, path: 'build/images/foo.jpg'}, …] 
+                                return {
+                                    status:false,
+                                    data: err.toString
+                                }
+
+                            });
                             console.log('rename ok');
                         }
                     });
-                                               
+
                 }
                 
             }
@@ -85,6 +114,7 @@ router.post('/uploading', function(req, res, next){
         res.send(dstPath)
         // res.end();
     });
+
 });
 
 
@@ -92,7 +122,7 @@ router.post('/uploading', function(req, res, next){
 router.get('/uploadImg', function(req, res, next) {
     try{
         //获取类型
-        proListContent.getSorts('all',function(err,vals){
+        proListContent.getSorts('all',{pageSize:0,pageNum:0},function(err,vals){
             if(err){
                 console.log(err)
             }else{

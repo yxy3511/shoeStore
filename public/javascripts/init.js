@@ -1,4 +1,5 @@
 ﻿$(function() {
+    
 	//获取分类
 	$.ajax({
         type : 'get',
@@ -9,6 +10,8 @@
         contentType: false, 
         success:function(re){
             // var cnt = 0;
+            var pageNum = 1
+            var pageSize = localStorage.getItem('usersPageSize')
             for(var i in JSON.parse(re.vals)){
                 //建新的节点
                 var parent = document.getElementById('menus')
@@ -17,7 +20,7 @@
                 parent.appendChild(liContent);  
 
                 var aBlock = document.createElement("a")
-                aBlock.setAttribute('href', '/products/'+i)
+                aBlock.setAttribute('href', '/products/'+i+'/?pageNum='+pageNum+'&pageSize='+pageSize)
                 aBlock.setAttribute('sid', i)
                 aBlock.innerHTML = JSON.parse(re.vals)[i]
                 liContent.appendChild(aBlock); 
@@ -71,7 +74,7 @@
 		$('#products').removeClass('active');
 	} 
 	// window.location = '/getSorts'
-
 });
+    
  
 

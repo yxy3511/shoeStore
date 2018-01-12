@@ -9,19 +9,23 @@ $(function(){
         if('' == $("input[name='pname']").val()){
             goNext = false
             // alert('商品名称不能为空！')
-            window.wxc.xcConfirm('商品名称不能为空！', window.wxc.xcConfirm.typeEnum.info);
+            // window.wxc.xcConfirm('商品名称不能为空！', window.wxc.xcConfirm.typeEnum.info);
+            window.autoAlert('商品名称不能为空！','red')
         }else if('' == $("input[name='price']").val()){
             goNext = false
             // alert('商品价格不能为空！')
-            window.wxc.xcConfirm('商品价格不能为空！', window.wxc.xcConfirm.typeEnum.info);
+            window.autoAlert('商品价格不能为空！','red')
+            // window.wxc.xcConfirm('商品价格不能为空！', window.wxc.xcConfirm.typeEnum.info);
         }else if('' == $("input[name='allImg']").val() || '{}' == $("input[name='allImg']").val().toString()){
             goNext = false
             // alert('商品图片不能为空！')
-            window.wxc.xcConfirm('商品图片不能为空！', window.wxc.xcConfirm.typeEnum.info);
+            window.autoAlert('商品图片不能为空！','red')
+            // window.wxc.xcConfirm('商品图片不能为空！', window.wxc.xcConfirm.typeEnum.info);
         }else if('' == $("textarea[name='desc']").val()){
             goNext = false
             // alert('商品描述不能为空！')
-            window.wxc.xcConfirm('商品描述不能为空！', window.wxc.xcConfirm.typeEnum.info);
+            window.autoAlert('商品描述不能为空！','red')
+            // window.wxc.xcConfirm('商品描述不能为空！', window.wxc.xcConfirm.typeEnum.info);
         }
         // console.log("goNext:",goNext)
         // e.preventDefault();
@@ -75,7 +79,9 @@ $(function(){
             //IE中阻止函数器默认动作的方式 
             window.event.returnValue = false;
         }
-        window.location.href='/manage/proList'
+        var pageSize = localStorage.getItem('pageSize') || 10
+        var pageNum = $.session.get('curPages') ? JSON.parse($.session.get('curPages'))['prolistPageNum'] : 1
+        window.location.href='/manage/proList/'+pageSize+'/'+pageNum
     })
     //在外层绑定
     $("#imgsBox").on("click","button",function(event) {
@@ -158,7 +164,8 @@ $(function(){
         for(var j in imgObj){
             var objType = imgObj[j].substring(imgObj[j].lastIndexOf(".")).toLowerCase();
             if(!(objType == '.jpg'||objType == '.png')){
-                alert("请上传jpg、png类型图片");
+                // alert("请上传jpg、png类型图片");
+                window.autoAlert("请上传jpg、png类型图片",'orange')
                 return false;
             }
         }
@@ -174,11 +181,12 @@ $(function(){
             cache: false,  
             contentType: false, 
             success:function(re){
-                creatImgs(re.imgs);
+                creatImgs(re.imgs)                
                 $('#allImg').attr('value',re.allImgs)
             },
             error:function(re){
-                alert(JSON.stringify(re))
+                window.autoAlert(JSON.stringify(re),'red')
+                // alert(JSON.stringify(re))
                 console.log(re);
             }
 

@@ -6,14 +6,14 @@ block content
       li
         i.icon-home
         |           
-        a(href="/manage/proList") 商品列表
+        a.toProlist(href="/manage/proList/pageSize/prolistPageNum") 商品列表
         |  
         | >          
         //- i.icon-angle-right
         | 
       |         
       li
-        | 添加商品
+        | 编辑商品
       //- li.addLi
         a(href="/manage/uploadImg") 添加商品
     |    
@@ -28,7 +28,7 @@ block content
                       //-span.break
                       //-| Members  */           
         .box-content.upload
-          form.form-horizontal(name='picForm' ,method='post', action='/manage/savePro?id=#{pid ? pid : 0}')
+          form.form-horizontal(name='picForm' ,method='post', action='/manage/savePro/pageSize/prolistPageNum/?id=#{pid ? pid : 0}')
               fieldset.manageFieldset
                 //- .control-group
                 //-   label.control-label(for="typeahead") Auto complete 
@@ -39,7 +39,9 @@ block content
                 //-     p.help-block Start typing to activate auto complete!
                 //- |     
                 .control-group
-                  label.control-label(for="typeahead") 商品名称
+                  label.control-label(for="typeahead") 
+                    span.required * 
+                    | 商品名称
                   |                               
                   .controls
                     input#typeahead.span4.typeahead(type="text" name='pname' value="#{pname ? pname : '' }")
@@ -53,12 +55,17 @@ block content
                     input#price.span4.typeahead(type="number" name='price' value="#{price ? price : '' }")
                 |   
                 .control-group
-                  label.control-label(for="psort") 商品分类
+                  label.control-label(for="psort") 
+                    span.required * 
+                    | 商品分类
                   |                               
                   .controls
                     select#psort.form-control(name='sort')
                       -for(var j in JSON.parse(sorts))
-                        option(value='#{j}') #{JSON.parse(sorts)[j]}
+                        if(JSON.parse(sorts)[sort] == JSON.parse(sorts)[j])
+                          option(value='#{j}' selected) #{JSON.parse(sorts)[j]}
+                        -else
+                          option(value='#{j}') #{JSON.parse(sorts)[j]}
                     //- input#psort.span4.typeahead(type="number" name='sort' value="#{sort ? sort : '' }")
                 |   
                 //- .control-group
@@ -97,7 +104,9 @@ block content
                 //-         input(name='inputFile',id='j_imgfile', type='file', multiple='mutiple',class="fileupload")
                 |          
                 .control-group
-                  label.control-label(for="j_imgfile") 商品图片
+                  label.control-label(for="j_imgfile") 
+                    span.required * 
+                    | 商品图片
                   .controls#imgsBox
                       //- script.
                         var imgs = $('#imgsBox').attr('value') ? JSON.parse($('#imgsBox').attr('value')) : null
@@ -116,7 +125,9 @@ block content
 
                 |                           
                 .control-group.hidden-phone
-                  label.control-label(for="textarea") 商品描述
+                  label.control-label(for="textarea") 
+                    span.required * 
+                    | 商品描述
                   |                               
                   .controls
                     textarea#textarea.span66(name='desc' class='cleditor' rows='8') #{desc_txt ? desc_txt : ''}
@@ -127,10 +138,14 @@ block content
                   |                               
                   button.btn.cancelBtn Cancel
         script.
-          //- console.log(!{sorts})
-          //- console.log('pnama:',#{pname})
-          if('#{msg}' != '')
-            window.wxc.xcConfirm('#{msg}', window.wxc.xcConfirm.typeEnum.info)
-            //- alert('#{msg}')
+          console.log('sid:',#{sort})
+            console.log('sorts:',!{sorts}[#{sort}])
+          setUrl($("form"),'action',0)
+          setUrl($(".toProlist"),'href',0)
+          if('#{msg}' != '' && '#{msg}'.indexOf('成功') != -1){
+            autoAlert('#{msg}','green',1000)
+          }else if('#{msg}' != '' ){
+            autoAlert('#{msg}','orange',1000)
+          }
 
         script(type='text/javascript', src="/conm/upload.js")

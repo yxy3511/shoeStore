@@ -2,7 +2,7 @@ extends layout
 
 block content      
   section.proDescPage.content
-    .container
+    .container.bindWidth
       //- .row
       //-   .col-lg-7.text-center
       //-     .section-title
@@ -120,7 +120,7 @@ block content
       //-       i.iconFont.icon-close
       //-     span.pagedown()
       //-       i.iconFont.icon-pagedown
-      .row 
+      .row.atlasRow 
         .htmleaf-container.proDetail.col-md-7
           .htmleaf-content.bgcolor-3
             ul.pgwSlideshow
@@ -138,7 +138,6 @@ block content
               | ￥#{price.toFixed(2) }
             pre
               | #{desc_txt}
-      .row
         
       script.
         //- console.log(!{imgs})

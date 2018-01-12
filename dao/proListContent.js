@@ -25,13 +25,18 @@ exports.getPros= function(key,callback){
  *
  *获取商品列表
  */
-exports.getProList = function(key,callback){
+exports.getProList = function(key,page,callback){
     // var searchSql = sql ? ' select * from products where '+sql : ' select * from products';
+    // Select * from products order by id desc Limit (pageNo-1)*pageSize,pageSize
     var searchSql = null
+    let pageSize = +page.pageSize
+    let pageNum = +page.pageNum
     if(key == 0){
-        searchSql = 'select * from products order by up_date desc' ;
+        searchSql = 'select *,(select COUNT(1) from products) as totalCount from products order by up_date desc Limit '+(pageNum-1)*pageSize+','+pageSize;
+        // searchSql = 'select *,(select COUNT(1) from products) as totalCount from products order by up_date desc ';
     }else{
-        searchSql = "select * from products where sort = "+key+" order by up_date desc"
+        searchSql = "select *,(select COUNT(1) from products where sort = "+key+") as totalCount from products where sort = "+key+" order by up_date desc Limit "+(pageNum-1)*pageSize+","+pageSize
+        // searchSql = "select *,(select COUNT(1) from products) as totalCount products where sort = "+key+" order by up_date desc "
     }
     query(searchSql,callback)
 }
@@ -40,13 +45,15 @@ exports.getProList = function(key,callback){
 *
 *查找商品
 */
-exports.searchPro = function(key,callback){
+exports.searchPro = function(key,page,callback){
     var sql = null;
+    let pageSize = +page.pageSize
+    let pageNum = +page.pageNum
     if(key && parseInt(key)){
-        sql = 'select * from products where price = ' + parseInt(key) + " or state = "+ parseInt(key) + " or pname like '%"+key+"%' or desc_txt like '%"+key+"%' order by up_date desc";
+        sql = 'select * ,(select COUNT(1) from products where price = ' + parseInt(key) + " or state = "+ parseInt(key) + " or pname like '%"+key+"%' or desc_txt like '%"+key+"%') as totalCount from products where price = " + parseInt(key) + " or state = "+ parseInt(key) + " or pname like '%"+key+"%' or desc_txt like '%"+key+"%' order by up_date desc Limit "+(pageNum-1)*pageSize+","+pageSize;
         
     }else{
-        sql = "select * from products where pname like '%" + key +"%' or desc_txt like '%"+key+"%' order by up_date desc";
+        sql = "select * ,(select COUNT(1) from products where pname like '%" + key +"%' or desc_txt like '%"+key+"%' ) as totalCount from products where pname like '%" + key +"%' or desc_txt like '%"+key+"%' order by up_date desc Limit "+(pageNum-1)*pageSize+","+pageSize;
     }
     
     query(sql,callback)
@@ -99,9 +106,9 @@ exports.editPro = function(id,param,callback){
     }else if(param.pname && param.price && param.desc && param.imgs && param.state){
         searchSql = "update products set pname='"+param.pname+"', price = "+param.price+", state="+param.state+", desc_txt='"+param.desc+"', up_date=now(), imgs='"+param.imgs+"' where pid="+id;
     }else if(param.pname && param.price && param.desc && param.imgs && param.sort){
-        searchSql = "update products set pname='"+param.pname+"', price = "+param.price+", desc_txt='"+param.desc+"', up_date=now(), imgs='"+param.imgs+"', sort=1 where pid="+id;
+        searchSql = "update products set pname='"+param.pname+"', price = "+param.price+", desc_txt='"+param.desc+"', up_date=now(), imgs='"+param.imgs+"', sort="+param.sort+" where pid="+id;
     }else if(param.pname && param.desc && param.imgs && param.sort){
-        searchSql = "update products set pname='"+param.pname+"', price = "+0.00+", desc_txt='"+param.desc+"', up_date=now(), imgs='"+param.imgs+"', sort=1 where pid="+id;
+        searchSql = "update products set pname='"+param.pname+"', price = "+0.00+", desc_txt='"+param.desc+"', up_date=now(), imgs='"+param.imgs+"', sort="+param.sort+" where pid="+id;
     }
     query(searchSql,callback)
 }
@@ -121,12 +128,16 @@ exports.descPro = function(id,callback){
 *获得商品总类
 */
 
-exports.getSorts = function(key,callback){
+exports.getSorts = function(key,page,callback){
     var searchSql = null
-    if(key && key == 'all'){
-        searchSql = "select * from sorts"
+    var pageNum = +page.pageNum
+    var pageSize = +page.pageSize
+    if(key && key == 'all' && pageNum>0 && pageSize > 0){
+        searchSql = 'select * ,(select COUNT(1) from sorts) as totalCount from sorts order by id desc  Limit '+(pageNum-1)*pageSize+','+pageSize;
+    }else if(key && key == 'all'){
+        searchSql = 'select * from sorts order by id desc';
     }else{
-        searchSql = "select name from sorts"
+        searchSql = "select name from sorts order by id desc"
     }
    
     query(searchSql,callback)
@@ -188,12 +199,24 @@ exports.delAboutUs = function(callback){
     query(sql,callback)
 }
 
-exports.getAboutUs = function(id,callback){
+exports.delOneAboutus = function(id,callback){
+    var sql = "delete from aboutus where id ="+id;
+    query(sql,callback)
+}
+
+exports.getAboutUs = function(id,page,callback){
     var sql = ''
+    var pageNum = +page.pageNum
+    var pageSize = +page.pageSize 
+    var demoLength = +page.demoLength
+    var offset = (pageNum-1)*pageSize
+    if(pageNum > 1){
+        offset = (pageNum-1)*pageSize - demoLength
+    }
     if(id){
         sql = 'select * from aboutus where id = '+id;
     }else{
-        sql = 'select * from aboutUs order by up_date desc'
+        sql = 'select * ,(select COUNT(1) from aboutus) as totalCount from aboutUs order by up_date desc Limit '+offset+','+pageSize;
     }
     query(sql,callback)
 }

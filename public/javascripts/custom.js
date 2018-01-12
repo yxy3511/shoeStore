@@ -1,5 +1,6 @@
 /* -------------------- Check Browser --------------------- */
-
+// import {manageMenu} from '/conm/config.js'
+document.write("<script language=javascript src='/conm/config.js'></script>");
 function browser() {
 	
 	var isOpera = !!(window.opera && window.opera.version);  // Opera 8.0+
@@ -72,13 +73,23 @@ $(document).ready(function(){
 	
 				
 	/* ---------- Add class .active to current link  ---------- */
+	console.log(manageMenu)
 	$('ul.main-menu li a').each(function(){
-		
-			if($($(this))[0].href==String(window.location)) {
+			console.log($($(this))[0].href)
+			manageMenu.forEach((menu,i)=>{
+				if($($(this))[0].href.indexOf(menu.url) != -1){
+					menu.childUrl.forEach((url,d)=>{
+						if(String(window.location).indexOf(url) != -1){
+							$(this).parent().addClass('active');
+						}
+					})
+				}
+			})
+			// if($($(this))[0].href==String(window.location)) {
 				
-				$(this).parent().addClass('active');
+			// 	$(this).parent().addClass('active');
 				
-			}
+			// }
 	
 	});
 	
@@ -2096,8 +2107,9 @@ function widthFunctions(e) {
 		$("#sidebar-left2").css("height",contentHeight);
 		
 	}
-    
-	if (winWidth < 980 && winWidth > 750) {
+    // console.log('minwidth:',winWidth)
+	// if (winWidth < 980 && winWidth > 750) {
+	if (winWidth < 961) {
 		
 		if($("#sidebar-left").hasClass("span2")) {
 			

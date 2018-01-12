@@ -18,7 +18,7 @@ Import Google Fonts
 --------------------*/
 
 body {
-    min-width: 320px;
+    /*min-width: 320px;*/
     margin: 0px;
     font-family: "Open Sans", Sans-serif;
 }
@@ -29,19 +29,19 @@ h3,
 h4,
 h5,
 h6 {
-    font-weight: 300;
+    font-weight: 300 !important;
     letter-spacing: 0.4px;
-    font-family: "Open Sans", Sans-serif;
+    font-family: "Open Sans", Sans-serif  !important;
     color: #232323;
 }
 
 p,pre {
-    font-family: 'Roboto', sans-serif;
-    font-size: 15px;
+    font-family: 'Roboto', sans-serif !important;
+    font-size: 15px  !important;
     font-weight: 300;
-	line-height: 23px;
+	line-height: 23px  !important;
     letter-spacing: 0.2px;
-    color: #797979;
+    color: #797979  !important;
 }
 /* -------商品详情 pre-------------------*/
 pre{
@@ -88,7 +88,7 @@ section .yumain{
     position:  relative;
 }
 .marginB{
-    margin-bottom: 20px;
+    /*margin-bottom: 20px;*/
 }
 /*--------------------
 2. Navigation
@@ -814,6 +814,31 @@ ul.nav.navbar-nav.navbar-right> li >a.page-scroll:focus,ul.nav.navbar-nav.navbar
 ul#menus {
     background-color: #000;
     opacity: 0.9;
+    max-height: 500px;
+    overflow-y: auto;
+
+}
+::-webkit-scrollbar
+{
+    width: 6px;
+    height: 6px;
+}
+::-webkit-scrollbar-track-piece
+{
+    background-color: #CCCCCC;
+    -webkit-border-radius: 6px;
+}
+::-webkit-scrollbar-thumb:vertical
+{
+    height: 5px;
+    background-color: #999999;
+    -webkit-border-radius: 6px;
+}
+::-webkit-scrollbar-thumb:horizontal
+{
+    width: 5px;
+    background-color: #CCCCCC;
+    -webkit-border-radius: 6px;
 }
 
 ul#menus a:hover,ul#menus a:focus {
@@ -924,6 +949,22 @@ figure.effect-bubba {
 .noContent{
     opacity: 0.6;
 }
+#aboutMe .row .col-md-3{
+    /*width:400px;*/
+    width: 360px;
+}
+
+#aboutMe .row{
+    display: flex;
+    align-items: center;
+    margin-left: 0px;
+}
+#aboutMe .container{
+    width: 80%;
+}
+.isLittleImg {
+    display: none;
+}
 /* -------------------page--------------- */
 a#knowMore:hover{
     color: #fff !important;
@@ -932,6 +973,9 @@ a.noLine:hover{
     text-decoration: none !important;
 }
 /* -------------products---------------- */
+.overHide{
+    overflow: hidden;
+}
 
 h2 a{
     color: #232323;
@@ -950,6 +994,7 @@ h2 a:hover{
    min-height: 228.6px;
 }  */
 /* ---轮播-- */
+
 .carousel-control.right,.carousel-control.left {
     background-image: none;
 }
@@ -1014,6 +1059,13 @@ ol.carousel-indicators{
     word-wrap:break-word;
     background: transparent;
 }
+@media (min-width: 992px){
+
+    /*详情轮播*/
+    .bindWidth{
+        /*width: 750px !important;*/
+    }
+}
 
 /* ---products 搜索框---- */
 @media only screen and (max-width : 990px) {
@@ -1028,10 +1080,47 @@ ol.carousel-indicators{
         margin: 0 auto;
         margin:0px;
     }*/
+    /* .proDesc{
+        display: block;
+        text-align: center;
+        margin-top: 30px;
+        width: 100%;
+    }
+    .proDesc pre{
+        text-align: left;
+    }
+    
+    .proDescPage{
+        margin-top: 0px;
+        // position: relative;
+        // top:90px;
+        // left: 20%;
+        // padding-top:50px;
+    } */
+
+    #Coolwpimg{
+        /*position:relative;*/
+        width:100%;
+        margin-top:60px;
+    }
+}
+
+@media only screen and (min-width : 682px){
+    .proDetail{
+        width: 682px;
+    }
+}
+@media only screen and (max-width : 1199px){
+    .atlasRow{
+        /*width: 682px;*/
+        margin: 0 auto;
+    }
     .proDesc{
         display: block;
         text-align: center;
         margin-top: 30px;
+        /*width: 682px;*/
+        width: 100%;
     }
     .proDesc pre{
         text-align: left;
@@ -1044,25 +1133,14 @@ ol.carousel-indicators{
         // left: 20%;
         // padding-top:50px;
     }
-    #Coolwpimg{
-        /*position:relative;*/
-        width:100%;
-        margin-top:60px;
+    /*详情轮播*/
+    .bindWidth{
+        width: 750px !important;
     }
-}
+} 
 
-@media only screen and (min-width : 991px) {
-    /*#searchForm{
-        position: relative;
-        left: 68%;
-        top: -144px;
-        max-width: 300px;
-    }*/
-    .carousel-inner{
-        width: 80%
-        max-width:620px;
-        min-width: 500px;
-    }
+@media only screen and (min-width : 1200px) {
+
     .proDesc{
         display: flex;
         height: 420px;
@@ -1083,6 +1161,41 @@ ol.carousel-indicators{
         // left: 20%;
         // padding-top:50px;
     }
+}
+
+@media only screen and (min-width : 991px) {
+    /*#searchForm{
+        position: relative;
+        left: 68%;
+        top: -144px;
+        max-width: 300px;
+    }*/
+    .carousel-inner{
+        width: 80%
+        max-width:620px;
+        min-width: 500px;
+    }
+    /* .proDesc{
+        display: flex;
+        height: 420px;
+        line-height: 420px;
+        // border: 1px solid yellow;
+        flex-direction: column;
+        justify-content:center;
+    }
+    .proDesc pre{
+        min-width: 300px;
+    }
+    
+    .proDescPage{
+        // margin-top: 90px;
+        padding-top: 190px;
+        // position: relative;
+        // top:90px;
+        // left: 20%;
+        // padding-top:50px;
+    } */
+    
     /* ------contact--------- */
     #Coolwpimg{
         /*position:relative;*/
@@ -1112,12 +1225,20 @@ ol.carousel-indicators{
     
 }
 .imgsList{
+    
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+    flex-wrap: wrap; 
     /*position: absolute;*/
     max-width: 1080px;
     /*left: 0px;*/
     /*top: 207px;*/
     margin: 0 auto;
 
+}
+.centerDiv{
+    float: left;
 }
 @media only screen and (max-width : 1199px){
     .imgsList{

@@ -76,7 +76,8 @@
     display: inherit !important;
   }
   .hidden-tablet {
-    display: none !important;
+    /*display: none !important;*/
+    display: inline-block; !important;
   }
 }
 

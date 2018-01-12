@@ -46,8 +46,12 @@ block content
               //- .mb2.login
                 a.act-but.submit(href="/login") 登 录
         script.
-            if('#{msg}' != '')
-              window.wxc.xcConfirm('#{msg}', window.wxc.xcConfirm.typeEnum.info)
+            if('#{msg}' != '' && '#{msg}'.indexOf('成功') != -1){
+              autoAlert('#{msg}','green',1000)
+            }else if('#{msg}' != '' ){
+              autoAlert('#{msg}','orange',1000)
+            }
+              //- window.wxc.xcConfirm('#{msg}', window.wxc.xcConfirm.typeEnum.info)
               //- alert('#{msg}')
     //- // /container
     //- script(src="/javascripts/TweenLite.min.js")

@@ -10,13 +10,14 @@ div,h1,h2,h3,table,ul,li,span,img{
     margin:0px;
     padding:0px;
 }
+
 /* --------------小--------- */
 @media only screen and (max-width : 990px) {
     .proDetail .htmleaf-content{
         /*width:80%;*/
         padding: 0px;
         margin: 0 auto;
-        min-width: 300px;
+        /*min-width: 682px;*/
     }
 }
 /* ------------------大--------- */
@@ -72,7 +73,7 @@ div,h1,h2,h3,table,ul,li,span,img{
     max-width: 100%;
     margin: auto; */
     /*width: 100%;*/
-    // width: 97%;
+    /*width: 97%;*/
     margin: 0 auto;
     max-width: 620px;
     /*max-height: 400px;*/

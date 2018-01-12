@@ -8,17 +8,49 @@
 var express = require('express');
 var router = express.Router();
 var proListContent = require('./../dao/proListContent.js');
+const imagemin = require('imagemin');
+const imageminJpegtran = require('imagemin-jpegtran');
+const imageminPngquant = require('imagemin-pngquant');
+const imageminMozjpeg = require('imagemin-mozjpeg');
 
 rePage=function(req,res){
 	res.redirect('/page');
 }
 toPage=function(req,res){
     try{
+        //压缩首页大图
+        imagemin(['./public/images/bg-main.jpg'], './public/images/', {
+            plugins: [
+                imageminMozjpeg(),
+                imageminJpegtran(),
+                imageminPngquant({quality: '65-80'})
+            ]
+        }).then(files => {
+            // console.log('files:',files);
+            //=> [{data: <Buffer 89 50 4e …>, path: 'build/images/foo.jpg'}, …] 
+            return {
+                status:true,
+                data: files
+            }
+
+        }).catch(err => {
+            console.log('err:',err);
+            //=> [{data: <Buffer 89 50 4e …>, path: 'build/images/foo.jpg'}, …] 
+            return {
+                status:false,
+                data: err.toString
+            }
+
+        });
+
+        var msg = req.session.manageMsg
+        req.session.manageMsg = null
         //获取商品前九个，按时间排
         proListContent.getPros(9,function(err,vals){
             if(err){
                 console.log(err)
             }else{
+                // console.log('vals:',vals)
                 if(vals.length > 0){
                     var resArr = {}
                     for(var i in vals){
@@ -26,9 +58,15 @@ toPage=function(req,res){
                     }
                     if(vals.length > 0){
                         res.render('page',{
-                            vals: JSON.stringify(resArr)
+                            vals: JSON.stringify(resArr),
+                            msg: msg
                         })
                     }
+                }else{
+                    res.render('page',{
+                        vals: JSON.stringify({}),
+                        msg: msg
+                    })
                 }
             }
         })
@@ -48,15 +86,14 @@ setSC = function(val){
 }
 toAbout=function(req,res){
 	// res.render('aboutUs');
-    var id = req.query.id
+    var id = req.query.id 
     var msg = req.session.manageMsg
     req.session.manageMsg = null
     //获得页面信息
-    proListContent.getAboutUs(id,function(err,vals){
+    proListContent.getAboutUs(id,{pageNum:1,pageSize:1},function(err,vals){
         if(err){
             console.log(err)
         }else{
-            console.log('vals.length:',vals.length)
             if(vals.length > 0){
                 vals[0].content = setSC(JSON.parse(vals[0].content))
                 res.render('aboutUs',{
@@ -64,9 +101,11 @@ toAbout=function(req,res){
                     msg:msg
                 })
             }else{
-                req.session.manageMsg = '暂无介绍'
+                // req.session.manageMsg = '暂无介绍'
+                msg = '暂无介绍'
                 res.render('aboutUs',{
-                    msg:msg
+                    msg:msg,
+                    vals: JSON.stringify(vals)
                 })
             }
         }
@@ -74,36 +113,67 @@ toAbout=function(req,res){
 }
 toProducts=function(req,res){
     try{
+        var msg = req.session.manageMsg
+        req.session.manageMsg = null
         var sid = req.params.sid ? parseInt(req.params.sid) : 0
-        proListContent.getProList(sid,function(err,vals){
+
+        var page = {}
+        page.pageNum = +req.query.pageNum 
+        page.pageSize = +req.query.pageSize
+    
+        proListContent.getProList(sid,page,function(err,vals){
             if(err){
                 console.log(err)
             }else{
                 var resArr = {}
+                var totalCount = -1
                 for(var i in vals){
                     resArr[i] = vals[i]
+                    totalCount = vals[i]['totalCount']
+                }
+                if(parseInt(totalCount/page.pageSize) == 0){
+                    pageCount = 1
+                }else if(totalCount%page.pageSize > 0 && totalCount%page.pageSize < page.pageSize){
+                    pageCount = parseInt(totalCount/page.pageSize) + 1
+                }else{
+                    pageCount = parseInt(totalCount/page.pageSize)
                 }
                 if(vals.length > 0){
                     res.render('products',{
-                        vals: JSON.stringify(resArr)
+                        vals: JSON.stringify(resArr),
+                        msg: msg,
+                        pageCount:pageCount,
+                        pageNum: page.pageNum,
                     })
                 }else{
-                    proListContent.getProList(0,function(e,val){
-                        if(e){
-                            console.log(e)
-                        }else{
-                            var resObj = {}
-                            for(var j in val){
-                                resObj[j] = val[j]
-                            }
-                            if(val.length > 0){
-                                res.render('products',{
-                                    vals: JSON.stringify(resObj),
-                                    msg: '暂无此类商品！'
-                                })
-                            }
-                        }
-                    })
+                    if(sid != 0){
+                        req.session.manageMsg = '暂无此类商品！'
+                        res.redirect('/products/0/?pageNum='+page.pageNum+'&pageSize='+page.pageSize)
+                    }else{
+                        res.render('products',{
+                            vals: JSON.stringify(vals),
+                            msg: msg,
+                            pageCount:pageCount,
+                            pageNum: page.pageNum,
+                        })
+                    }
+
+                    // proListContent.getProList(0,{pageNum:1,pageSize:9},function(e,val){
+                    //     if(e){
+                    //         console.log(e)
+                    //     }else{
+                    //         var resObj = {}
+                    //         for(var j in val){
+                    //             resObj[j] = val[j]
+                    //         }
+                    //         if(val.length > 0){
+                    //             res.render('products',{
+                    //                 vals: JSON.stringify(resObj),
+                    //                 msg: '暂无此类商品！'
+                    //             })
+                    //         }
+                    //     }
+                    // })
                     // res.redirect('/products/0')
                 }
             }
@@ -135,7 +205,6 @@ getProDesc=function(req,res){
             if(err){
                 console.log(err)
             }else{
-                console.log(vals[0]['pid'])
                 var id = vals[0]['pid']
                 res.redirect('/proDesc/'+id)
             }
@@ -149,7 +218,7 @@ toContact=function(req,res){
 }
 getSorts = function(req,res){
     try{
-        proListContent.getSorts('name',function(err,vals){
+        proListContent.getSorts('name',{pageNum:0,pageSize:0},function(err,vals){
             if(err){
                 console.log(err)
             }else{
@@ -169,16 +238,29 @@ getSorts = function(req,res){
 searchPro = function(req,res,next){
     try{
         var key = req.query.key
-        proListContent.searchPro(key,function(err,vals){
+        var page = {}
+        page.pageNum = +req.query.pageNum
+        page.pageSize = +req.query.pageSize
+        proListContent.searchPro(key,page,function(err,vals){
             if(err){
                 console.log(err)
             }else if(vals.length > 0){
+                var totalCount = -1
                 var resArr = {}
                 for(var i in vals){
                     resArr[i] = vals[i]
+                    totalCount = vals[i]['totalCount']
+                }
+
+                if(parseInt(totalCount/page.pageSize) == 0){
+                    pageCount = 1
+                }else if(totalCount%page.pageSize > 0 && totalCount%page.pageSize < page.pageSize){
+                    pageCount = parseInt(totalCount/page.pageSize) + 1
+                }else{
+                    pageCount = parseInt(totalCount/page.pageSize)
                 }
                 //获取sorts
-                proListContent.getSorts('all',function(e,val){
+                proListContent.getSorts('all',{pageNum:0,pageSize:0},function(e,val){
                     if(e){
                         console.log(e)
                     }else{
@@ -188,15 +270,18 @@ searchPro = function(req,res,next){
                         }
                          res.render('products',{
                             vals: JSON.stringify(resArr),
-                            sorts: JSON.stringify(sortArr)
+                            sorts: JSON.stringify(sortArr),
+                            pageNum: page.pageNum,
+                            pageCount: pageCount
                         })
                         // res.render('tbodyPro',vals[0])
                     }
                 })
                
             }else{
-                // res.redirect('/manage/proList')
-                proListContent.getProList(0,function(err,vals){
+                req.session.manageMsg = '暂无此类商品！'
+                res.redirect('/products/0/?key='+key+'&pageNum='+page.pageNum+'&pageSize='+page.pageSize)
+                /*proListContent.getProList(0,page,function(err,vals){
                     if(err){
                         console.log(err)
                     }else{
@@ -204,10 +289,11 @@ searchPro = function(req,res,next){
                         for(var i in vals){
                             resArr[i] = vals[i]
                         }
+                        var totalCount = -1
 
                         if(vals.length > 0){
                             //获取sorts
-                            proListContent.getSorts('all',function(e,val){
+                            proListContent.getSorts('all',{pageNum:0,pageSize:0},function(e,val){
                                 if(e){
                                     console.log(e)
                                 }else{
@@ -218,6 +304,8 @@ searchPro = function(req,res,next){
                                     res.render('products',{
                                         vals: JSON.stringify(resArr),
                                         sorts: JSON.stringify(sortArr),
+                                        pageNum: page.pageNum,
+                                        pageCount
                                         msg:'查询无结果！'
                                     })
                                 }
@@ -225,7 +313,7 @@ searchPro = function(req,res,next){
                             
                         }
                     }
-                })
+                })*/
             }
         })
         
@@ -236,7 +324,7 @@ searchPro = function(req,res,next){
 
 getSortsList = function(req,res,next){
     try{
-        proListContent.getSorts('all',function(err,vals){
+        proListContent.getSorts('all',{pageNum:0,pageSize:0},function(err,vals){
             if(err){
                 console.log(err)
             }else{
@@ -281,6 +369,9 @@ toAtlas = function(req,res){
                     }
                     console.log(JSON.stringify(imgs))
                     res.render('atlas',{imgs:JSON.stringify(imgs)})
+                }else{
+                    req.session.manageMsg = '暂无商品！'
+                    res.redirect('/page')
                 }
             }
         })

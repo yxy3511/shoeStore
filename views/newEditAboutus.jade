@@ -6,29 +6,39 @@ block content
       li
         i.icon-home
         |           
-        a(href="/manage/aboutUs") 公司介绍
+        a.toComplist(href="/manage/aboutUs/pageSize/compPageNum") 公司介绍
         |  
         | >          
         //- i.icon-angle-right
         | 
       |         
       li
-        | 编辑介绍
-      li.addLi
+        -if(id)
+          | 编辑介绍
+        -else
+          | 添加介绍
+      //- li.addLi
         a(href="/manage/delAboutus") 清空介绍
     | 
     section.manageSection
       .box-content.upload
-        form.form-horizontal(name='aboutUsForm' ,method='post', action='/manage/addAboutUs'  target="_blank")
+        form.form-horizontal(name='aboutUsForm' ,method='post', action='/manage/addAboutUs/pageSize/compPageNum')
             fieldset.manageFieldset#getImgIndex
+              .control-group(style='display:none;')
+                label.control-label(for="id") ID
+                .controls
+                  input#id.span4.typeahead(type="text" name='id' value="#{id ? id : null}")
               .control-group
-                label.control-label(for="typeahead") 介绍页大标题
+                label.control-label(for="typeahead") 
+                  span.required * 
+                  | 介绍页大标题
                 .controls
                   input#typeahead.span4.typeahead(type="text" name='bname' value="#{title ? title : 'About Us' }")
                   //- p.help-block Start typing to activate auto complete!
               .control-group.hidden-phone
-                label.control-label(for="desc_txt") 介绍页描述
-                |                               
+                label.control-label(for="desc_txt") 
+                  span.required * 
+                  | 介绍页描述
                 .controls
                   textarea#desc_txt.span66(name='desc_txt' class='cleditor' rows='8') #{desc_txt ? desc_txt : ''}
               -if(!!content && content != '[]')
@@ -83,6 +93,7 @@ block content
                       |                               
                       .controls
                         textarea.info.span66(name='info' class='cleditor' rows='8') #{JSON.parse(content)[i]['value']}
+              
                         //- textarea.info.span66(name='info' class='cleditor' rows='8') #{info ? info : ''}
                   //- .infoBlock.light-bg
                   //-   .control-group
@@ -186,12 +197,12 @@ block content
               |                               
               button.btn.cancelBtn Cancel
       script.
-        //- console.log(33333,!{content}[1]['value'])
-        //- console.log(4444444,JSON.parse('!{content}')[0]['img'] != null)
-        //- console.log(333,!{content}[0]['img'])
-        //- console.log('pnama:',#{pname})
-        if('#{msg}' != '')
-          window.wxc.xcConfirm('#{msg}', window.wxc.xcConfirm.typeEnum.info)
-          //- alert('#{msg}')
+        setUrl($('form'),'action',3)
+        setUrl($('.toComplist'),'href',3)
+        if('#{msg}' != '' && '#{msg}'.indexOf('成功') != -1){
+          autoAlert('#{msg}','green',1000)
+        }else if('#{msg}' != '' ){
+          autoAlert('#{msg}','orange',1000)
+        }
 
-    script(type='text/javascript', src="/conm/editAboutUs.js")
+  script(type='text/javascript', src="/conm/editAboutUs.js")

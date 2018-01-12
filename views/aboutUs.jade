@@ -3,7 +3,7 @@ extends layout
 block content
     section#aboutMe.light-bg.content
       .container
-        -if(!!vals) 
+        -if(JSON.parse(vals).length != 0) 
           .row
             .col-lg-12.text-center
               .section-title
@@ -11,30 +11,46 @@ block content
                 | 							
                 p= JSON.parse(vals)['desc_txt']
           -for(var i in JSON.parse(JSON.parse(vals)['content']))
-            if(i%2 == 0)		
+            if(i%2 == 0)        
               .row
+                // 左图右字
                 // about module
                 -if(!!JSON.parse(JSON.parse(vals)['content'])[i]['img'] && ''!=JSON.parse(JSON.parse(vals)['content'])[i]['img'])
                   .col-md-3.text-center.marginB
                     .mz-module-about.aboutImg
                       //- i.fa.fa-briefcase.ot-circle
-                      img(src="#{JSON.parse(JSON.parse(vals)['content'])[i]['img']}")
-                      | 	
-                .col-md-8.aboutLeft					
-                  h3= JSON.parse(JSON.parse(vals)['content'])[i]['title']
-                  | 							
-                  pre= JSON.parse(JSON.parse(vals)['content'])[i]['value']
+                      img.isLittleImg(onload='resizePic(this)' src="#{JSON.parse(JSON.parse(vals)['content'])[i]['img']}")
+                      |     
+                  .col-md-9.aboutLeft                 
+                    -if(h3= JSON.parse(JSON.parse(vals)['content'])[i]['title'])     
+                     h3= JSON.parse(JSON.parse(vals)['content'])[i]['title']
+                    |                             
+                    pre= JSON.parse(JSON.parse(vals)['content'])[i]['value']
+                -else
+                  .col-md-12.aboutLeft            
+                    -if(h3= JSON.parse(JSON.parse(vals)['content'])[i]['title'])     
+                     h3= JSON.parse(JSON.parse(vals)['content'])[i]['title']
+                    |                             
+                    pre= JSON.parse(JSON.parse(vals)['content'])[i]['value']
             -else
              .row
+               // 右图左字
                // about module
-               .col-md-8.aboutLeft         
-                 h3= JSON.parse(JSON.parse(vals)['content'])[i]['title']
-                 |               
-                 pre= JSON.parse(JSON.parse(vals)['content'])[i]['value']
                -if(!!JSON.parse(JSON.parse(vals)['content'])[i]['img'] && ''!=JSON.parse(JSON.parse(vals)['content'])[i]['img'])
+                 .col-md-9.aboutLeft         
+                   -if(h3= JSON.parse(JSON.parse(vals)['content'])[i]['title'])     
+                     h3= JSON.parse(JSON.parse(vals)['content'])[i]['title']
+                   |               
+                   pre= JSON.parse(JSON.parse(vals)['content'])[i]['value']
                  .col-md-3.text-center.marginB
                    .mz-module-about.aboutImg
-                      img(src="#{JSON.parse(JSON.parse(vals)['content'])[i]['img']}")
+                      img.isLittleImg(onload='resizePic(this)' src="#{JSON.parse(JSON.parse(vals)['content'])[i]['img']}")
+               -else
+                .col-md-12.aboutLeft    
+                   -if(JSON.parse(JSON.parse(vals)['content'])[i]['title'])     
+                    h3= JSON.parse(JSON.parse(vals)['content'])[i]['title']
+                   |               
+                   pre= JSON.parse(JSON.parse(vals)['content'])[i]['value']
             //- .row
             //-   // about module
             //-   .col-md-3.text-center.marginB
@@ -50,10 +66,16 @@ block content
           .center
             h1.noContent= msg
     script.
-      //- console.log(11,!{vals})
+      console.log(11,!{vals})
       //- console.log(222,!!JSON.parse(!{vals}['content'])['img'])
       //- console.log(333,'#{msg}')
-      if('#{msg}' != '' && '#{msg}' != '暂无介绍')
-        setTimeout(window.wxc.xcConfirm('#{msg}', window.wxc.xcConfirm.typeEnum.info),8000);
-        //- alert('#{msg}')
+      //- if('#{msg}' != '' && '#{msg}' != '暂无介绍')
+        //- window.autoClose('#{msg}')
+
+      if('#{msg}' != '' && '#{msg}' != '暂无介绍' && '#{msg}'.indexOf('成功') != -1){
+        autoAlert('#{msg}','green',1000)
+      }else if('#{msg}' != '' && '#{msg}' != '暂无介绍'){
+        autoAlert('#{msg}','orange',1000)
+      }
+    script(type='text/javascript', src="/conm/editAboutUs.js")
 

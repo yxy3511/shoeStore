@@ -7,7 +7,7 @@ block content
       li
         //- i.icon-home
         |           
-        a(href="/manage/getUser") 用户列表
+        a.toUserlist(href="/manage/getUser/pageSize/userPageNum") 用户列表
         |  
         | >          
         //- i.icon-angle-right
@@ -23,7 +23,7 @@ block content
           .logo_box
             //- h3 添加用户
             |                       
-            form(action="/registering", name="registerForm", method="post")
+            form(action="/registering/pageSize/userPageNum", name="registerForm", method="post")
               .input_outer
                 span.u_user
                 |                               
@@ -46,15 +46,20 @@ block content
                 //- button.btn.btn-primary.subBtn(type='button') Save changes
                 button.btn.btn-primary.subBtn(type="submit") Save changes
                 |                               
-                a.btn.cancelBtn(href="/manage/getUser") Cancel                 
+                a.btn.cancelBtn(href="/manage/getUser/pageSize/userPageNum") Cancel                 
               //- .mb2.register
                 button.act-but.submit(type='submit') 添加
               //- .mb2.login
                 a.act-but.submit(href="/login") 登 录
         script.
-            if('#{msg}' != '')
-              window.wxc.xcConfirm('#{msg}', window.wxc.xcConfirm.typeEnum.info)
-              //- alert('#{msg}')
+          setUrl($('form'),'action',1)
+          setUrl($('.cancelBtn'),'href',1)
+          setUrl($('.toUserlist'),'href',1)
+          if('#{msg}' != '' && '#{msg}'.indexOf('成功') != -1){
+            autoAlert('#{msg}','green',1000)
+          }else if('#{msg}' != '' ){
+            autoAlert('#{msg}','orange',1000)
+          }
     //- // /container
     //- script(src="/javascripts/TweenLite.min.js")
     //- |       

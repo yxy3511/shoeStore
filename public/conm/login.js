@@ -1,5 +1,5 @@
 $(function(){
-    console.log('ok')
+    // console.log('ok')
     $(document).ready(function() { 
         if ($.cookie("rmbUser") == 'true') { 
             $("#rmbUser").attr("checked", true); 
@@ -19,4 +19,16 @@ $(function(){
         }
         
     }
+    autoClose = function(content){
+          $.alert({
+              title: '提示',
+              content: content,
+              icon: 'fa fa-close',
+              // autoClose: 'ok|3000',
+              animation: 'scale',
+              closeAnimation: 'scale',
+              buttons: {}
+          });
+      }
+    
 })

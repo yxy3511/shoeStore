@@ -22,7 +22,7 @@ html
                 //- img(src="../images/logo.png", alt="Lattes theme logo")
                 | Shengyi
             // Collect the nav links, forms, and other content for toggling
-            #bs-example-navbar-collapse-1.collapse.navbar-collapse
+            #bs-example-navbar-collapse-1.collapse.navbar-collapse.overHide
               ul.nav.navbar-nav.navbar-right
                 li.hidden
                   a(href="#page-top") Home
@@ -47,7 +47,7 @@ html
                   |           
                   ul#menus.dropdown-menu
                     li.txt
-                      a(href="/products/0" sid=0) All
+                      a.getAll(href="/products/0" sid=0) All
                     |             
                     li.divider.marginT(role="separator")
                     |             
@@ -84,6 +84,8 @@ html
         // Header
         block content
         include inc/footer
-
+        script.
+            setUrl($('#products'),'href')
+            setUrl($('.getAll'),'href')
         script(src='/javascripts/init.js')
         block scripts

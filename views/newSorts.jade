@@ -18,9 +18,9 @@ block content
         | 添加分类
     | 
     .box-content.prolist
-          -if(sorts == "{}")
+          -if(sorts == "[]")
             p.noInfo 暂无商品分类
-            table.table.table-striped.table-bordered.bootstrap-datatable.datatable
+            table.table.table-striped.table-bordered.bootstrap-datatable.datatable.newTab
               thead
                 tr
                   th ID
@@ -49,29 +49,58 @@ block content
 
               |    
               tbody
-                -var cnt = 0;
-                -for(var i in JSON.parse(sorts))
-                  //- -cnt += 1;
-                  tr.sortTr
-                    td #{i}
-                    |                                 
-                    td.center
-                      input.sortName(type='text' value='#{JSON.parse(sorts)[i]}' disabled) 
-                    td.center
-                      //- .btn.btn-info.sortEdit
-                        i.halflings-icon.white.edit
-                      a.btn.btn-danger(href="/manage/delSort/#{i}")
-                        i.halflings-icon.white.trash
                 tr.newSort
-                  td.newId #{+i+1}
+                  td.newId #{JSON.parse(sorts)[0]["id"] + 1}
                   |                                 
                   td.center.tc
-                    input.addSortName(type='text' value='' placeholder='输入类型名称' ) 
+                    input.addSortName(type='text' value='' placeholder='点击输入类别名称' ) 
                   td.center
                     .btn.btn-info.addSort
                       i.halflings-icon.white.edit
                       | 添加
+                -var cnt = 0;
+                -for(var i in JSON.parse(sorts))
+                  //- -cnt += 1;
+                  tr.sortTr
+                    td #{JSON.parse(sorts)[i]["id"]}
+                    |                                 
+                    td.center
+                      input.sortName(type='text' value='#{JSON.parse(sorts)[i]["name"]}' disabled) 
+                    td.center
+                      //- .btn.btn-info.sortEdit
+                        i.halflings-icon.white.edit
+                      //- a.btn.btn-danger(href="/manage/delSort/#{i}")
+                        i.halflings-icon.white.trash
+                      .btn.btn-danger(onclick='delConfirm("/manage/delSort/pageSize/sortsPageNum/#{JSON.parse(sorts)[i]["id"]}",2)')
+                        i.halflings-icon.white.trash
+          //- .pagination.pagination-centered.widthAll
+            ul#page
+          div#pageSortlist.page-contain
+            a.goPre(href="")
+            .page-box
+              a.page-pre(href="")
+            a.goNext(href="")
     script.
-      if('#{msg}' != '')
-        window.wxc.xcConfirm('#{msg}', window.wxc.xcConfirm.typeEnum.info)
-    script(type='text/javascript', src='/conm/proList.js')
+      let pageNum = #{pageNum}
+      let pageCount = #{pageCount}
+      let pageSize = localStorage.getItem('pageSize')
+      let url = '/manage/editSorts/'+pageSize+'/'
+      let option = {
+        box: 'pageSortlist',//存放分页的容器
+        href: url,//跳转连接
+        page: pageNum,//当前页码 
+        count: pageCount,//总页数
+        num: 5,//页面展示的页码个数
+        step: 3,
+        type:2,
+        //- num:pageCount,//页面展示的页码个数
+      }
+      setPages(option,1)
+      //- setPage('#{pageCount}','#{pageNum}',$('ul#page'),2)
+      if('#{msg}' != '' && '#{msg}'.indexOf('成功') != -1){
+        autoAlert('#{msg}','green',1000)
+      }else if('#{msg}' != '' ){
+        autoAlert('#{msg}','orange',1000)
+      }
+        //- window.wxc.xcConfirm('#{msg}', window.wxc.xcConfirm.typeEnum.info)
+    script(type='text/javascript', src='/conm/sorts.js')

@@ -61,7 +61,8 @@ a:hover,a:focus{color:#74777b;}
 }
 .htmleaf-content {
 	font-size: 150%;
-	padding: 1em 0;
+	min-width: 630px;
+	/*padding: 1em 0;*/
 }
 
 .bgcolor-1 { background: #f0efee; }

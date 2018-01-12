@@ -1,4 +1,7 @@
-.manageSection ul,li,table,div,span,h1,h2,h3,input{
+body{
+    min-width: 471px;
+}
+.manageSection ul,li,table,div,span,h1,h2,h3,input,pre{
     margin: 0px;
     padding: 0px;
 }
@@ -9,6 +12,12 @@
 
 #testid .nav-tabs{
     border-bottom: 1px solid #ddd;
+}
+#testid li a:focus{
+    outline: none;
+    border-color: transparent; 
+    background-color:  transparent;
+    background: rgba(8,8,8,0.6);
 }
 
 .manageSection pre{
@@ -81,6 +90,12 @@
     right: 58px;
     top: 8px;
 }
+.ml{
+    right: 130px;
+}
+.mc{
+    margin: 0 auto;
+}
 .addLi:hover{
     cursor: pointer;
 }
@@ -97,3 +112,85 @@
     display: none;
     /*display: inline-block;*/
 }
+
+/* view aboutus */
+.section-title h2{
+    font-weight: 300;
+}
+.aboutLeft pre{
+    background-color: transparent;
+}
+#aboutMe .container{
+    width: 90%;
+}
+
+
+/* 表单样式 */
+.control-group label span.required{
+    color: #f46861;
+    font-size: 16px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+/*左边菜单*/
+#sidebar-left {
+    /*min-width: 106px;*/
+    /*position: relative;*/
+}
+.managePage .content{
+    width: auto !important;
+    margin-left: 0px !important;
+}
+.managePage .hidden-tablet{
+    display: inline-block !important;
+}
+.main-menu li {
+    text-align: center;
+}
+
+/*小屏幕菜单*/
+.navbar .btn-navbar: hover{
+    background-color: transparent !important; 
+    background-image: none !important;
+}
+@media only screen and (max-width: 767px) {
+    .sidebar-nav > ul{
+        min-height: 230px;
+    }
+}
+/*@media only screen and (min-width: 559px) {
+    .opr3{
+        min-width: 142px;
+    }
+}*/
+@media only screen and (max-width: 785px) {
+    .opr5{
+        max-width: 70px;
+    }
+}
+@media only screen and (max-width: 587px) {
+    .opr6{
+        max-width: 63px;
+    }
+}
+
+.managePage .uname{
+    display: inline-block;
+    max-width: 80px;
+}
+
+/*分页*/
+.widthAll{
+    width: 100%;
+}
+/*无数据表格*/
+.newTab{
+    display: none;
+}
+.noticeHref{
+    color: #fed136;
+}
+
+
+

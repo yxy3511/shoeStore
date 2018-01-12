@@ -238,6 +238,7 @@ body {
 	border: none;
 	font-family: 'Open Sans', sans-serif;
 	font-weight: 400;
+	min-width: 720px;
 }
 
 a {
@@ -717,7 +718,7 @@ h6 {
 	min-height: 584px;
 	/*padding: 20px 20px;*/
 	position: relative;
-	width: 86%;
+	width: 100%;
 }
 
 .breadcrumb {
@@ -3268,7 +3269,7 @@ a.manageNav {
  .ciBox{
  	display: inline-block;
  	visibility: hidden;
- 	margin-left: 55px !important;
+ 	margin-left: 25px !important;
  	margin-top: 5px !important;
  	border: none;
  }  

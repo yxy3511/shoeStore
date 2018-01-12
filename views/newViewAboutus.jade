@@ -1,0 +1,89 @@
+extends newManageLayout
+block content
+  #content.span10
+    ul.breadcrumb.realtive
+      li
+        i.icon-home
+        |           
+        a.toComplist(href="/manage/aboutUs/pageSize/compPageNum") 公司介绍
+        |  
+        | >          
+        //- i.icon-angle-right
+        | 
+      |         
+      li
+        | 介绍详情
+      -if(!!vals) 
+        li.addLi
+          a(href="/manage/editAboutUs/?id=#{JSON.parse(vals)['id']}") 编辑介绍
+        //- li.addLi
+          a(href="/manage/delOneAboutus/?id=#{JSON.parse(vals)['id']}") 删除介绍
+    | 
+    section.manageSection#aboutMe
+      .container
+        -if(!!vals) 
+          .row
+            .col-lg-12.text-center.mc
+              .section-title
+                h2= JSON.parse(vals)['title']
+                |                           
+                p= JSON.parse(vals)['desc_txt']
+          -for(var i in JSON.parse(JSON.parse(vals)['content']))
+            if(i%2 == 0)        
+              .row
+                // 左图右字
+                // about module
+                -if(!!JSON.parse(JSON.parse(vals)['content'])[i]['img'] && ''!=JSON.parse(JSON.parse(vals)['content'])[i]['img'])
+                  .col-md-3.text-center.marginB
+                    .mz-module-about.aboutImg
+                      //- i.fa.fa-briefcase.ot-circle
+                      img.isLittleImg(src="#{JSON.parse(JSON.parse(vals)['content'])[i]['img']}")
+                      |     
+                  .col-md-9.aboutLeft                 
+                    -if(h3= JSON.parse(JSON.parse(vals)['content'])[i]['title'])     
+                     h3= JSON.parse(JSON.parse(vals)['content'])[i]['title']
+                    |                             
+                    pre= JSON.parse(JSON.parse(vals)['content'])[i]['value']
+                -else
+                  .col-md-12.aboutLeft            
+                    -if(h3= JSON.parse(JSON.parse(vals)['content'])[i]['title'])     
+                     h3= JSON.parse(JSON.parse(vals)['content'])[i]['title']
+                    |                             
+                    pre= JSON.parse(JSON.parse(vals)['content'])[i]['value']
+            -else
+             .row
+               // 右图左字
+               // about module
+               -if(!!JSON.parse(JSON.parse(vals)['content'])[i]['img'] && ''!=JSON.parse(JSON.parse(vals)['content'])[i]['img'])
+                 .col-md-9.aboutLeft         
+                   -if(h3= JSON.parse(JSON.parse(vals)['content'])[i]['title'])     
+                     h3= JSON.parse(JSON.parse(vals)['content'])[i]['title']
+                   |               
+                   pre= JSON.parse(JSON.parse(vals)['content'])[i]['value']
+                 .col-md-3.text-center.marginB
+                   .mz-module-about.aboutImg
+                      img.isLittleImg(src="#{JSON.parse(JSON.parse(vals)['content'])[i]['img']}")
+               -else
+                .col-md-12.aboutLeft    
+                   -if(JSON.parse(JSON.parse(vals)['content'])[i]['title'])     
+                    h3= JSON.parse(JSON.parse(vals)['content'])[i]['title']
+                   |               
+                   pre= JSON.parse(JSON.parse(vals)['content'])[i]['value']
+        -else
+          .center
+            h1.noContent= msg
+    script.
+      console.log($('pre')[0].innerHTML)
+      //- console.log(222,!!JSON.parse(!{vals}['content'])['img'])
+      //- console.log(333,'#{msg}')
+      //- if('#{msg}' != '' && '#{msg}' != '暂无介绍')
+      //-   window.autoAlert('#{msg}','orange')
+        //- setTimeout(,8000);
+        //- window.wxc.xcConfirm('#{msg}', window.wxc.xcConfirm.typeEnum.info)
+      setUrl($('.toComplist'),'href',3)
+      if('#{msg}' != '' && '#{msg}' != '暂无介绍' && '#{msg}'.indexOf('成功') != -1){
+        autoAlert('#{msg}','green',1000)
+      }else if('#{msg}' != '' && '#{msg}' != '暂无介绍'){
+        autoAlert('#{msg}','orange',1000)
+      }
+    script(type='text/javascript', src="/conm/editAboutUs.js")

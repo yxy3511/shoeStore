@@ -15,24 +15,26 @@ block content
       li
         | 公司介绍
       li.addLi
-        a(href="/manage/editAboutUs") 编辑介绍
+        a(href="/manage/editAboutUs") 添加介绍
+      //- li.addLi.ml
+        a(href="/manage/delAboutus") 清空介绍
     section.manageSection
       .box-content.prolist
-        -if(vals.length == 0)
-          p.noInfo 暂无介绍
+        -if(JSON.parse(vals).length == 0)
+          p.noInfo 暂无公司介绍
         -else
           table.table.table-striped.table-bordered.bootstrap-datatable.datatable
             thead
               tr
                 th ID
                 |                                   
-                th 分类
+                th 大标题
                 |                                   
-                th 商品名
+                th 概述
                 |                                   
                 //- th 价格
                 |                                   
-                th 描述
+                //- th 描述
                 |                                   
                 //- th 库存
                 |                                   
@@ -43,36 +45,63 @@ block content
             tbody
               -for(var i in JSON.parse(vals))
                 -var curId = parseInt(i)+1;
+                -var curDate = new Date(JSON.parse(vals)[i]['up_date']).Format("yyyy-MM-dd")
                 tr 
-                  td #{vals[i].id}
+                  td #{JSON.parse(vals)[i]['id'] > 0 ? JSON.parse(vals)[i]['id'] : 'demo'}
                   //- td #{curId}
                   |                                 
-                  td.center #{vals[i].id}
+                  td.center.overHid #{JSON.parse(vals)[i]['title']}
                   |                                 
-                  td.center #{vals[i].id}
+                  td.center.overHid #{JSON.parse(vals)[i]['desc_txt']}
                   |                                 
                   //- td.center ￥#{JSON.parse(vals)[i].price.toFixed(2) }
                   |                                 
-                  td.center.overHid #{vals[i].id}
+                  //- td.center.overHid #{JSON.parse(vals)[i]['id']}
                   |                                 
-                  td.center #{vals[i].id}
+                  td.center #{curDate}
+                  //- td.center #{JSON.parse(vals)[i]['up_date']}
                   |                                 
-                  td.center
-                    a.btn.btn-success(href="/manage/descPro/#{vals[i].id}")
+                  td.center.opr5
+                    a.btn.btn-success(href="/manage/viewAboutus/?id=#{JSON.parse(vals)[i]['id']}")
                       i.halflings-icon.white.zoom-in
                     |                                   
-                    a.btn.btn-info(href="/manage/editPro/#{vals[i].id}")
+                    a.btn.btn-info(href="/manage/editAboutUs/?id=#{JSON.parse(vals)[i]['id']}")
                       i.halflings-icon.white.edit
-                    |                                   
-                    a.btn.btn-danger(href="/manage/delPro/#{vals[i].id}")
-                      i.halflings-icon.white.trash
+                    -if(JSON.parse(vals)[i]['id'] > 0) 
+                      |                                  
+                      //- a.btn.btn-danger(href="/manage/delOneAboutus/?id=#{JSON.parse(vals)[i]['id']}")
+                        //- i.halflings-icon.white.trash
+                      .btn.btn-danger(onclick='delConfirm("/manage/delOneAboutus/pageSize/compPageNum/?id=#{JSON.parse(vals)[i]["id"]}",3)')
+                        i.halflings-icon.white.trash
+        //- .pagination.pagination-centered.widthAll
+            ul#page
+        div#pageAboutus.page-contain
+            a.goPre(href="")
+            .page-box
+              a.page-pre(href="")
+            a.goNext(href="")
       script.
-        console.log(!{vals})
-        //- for(var i in !{vals}){
-        //-   console.log(!{vals}[i]['title'])
-        //- }
-        if('#{msg}' != '')
-          window.wxc.xcConfirm('#{msg}', window.wxc.xcConfirm.typeEnum.info)
-          //- alert('#{msg}')
+        let pageNum = #{pageNum}
+        let pageCount = #{pageCount}
+        let pageSize = localStorage.getItem('pageSize')
+        let url = '/manage/aboutUs/'+pageSize+'/'
+        let option = {
+          box: 'pageAboutus',//存放分页的容器
+          href: url,//跳转连接
+          page: pageNum,//当前页码 
+          count: pageCount,//总页数
+          num: 5,//页面展示的页码个数
+          step: 3,
+          type:3,
+          //- num:pageCount,//页面展示的页码个数
+        }
+        setPages(option,1)
+        console.log(!{vals}.length)
+        //- setPage('#{pageCount}','#{pageNum}',$('ul#page'),3)
+        if('#{msg}' != '' && '#{msg}'.indexOf('成功') != -1){
+          autoAlert('#{msg}','green',1000)
+        }else if('#{msg}' != '' ){
+          autoAlert('#{msg}','orange',1000)
+        }
 
     script(type='text/javascript', src="/conm/editAboutUs.js")

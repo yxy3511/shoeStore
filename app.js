@@ -20,7 +20,8 @@ app.use(cookieParser('yxy3511'));
 app.use(session({
     secrect: 'yxy3511',
     resave: false, 
-    saveUninitialized: false 
+    saveUninitialized: true,
+    cookie: { maxAge: 1000*60*20 }
 }));
 
 // view engine setup

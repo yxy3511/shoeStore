@@ -3,7 +3,7 @@ html
   include inc/header
     link(rel='stylesheet', href='/stylesheets/bootstrap.css')
     link(rel="stylesheet", href="/stylesheets/style.css")
-    link(rel="stylesheet", href="/stylesheets/bootstrap-responsive.min.css")
+    link(rel="stylesheet", href="/stylesheets/bootstrap-responsive.css")
     link(rel="stylesheet", href="/stylesheets/style-responsive.css")
     link(rel="stylesheet", href="/stylesheets/newManage.css")
   include inc/scripts
@@ -26,13 +26,13 @@ html
               li.dropdown
                 a.btn.dropdown-toggle(data-toggle="dropdown", href="#")
                   i.halflings-icon.white.user
-                  |  Dennis Ji
+                  span.uname.overHid  
                   |                                 
                   span.caret
                 |  
                 ul.dropdown-menu.manageMenu
                   li
-                    a(href='/login')
+                    a(onclick='setSessionNull()')
                       i.halflings-icon.off
                       |  Logout              
                 //- ul.dropdown-menu
@@ -58,8 +58,8 @@ html
           #testid.sidebar-nav.collapse.navbar-collapse
             ul.nav.nav-tabs.nav-stacked.main-menu
               li
-                a(href="/manage/proList")
-                  i.icon-bar-chart
+                a.toPorlist(href="/manage/proList/pageSize/prolistPageNum")
+                  //- i.icon-bar-chart
                   span.hidden-tablet  商品列表
               |     
               //- li
@@ -68,18 +68,18 @@ html
                   span.hidden-tablet  添加商品
               |                         
               li
-                a(href="/manage/getUser")
-                  i.icon-envelope
+                a.toUserlist(href="/manage/getUser/pageSize/userPageNum")
+                  //- i.icon-envelope
                   span.hidden-tablet  用户列表
               |                         
               li
-                a(href="/manage/editSorts")
-                  i.icon-tasks
+                a.toSortslist(href="/manage/editSorts/pageSize/sortsPageNum")
+                  //- i.icon-tasks
                   span.hidden-tablet  分类列表
               |                         
               li
-                a(href="/manage/aboutUs")
-                  i.icon-eye-open
+                a.toCompList(href="/manage/aboutUs/pageSize/compPageNum")
+                  //- i.icon-eye-open
                   span.hidden-tablet  公司介绍
               |                         
               |                         
@@ -153,6 +153,11 @@ html
               
         block content
     include inc/footer
+    script.
+      setUrl($('.toPorlist'),'href',0,-1)
+      setUrl($('.toUserlist'),'href',1,-1)
+      setUrl($('.toSortslist'),'href',2,-1)
+      setUrl($('.toCompList'),'href',3,-1)
     script(type='text/javascript', src='/javascripts/custom.js')
     script(src='/conm/proList.js')
     block scripts

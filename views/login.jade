@@ -18,7 +18,7 @@
 extends layoutwithbar
 
 block content
-    .container.demo-1
+    .demo-1
       .content
         #large-header.large-header
           canvas#demo-canvas
@@ -26,7 +26,7 @@ block content
           .logo_box
             h3 欢迎你
             |                       
-            form(id='loginForm', action="/logging", name="loginForm", method="post")
+            form(id='loginForm', action="/logging/pageSize", name="loginForm", method="post")
               .input_outer
                 span.u_user
                 |                               
@@ -48,20 +48,10 @@ block content
 
                 span.marginL 记住密码  
     script.
-      console.log(222,'#{hasUs}' == 'true')
-      if('#{msg}' != '')
-        window.wxc.xcConfirm('#{msg}', window.wxc.xcConfirm.typeEnum.info)
-        //- alert('#{msg}')
-    //- // /container
-    //- script(type='text/javascript', src='/javascripts/jquery-1.10.2.min.js')
-    //- | 
-    //- script(src="/javascripts/TweenLite.min.js")
-    //- |       
-    //- script(src="/javascripts/EasePack.min.js")
-    //- |       
-    //- script(src="/javascripts/rAF.js")
-    //- |       
-    //- script(src="/javascripts/demo-1.js")  
-    //- |       
-    //- script(src="/javascripts/xcConfirm.js")     
+      setUrl($('form'),'action',-1)
+      if('#{msg}' != '' && '#{msg}'.indexOf('成功') != -1){
+        autoAlert('#{msg}','green',1000)
+      }else if('#{msg}' != '' ){
+        autoAlert('#{msg}','orange',1000)
+      } 
     script(type='text/javascript',src="/conm/login.js") 

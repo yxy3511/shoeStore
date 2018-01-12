@@ -24,12 +24,14 @@ exports.addUser = function(params,callback){
 }
 
 
-exports.searchUser = function(key,callback){
+exports.searchUser = function(key,page,callback){
     var sql = null
+    var pageNum = +page.pageNum
+    var pageSize = +page.pageSize
     if(key && key=='all'){
-        sql = "select * from users"
+        sql = "select *,(select COUNT(1) from users) as totalCount from users order by uid desc Limit "+(pageNum-1)*pageSize+','+pageSize;
     }else{
-        sql = "select * from users where uname = '"+key+"'"
+        sql = "select * ,(select COUNT(1) from users where uname = '"+key+"') as totalCount from users where uname = '"+key+"' order by uid desc Limit "+(pageNum-1)*pageSize+','+pageSize;
     }
     query(sql,callback)
 }

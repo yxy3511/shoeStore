@@ -1,69 +1,77 @@
 extends layout
 
 block content
-  section.light-bg()
-      .container.yumain
-        .row(id='product')
-          .col-lg-12.text-center
-            .section-title
-              h2 Products
-              | 						
-              p
-                | There is no perfection in the world, but we are always pursuing perfection.
-                
-              //- .col-lg-3#searchForm
-                //- form.form-horizontal(action="", method="get")
-                //- span#searchIcon.glyphicon.glyphicon-search
-            #searchInput.input-group.search-input-group
-                  input#searchIn.form-control(name="key", autocomplete="on", type="text")
-                  span#closeIcon.input-group-addon
-                    button.bnt
-                      //- span.glyphicon.glyphicon-remove
-                      span.glyphicon.glyphicon-search
-        .imgsList
-            -for(var i in JSON.parse(vals))
-              // -console.log(JSON.parse(JSON.parse(vals)[i].imgs)[0])
-              -var curId = parseInt(i); 
-                  //- -if(curId % 3 == 0)           
-                   .row
-                  // start portfolio item
-                  //- a.col-md-4(href="/proDesc/#{JSON.parse(vals)[i].pid}")
-                  a.imgcard(href="/proDesc/#{JSON.parse(vals)[i].pid}")
-                    .ot-portfolio-item
-                      figure.effect-bubba
-                        //- onload='resizePic(this)'
-                        img.img-responsive(class="lazyload" onload='resizePic(this)' data-original="#{JSON.parse(JSON.parse(vals)[i].imgs)[0] ? JSON.parse(JSON.parse(vals)[i].imgs)[0] : '/images/addBg.png'}" src="#{JSON.parse(JSON.parse(vals)[i].imgs)[0] ? JSON.parse(JSON.parse(vals)[i].imgs)[0] : '/images/addBg.png'}")
-                        | 							
-                        figcaption
-                          h2 #{JSON.parse(vals)[i].pname}
-                          | 								
-                          p.descTxt #{JSON.parse(vals)[i].desc_txt}
-                  // end portfolio item
-                  // start portfolio item
+  section.light-bg.content
+    -if(JSON.parse(vals).length != 0)
+        .container.yumain
+          .row(id='product')
+            .col-lg-12.text-center
+              .section-title
+                h2 Products
+                | 						
+                p
+                  | There is no perfection in the world, but we are always pursuing perfection.
+                  
+                //- .col-lg-3#searchForm
+                  //- form.form-horizontal(action="", method="get")
+                  //- span#searchIcon.glyphicon.glyphicon-search
+              #searchInput.input-group.search-input-group
+                    input#searchIn.form-control(name="key", autocomplete="on", type="text")
+                    span#closeIcon.input-group-addon
+                      button.bnt
+                        //- span.glyphicon.glyphicon-remove
+                        span.glyphicon.glyphicon-search
+          .imgsList
+            .centerDiv
+              -for(var i in JSON.parse(vals))
+                // -console.log(JSON.parse(JSON.parse(vals)[i].imgs)[0])
+                -var curId = parseInt(i); 
+                    //- -if(curId % 3 == 0)           
+                     .row
+                    // start portfolio item
+                    //- a.col-md-4(href="/proDesc/#{JSON.parse(vals)[i].pid}")
+                    a.imgcard(href="/proDesc/#{JSON.parse(vals)[i].pid}")
+                      .ot-portfolio-item
+                        figure.effect-bubba
+                          //- onload='resizePic(this)'
+                          img.img-responsive(class="lazyload" onload='resizePic(this)' data-original="#{JSON.parse(JSON.parse(vals)[i].imgs)[0] ? JSON.parse(JSON.parse(vals)[i].imgs)[0] : '/images/addBg.png'}" src="#{JSON.parse(JSON.parse(vals)[i].imgs)[0] ? JSON.parse(JSON.parse(vals)[i].imgs)[0] : '/images/addBg.png'}")
+                          | 							
+                          figcaption
+                            h2 #{JSON.parse(vals)[i].pname}
+                            | 								
+                            p.descTxt #{JSON.parse(vals)[i].desc_txt}
+                    // end portfolio item
+                    // start portfolio item
+          .row#d1
+            div.page-contain
+              a.goPre(href="")
+              .page-box
+                a.page-pre(href="")
+              a.goNext(href="")
+
+    -else
+      .center
+        h1.noContent 暂无商品
   script.
-    function resizePic(ThisPic){
-        //- console.log(11,$(ThisPic)[0]['naturalHeight'])
-        var RePicWidth = -1; //这里修改为您想显示的宽度值
-        var standardWidth = 350
-        //============以下代码请勿修改==================================
-
-        //- var TrueWidth = ThisPic.width;    //图片实际宽度
-        //- var TrueHeight = ThisPic.height;  //图片实际高度
-        var TrueWidth = $(ThisPic)[0]['naturalWidth']
-        var TrueHeight = $(ThisPic)[0]['naturalHeight']
-        if(TrueWidth > standardWidth){
-          RePicWidth = standardWidth
-        }else{
-          RePicWidth = TrueWidth
-        }
-        var Multiple = TrueWidth / RePicWidth;  //图片缩小(放大)的倍数
-
-        ThisPic.width = RePicWidth;  //图片显示的可视宽度
-        ThisPic.height = TrueHeight / Multiple;  //图片显示的可视高度
+    let pageNum = #{pageNum}
+    let pageCount = #{pageCount}
+    let pageSize = 9
+    let url = '/products/0/?pageSize='+pageSize+'&pageNum='
+    let option = {
+      box: 'd1',//存放分页的容器
+      href: url,//跳转连接
+      page: pageNum,//当前页码 
+      count: pageCount,//总页数
+      num: 5,//页面展示的页码个数
+      step: 3,
+      //- num:pageCount,//页面展示的页码个数
     }
-    //- console.log(JSON.parse(!{vals}[0].imgs))
-    //- console.log(!{vals})
-    if('#{msg}' != '')
-        window.wxc.xcConfirm('#{msg}', window.wxc.xcConfirm.typeEnum.info)
-        //- alert('#{msg}')    
+    setPages(option,1)
+
+    
+    if('#{msg}' != '' && '#{msg}' != '暂无商品' && '#{msg}'.indexOf('成功') != -1){
+      autoAlert('#{msg}','green',1000)
+    }else if('#{msg}' != ''  && '#{msg}' != '暂无商品'){
+      autoAlert('#{msg}','orange',1000)
+    }
   script(type='text/javascript', src="/conm/products.js")

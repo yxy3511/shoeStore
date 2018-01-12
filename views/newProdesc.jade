@@ -6,7 +6,7 @@ block content
       li
         i.icon-home
         |           
-        a(href="/manage/proList") 商品列表
+        a.toProlist(href="/manage/proList/pageSize/prolistPageNum") 商品列表
         |  
         | >          
         //- i.icon-angle-right
@@ -14,12 +14,12 @@ block content
       |         
       li
         | 商品详情
-      //- li.addLi
-        a(href="/manage/uploadImg") 添加商品
+      li.addLi
+        a(href="/manage/editPro/#{pid}") 编辑商品
     |         
     section.proDescPage.manageSection
-      .container
-        .row 
+      .container.bindWidth
+        .row.atlasRow 
           .htmleaf-container.proDetail.col-md-7
             .htmleaf-content.bgcolor-3
               ul.pgwSlideshow
@@ -39,8 +39,9 @@ block content
                 | #{desc_txt}
         .row
           
-        //- script.
-          //- console.log(!{imgs})
+        script.
+          setUrl($(".toProlist"),'href',0)
+          //- console.log(666,#{pid})
           //- for(var i in !{imgs})
           //-   console.log(i) 
   script(type='text/javascript', src="/conm/proDesc.js")

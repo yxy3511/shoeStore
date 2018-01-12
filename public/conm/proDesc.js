@@ -50,6 +50,11 @@ $(function(){
         }
         
     })
-
+    // //网站使用
+    // function setFooterWidth(className){
+    //     var widthVal = $(className).css('width')
+    //     $('.footer').css('min-width',widthVal)
+    // }
+    setFooterWidth('.bindWidth')
 
 })
