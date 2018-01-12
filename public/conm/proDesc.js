@@ -57,4 +57,29 @@ $(function(){
     // }
     setFooterWidth('.bindWidth')
 
+    // 二级菜单
+    $('.towLevelMenu').css('display','inline-block')
+    var prevUrl = null
+    if(document.referrer && document.referrer.indexOf('products') != -1){
+        let pageSize = localStorage.getItem('usersPageSize') || 9
+        prevUrl = '/products/0/?pageNum=1&pageSize='+pageSize
+
+        $('li.toList').css('display','inline-block')
+        $.session.set('prevUrl',prevUrl)
+    }else if(document.referrer && document.referrer.indexOf('page') != -1){
+        prevUrl = '/page'
+        
+        $('li.toPage').css('display','inline-block')
+        $.session.set('prevUrl',prevUrl)
+    }
+
 })
+
+function back(){
+    let prevUrl = $.session.get('prevUrl')
+    if(prevUrl){
+        window.location = prevUrl
+    }else{
+        window.history.back()
+    }
+}

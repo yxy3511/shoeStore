@@ -79,6 +79,16 @@ html
                 //- | 						
                 li
                   a.page-scroll#contact(href="/contact") Contact
+            .towLevelMenu
+                ul.tlMenuUl
+                  li.toPage(onclick='back();') 首页
+                  li.toList(onclick='back();') 商品列表
+                  | 
+                  li
+                    | >
+                    | 商品详情
+                  //- li.addLi
+                    a(href="/manage/editPro/#{pid}") 编辑商品
             // /.navbar-collapse
           // /.container-fluid
         // Header

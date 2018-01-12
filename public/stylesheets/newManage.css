@@ -1,5 +1,6 @@
 body{
-    min-width: 471px;
+    min-width: 647px;
+    /*min-width: 471px;*/
 }
 .manageSection ul,li,table,div,span,h1,h2,h3,input,pre{
     margin: 0px;
@@ -90,6 +91,9 @@ body{
     right: 58px;
     top: 8px;
 }
+.mml{
+    right: 330px;
+}
 .ml{
     right: 130px;
 }
@@ -171,7 +175,7 @@ body{
 }
 @media only screen and (max-width: 587px) {
     .opr6{
-        max-width: 63px;
+        max-width: 50px !important;
     }
 }
 
@@ -192,5 +196,15 @@ body{
     color: #fed136;
 }
 
+.inline{
+    display: inline-block;
+}
 
+.pageDesc{
+    position: relative;
+    top: -11px;
+}
 
+#setPageSize{
+    width: 90px;
+}

@@ -37,8 +37,9 @@
             }
         },
         error:function(re){
-            alert(JSON.stringify(re))
-            console.log(re);
+            // alert(JSON.stringify(re))
+            window.autoAlert(JSON.stringify(re),'red')
+            // console.log(re);
         }
 
     });   

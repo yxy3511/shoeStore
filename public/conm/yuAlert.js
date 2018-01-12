@@ -177,9 +177,9 @@ function setPages(option,showCnt){
 
 function setCurpage(num,index){
     // localStorage.setItem('pageNum',num)
-    pageNums = $.session.get('curPages') ? JSON.parse($.session.get('curPages')) : pageNums
-    pageNums[pageNumNames[index]] = num
-    $.session.set('curPages',JSON.stringify(pageNums))
+    let curPageNums = $.session.get('curPages') ? JSON.parse($.session.get('curPages')) : angular.copy(pageNums)
+    curPageNums[pageNumNames[index]] = num
+    $.session.set('curPages',JSON.stringify(curPageNums))
 }
 
 function returnUrl (urlStr,index){

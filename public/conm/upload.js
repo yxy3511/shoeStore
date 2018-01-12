@@ -36,6 +36,7 @@ $(function(){
     if(imgsObj != ''){
         creatImgs(imgsObj)
     }
+    
     function creatImgs(imgs){
         var parent = document.getElementById('imgsBox') 
         for(var i in imgs){
@@ -54,6 +55,8 @@ $(function(){
                 imgBlock.setAttribute('class', 'upImg')
                 imgBlock.setAttribute('src',imgs[i])
                 aBlock.appendChild(imgBlock); 
+                
+                  
 
                 //删除按钮
                 var addonSpan = document.createElement("span")
@@ -68,10 +71,10 @@ $(function(){
                 var iconSpan = document.createElement("span")
                 iconSpan.className = 'glyphicon glyphicon-remove iconSpan'   
                 btnClose.prepend(iconSpan);
-
             }
         }
     }
+    
     $('.cancelBtn').on('click',function(e){
         if ( e && e.preventDefault ){
             e.preventDefault(); 
@@ -112,7 +115,8 @@ $(function(){
                 $('#allImg').attr('value',JSON.stringify(JSON.parse(re.vals)[0]))
             },
             error:function(re){
-                alert(JSON.stringify(re))
+                // alert(JSON.stringify(re))
+                window.autoAlert(JSON.stringify(re),'red')
                 console.log(re);
             }
 

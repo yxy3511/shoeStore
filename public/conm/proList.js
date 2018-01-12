@@ -95,14 +95,7 @@ $(function(){
     //     });
     // })
 
-    //回车搜索
-    $('#inputKey').on('keypress',function(event){
-        if(event.keyCode == 13){
-            var keyVal = $('#inputKey').val();
-            // window.location = '/manage/searchPro?key='+keyVal
-            window.location = returnUrl('/manage/searchPro/prolistPageNum/pageSize/?key='+keyVal,0)
-        }   
-    })
+    
     
 
 })  

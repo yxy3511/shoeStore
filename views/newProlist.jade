@@ -14,6 +14,11 @@ block content
       |         
       li
         a.toProlist(href='/manage/proList/pageSize/prolistPageNum') 商品列表
+      li.addLi.mml
+        span.pageDesc
+          | 设置每页显示数量 : 
+        .input-group.searchGroup.inline
+          input#setPageSize.form-control.searchInput(name="key", autocomplete="on", type="text",)
       li.addLi.ml
         .input-group.searchGroup
           input#inputKey.form-control.searchInput(name="key", autocomplete="on", type="text", placeholder="输入关键字回车搜索")
