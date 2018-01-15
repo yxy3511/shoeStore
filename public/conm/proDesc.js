@@ -60,7 +60,27 @@ $(function(){
     // 二级菜单
     $('.towLevelMenu').css('display','inline-block')
     var prevUrl = null
-    if(document.referrer && document.referrer.indexOf('products') != -1){
+    let hasUrl = 0
+    Menu[2]['childUrl'].map((url,i)=>{
+        if(document.referrer && document.referrer.indexOf(url) != -1){
+            hasUrl = 1
+        }
+    })
+    if(hasUrl){
+        let pageSize = localStorage.getItem('usersPageSize') || 9
+        // prevUrl = '/products/0/?pageNum=1&pageSize='+pageSize
+        prevUrl = document.referrer
+
+        $('li.toList').css('display','inline-block')
+        $.session.set('prevUrl',prevUrl)
+    }else{
+        // prevUrl = '/page'
+        prevUrl = document.referrer
+        
+        $('li.toPage').css('display','inline-block')
+        $.session.set('prevUrl',prevUrl)
+    }
+    /*if(document.referrer && document.referrer.indexOf('products') != -1){
         let pageSize = localStorage.getItem('usersPageSize') || 9
         prevUrl = '/products/0/?pageNum=1&pageSize='+pageSize
 
@@ -71,7 +91,7 @@ $(function(){
         
         $('li.toPage').css('display','inline-block')
         $.session.set('prevUrl',prevUrl)
-    }
+    }*/
 
 })
 

@@ -241,6 +241,7 @@ searchPro = function(req,res,next){
         var page = {}
         page.pageNum = +req.query.pageNum
         page.pageSize = +req.query.pageSize
+        console.log('page:',page)
         proListContent.searchPro(key,page,function(err,vals){
             if(err){
                 console.log(err)

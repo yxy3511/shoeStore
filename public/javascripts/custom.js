@@ -73,9 +73,8 @@ $(document).ready(function(){
 	
 				
 	/* ---------- Add class .active to current link  ---------- */
-	console.log(manageMenu)
+	// console.log(manageMenu)
 	$('ul.main-menu li a').each(function(){
-			console.log($($(this))[0].href)
 			manageMenu.forEach((menu,i)=>{
 				if($($(this))[0].href.indexOf(menu.url) != -1){
 					menu.childUrl.forEach((url,d)=>{

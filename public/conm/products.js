@@ -1,5 +1,10 @@
 $(function(){
-
+    if(localStorage.getItem('usersPageSize')){
+        var pageSize = localStorage.getItem('usersPageSize')
+    }else{
+        localStorage.setItem('usersPageSize',defaultUserPagesize)
+        var pageSize = defaultUserPagesize
+    }
     // $('section').height($('.imgsList').height()+80) 
     //懒加载
     $(".lazyload").lazyload({
@@ -48,9 +53,8 @@ $(function(){
     })
 
     function searchKey(){
-        console.log("1111")
         var keyVal = $('#searchIn').val();
-        var pageSize = localStorage.getItem('usersPageSize')
+        // var pageSize = localStorage.getItem('usersPageSize')
         if(keyVal){
             window.location = '/proSearch?key='+keyVal+'&pageNum=1&pageSize='+pageSize
         }else{

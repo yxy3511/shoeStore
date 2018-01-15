@@ -1,10 +1,10 @@
-﻿$(function() {
-    console.log('userpageSize:',localStorage.getItem('usersPageSize'))
+﻿document.write("<script language=javascript src='/conm/config.js'></script>");
+$(function() {
     if(localStorage.getItem('usersPageSize')){
         var pageSize = localStorage.getItem('usersPageSize')
     }else{
-        localStorage.setItem('usersPageSize',9)
-        var pageSize = 9
+        localStorage.setItem('usersPageSize',defaultUserPagesize)
+        var pageSize = defaultUserPagesize
     }
 	//获取分类
 	$.ajax({
@@ -17,6 +17,7 @@
         success:function(re){
             // var cnt = 0;
             var pageNum = 1
+            var isAll = 1
             // var pageSize = localStorage.getItem('usersPageSize')
             for(var i in JSON.parse(re.vals)){
                 //建新的节点
@@ -26,6 +27,11 @@
                 parent.appendChild(liContent);  
                 var aBlock = document.createElement("a")
                 aBlock.setAttribute('href', '/products/'+i+'/?pageNum='+pageNum+'&pageSize='+pageSize)
+                //设置选中状态
+                if(window.location.pathname.indexOf('/products/'+i) != -1){
+                    aBlock.setAttribute('class','active')
+                    isAll = 0
+                }
                 aBlock.setAttribute('sid', i)
                 aBlock.innerHTML = JSON.parse(re.vals)[i]
                 liContent.appendChild(aBlock); 
@@ -40,6 +46,9 @@
                 cnt++;*/
 
             }
+            if(isAll && window.location.pathname.indexOf('/products/') != -1){
+                $('.getAll').attr('class','active')
+            }
         },
         error:function(re){
             // alert(JSON.stringify(re))
@@ -48,11 +57,21 @@
         }
 
     });   
-	// var url = window.location.href;
-	// var arr = url.split("//");
-	// var path = arr[1].substring(arr[1].indexOf("/"));
 	var path = window.location.pathname;
-	if (path == '/page' || path == '/atlas') {
+    Menu.forEach((m,index)=>{
+        m.childUrl.forEach(url=>{
+            if(path.indexOf(url) != -1){
+                $('a.page-scroll').map((i,param)=>{
+                    if(i == index){
+                        $(param).addClass('active');
+                    }else{
+                        $(param).removeClass('active');
+                    }
+                })
+            }
+        })
+    })
+	/*if (path == '/page' || path == '/atlas') {
 		$('#home').addClass('active');
 		$('#aboutUs').removeClass('active');
 		$('#products').removeClass('active');
@@ -78,8 +97,7 @@
 		$('#home').removeClass('active');
 		$('#aboutUs').removeClass('active');
 		$('#products').removeClass('active');
-	} 
-	// window.location = '/getSorts'
+	} */
 });
     
  

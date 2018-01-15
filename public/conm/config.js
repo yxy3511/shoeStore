@@ -34,3 +34,38 @@ const manageMenu = [
         ],
     }
 ]
+
+const defaultUserPagesize = 9
+
+
+const Menu = [
+    {
+        name: 'HOME',
+        url:'/page',
+        childUrl:[
+            '/page',
+            '/atlas',
+            
+        ],
+    },{
+        name: 'ABOUT US',
+        url:'/aboutUs',
+        childUrl:[
+            '/aboutUs',
+        ],
+    },{
+        name: 'PRODUCTS',
+        url:'/products/',
+        childUrl:[
+            '/products/',
+            '/proSearch',
+            '/proDesc'
+        ],
+    },{
+        name: 'CONTACT',
+        url:'/contact',
+        childUrl:[
+            '/contact'
+        ],
+    }
+]
