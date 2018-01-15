@@ -1,5 +1,11 @@
 ﻿$(function() {
-    
+    console.log('userpageSize:',localStorage.getItem('usersPageSize'))
+    if(localStorage.getItem('usersPageSize')){
+        var pageSize = localStorage.getItem('usersPageSize')
+    }else{
+        localStorage.setItem('usersPageSize',9)
+        var pageSize = 9
+    }
 	//获取分类
 	$.ajax({
         type : 'get',
@@ -11,14 +17,13 @@
         success:function(re){
             // var cnt = 0;
             var pageNum = 1
-            var pageSize = localStorage.getItem('usersPageSize')
+            // var pageSize = localStorage.getItem('usersPageSize')
             for(var i in JSON.parse(re.vals)){
                 //建新的节点
                 var parent = document.getElementById('menus')
                 var liContent = document.createElement("li")
                 liContent.className = 'txt'
                 parent.appendChild(liContent);  
-
                 var aBlock = document.createElement("a")
                 aBlock.setAttribute('href', '/products/'+i+'/?pageNum='+pageNum+'&pageSize='+pageSize)
                 aBlock.setAttribute('sid', i)
