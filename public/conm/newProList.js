@@ -7,11 +7,12 @@ $(function(){
         }
     }
     //设置pageSize
+    let pageSize = null
     if(localStorage.getItem('pageSize')){
-        let pageSize = parseInt(localStorage.getItem('pageSize'))
+        pageSize = parseInt(localStorage.getItem('pageSize'))
     }else{
-        localStorage.setItem('pageSize',10)
-        let pageSize = 10
+        localStorage.setItem('pageSize',defaultPagesize)
+        pageSize = defaultPagesize
     }
     $('#setPageSize').val(pageSize)
 

@@ -51,7 +51,7 @@ $(function(){
     }
 
     saveVal = function(){
-      if(parseInt(localStorage.getItem("rmbUser"))){
+      if(isRmb){
         var b = new Base64();  
         var pass = b.encode($('.pwd').val());  
         let useInfo = {'uname':$('.uname').val(),'pwd':pass}

@@ -34,8 +34,10 @@ const manageMenu = [
         ],
     }
 ]
-
+//页面的
 const defaultUserPagesize = 9
+//后台的
+const defaultPagesize = 10
 
 
 const Menu = [
